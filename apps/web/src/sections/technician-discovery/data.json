@@ -1,0 +1,260 @@
+{
+  "_meta": {
+    "models": {
+      "technicians": "AV professionals who offer their services on the platform. Each technician has a public profile with skills, hourly rate, location, tier ranking, and verification status.",
+      "skills": "Verified capabilities that technicians possess, such as audio mixing, lighting design, or video engineering.",
+      "filters": "Available filter options for narrowing down search results by skill, tier, location, rate, and verification status."
+    },
+    "relationships": [
+      "Each Technician has multiple Skills (the services they can provide)",
+      "Technicians are ranked by tier (Beginner, Experienced, Advanced, Pro) based on their XP",
+      "Search results show Technicians sorted by ranking score, which factors in tier, verification, reviews, and distance"
+    ]
+  },
+  "technicians": [
+    {
+      "id": "tech-001",
+      "randomizedId": "TECH-8X4K2M",
+      "name": "Marcus Chen",
+      "avatarUrl": null,
+      "bio": "15+ years in live sound engineering. Specialized in large-format concerts and corporate events. Avid Venue and DiGiCo certified.",
+      "tier": "Pro",
+      "xp": 4850,
+      "hourlyRate": 125,
+      "location": {
+        "city": "Los Angeles",
+        "state": "CA",
+        "distance": 3.2
+      },
+      "skills": [
+        { "name": "Audio Mixing", "verified": true },
+        { "name": "System Design", "verified": true },
+        { "name": "DiGiCo", "verified": true },
+        { "name": "Avid Venue", "verified": false }
+      ],
+      "verificationStatus": "verified",
+      "insuranceStatus": "verified",
+      "averageRating": 4.9,
+      "reviewCount": 127,
+      "rankingScore": 215,
+      "isBookmarked": false
+    },
+    {
+      "id": "tech-002",
+      "randomizedId": "TECH-3P9N7Q",
+      "name": "Sarah Mitchell",
+      "avatarUrl": null,
+      "bio": "Lighting designer with a passion for creating immersive experiences. Broadway touring and corporate specialist.",
+      "tier": "Advanced",
+      "xp": 2340,
+      "hourlyRate": 95,
+      "location": {
+        "city": "Las Vegas",
+        "state": "NV",
+        "distance": 12.8
+      },
+      "skills": [
+        { "name": "Lighting Design", "verified": true },
+        { "name": "MA Lighting", "verified": true },
+        { "name": "Hog 4", "verified": false }
+      ],
+      "verificationStatus": "verified",
+      "insuranceStatus": "verified",
+      "averageRating": 4.7,
+      "reviewCount": 64,
+      "rankingScore": 178,
+      "isBookmarked": true
+    },
+    {
+      "id": "tech-003",
+      "randomizedId": "TECH-6W2R5T",
+      "name": "David Park",
+      "avatarUrl": null,
+      "bio": "Video engineer and LED specialist. Experienced with large-scale productions, broadcast, and IMAG.",
+      "tier": "Pro",
+      "xp": 5120,
+      "hourlyRate": 140,
+      "location": {
+        "city": "San Francisco",
+        "state": "CA",
+        "distance": 8.5
+      },
+      "skills": [
+        { "name": "Video Engineering", "verified": true },
+        { "name": "LED Walls", "verified": true },
+        { "name": "Broadcast", "verified": true },
+        { "name": "Resolume", "verified": true }
+      ],
+      "verificationStatus": "verified",
+      "insuranceStatus": "none",
+      "averageRating": 4.8,
+      "reviewCount": 89,
+      "rankingScore": 195,
+      "isBookmarked": false
+    },
+    {
+      "id": "tech-004",
+      "randomizedId": "TECH-1Y8H4J",
+      "name": "Emily Rodriguez",
+      "avatarUrl": null,
+      "bio": "A1/A2 audio technician. Quick learner, reliable, and great with corporate clients.",
+      "tier": "Experienced",
+      "xp": 890,
+      "hourlyRate": 65,
+      "location": {
+        "city": "Phoenix",
+        "state": "AZ",
+        "distance": 25.3
+      },
+      "skills": [
+        { "name": "Audio Mixing", "verified": true },
+        { "name": "RF Coordination", "verified": false }
+      ],
+      "verificationStatus": "verified",
+      "insuranceStatus": "verified",
+      "averageRating": 4.6,
+      "reviewCount": 28,
+      "rankingScore": 142,
+      "isBookmarked": false
+    },
+    {
+      "id": "tech-005",
+      "randomizedId": "TECH-9M3K6L",
+      "name": "James Wilson",
+      "avatarUrl": null,
+      "bio": "Rigging and automation specialist. ETCP certified with 10 years of arena touring experience.",
+      "tier": "Pro",
+      "xp": 4200,
+      "hourlyRate": 150,
+      "location": {
+        "city": "Denver",
+        "state": "CO",
+        "distance": 42.1
+      },
+      "skills": [
+        { "name": "Rigging", "verified": true },
+        { "name": "Automation", "verified": true },
+        { "name": "ETCP Certified", "verified": true }
+      ],
+      "verificationStatus": "verified",
+      "insuranceStatus": "verified",
+      "averageRating": 5.0,
+      "reviewCount": 156,
+      "rankingScore": 228,
+      "isBookmarked": false
+    },
+    {
+      "id": "tech-006",
+      "randomizedId": "TECH-4F7B2C",
+      "name": "Alex Thompson",
+      "avatarUrl": null,
+      "bio": "New to the industry but eager to learn. Background in music production and live streaming.",
+      "tier": "Beginner",
+      "xp": 120,
+      "hourlyRate": 35,
+      "location": {
+        "city": "Los Angeles",
+        "state": "CA",
+        "distance": 5.7
+      },
+      "skills": [
+        { "name": "Audio Mixing", "verified": false },
+        { "name": "Streaming", "verified": false }
+      ],
+      "verificationStatus": "unverified",
+      "insuranceStatus": "none",
+      "averageRating": 4.2,
+      "reviewCount": 3,
+      "rankingScore": 85,
+      "isBookmarked": false
+    },
+    {
+      "id": "tech-007",
+      "randomizedId": "TECH-2D5G8N",
+      "name": "Michelle Foster",
+      "avatarUrl": null,
+      "bio": "Stage manager and production coordinator. Excellent communication skills and attention to detail. Theatre and corporate background.",
+      "tier": "Advanced",
+      "xp": 1950,
+      "hourlyRate": 85,
+      "location": {
+        "city": "San Diego",
+        "state": "CA",
+        "distance": 18.4
+      },
+      "skills": [
+        { "name": "Stage Management", "verified": true },
+        { "name": "Production Coordination", "verified": true },
+        { "name": "Cue Systems", "verified": false }
+      ],
+      "verificationStatus": "verified",
+      "insuranceStatus": "expired",
+      "averageRating": 4.9,
+      "reviewCount": 47,
+      "rankingScore": 165,
+      "isBookmarked": true
+    },
+    {
+      "id": "tech-008",
+      "randomizedId": "TECH-7V1X9Z",
+      "name": "Robert Kim",
+      "avatarUrl": null,
+      "bio": "Projection and media server specialist. Disguise, Watchout, and Notch certified. Festival and immersive experience focused.",
+      "tier": "Pro",
+      "xp": 3890,
+      "hourlyRate": 135,
+      "location": {
+        "city": "Los Angeles",
+        "state": "CA",
+        "distance": 2.1
+      },
+      "skills": [
+        { "name": "Projection Mapping", "verified": true },
+        { "name": "Disguise", "verified": true },
+        { "name": "Watchout", "verified": true },
+        { "name": "Notch", "verified": true },
+        { "name": "Content Creation", "verified": false }
+      ],
+      "verificationStatus": "verified",
+      "insuranceStatus": "verified",
+      "averageRating": 4.7,
+      "reviewCount": 71,
+      "rankingScore": 198,
+      "isBookmarked": false
+    }
+  ],
+  "filters": {
+    "availableSkills": [
+      "Audio Mixing",
+      "Lighting Design",
+      "Video Engineering",
+      "Rigging",
+      "Stage Management",
+      "Projection Mapping",
+      "LED Walls",
+      "Broadcast",
+      "RF Coordination",
+      "System Design",
+      "Automation",
+      "Streaming",
+      "Content Creation"
+    ],
+    "tiers": ["Beginner", "Experienced", "Advanced", "Pro"],
+    "rateRange": { "min": 25, "max": 500 },
+    "radiusOptions": [5, 10, 25, 50, 100]
+  },
+  "searchState": {
+    "query": "",
+    "selectedSkills": [],
+    "selectedTiers": [],
+    "locationZip": "90001",
+    "radius": 50,
+    "rateMin": 25,
+    "rateMax": 500,
+    "verifiedOnly": false,
+    "insuredOnly": false,
+    "page": 1,
+    "totalResults": 8,
+    "totalPages": 1
+  }
+}

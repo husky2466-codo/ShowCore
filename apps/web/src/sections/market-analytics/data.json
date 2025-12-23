@@ -1,0 +1,728 @@
+{
+  "_meta": {
+    "description": "Market Analytics sample data for AV technician rate guidance and market trends",
+    "entities": {
+      "MarketOverview": "Baseline metrics shown on dashboard landing - average rates, trending skills, regional insights, and alerts",
+      "RateDataPoint": "Granular rate information organized by skill, tier, region, event type, and time period for filtering and charting",
+      "NamedEvent": "Specific recurring events for year-over-year comparison (e.g., Coachella 2024 vs 2025)",
+      "PersonalBenchmark": "User's own historical rates compared to market averages for personalized insights",
+      "AIInsight": "AI-generated predictions, recommendations, and demand forecasts",
+      "SavedLayout": "User's customized dashboard configurations with filters and chart preferences",
+      "ArchiveData": "Historical data beyond 1 year, accessible only to Pro/Enterprise company tiers"
+    },
+    "relationships": {
+      "RateDataPoint": "Links to Skill, Tier, Region, EventType entities; aggregated from Booking data",
+      "PersonalBenchmark": "Links to current User (Technician) and their Booking history",
+      "NamedEvent": "Contains aggregated RateDataPoint data for a specific event instance",
+      "SavedLayout": "Belongs to current User, stores filter preferences and chart configurations"
+    },
+    "generatedAt": "2025-03-15T08:00:00Z",
+    "dataVersion": "1.0"
+  },
+  "marketOverview": {
+    "averageMarketRate": {
+      "overall": 75,
+      "bySkill": {
+        "Audio/Sound": 82,
+        "Lighting": 78,
+        "Video": 85,
+        "LED Wall": 95,
+        "Rigging": 88
+      },
+      "byTier": {
+        "Beginner": 35,
+        "Intermediate": 58,
+        "Advanced": 82,
+        "Pro": 115,
+        "Master": 145
+      }
+    },
+    "trendingSkills": [
+      {
+        "skill": "LED Wall",
+        "currentAvgRate": 95,
+        "percentageChange": 18,
+        "period": "Last Quarter",
+        "trend": "up"
+      },
+      {
+        "skill": "Video",
+        "currentAvgRate": 85,
+        "percentageChange": 12,
+        "period": "Last Quarter",
+        "trend": "up"
+      },
+      {
+        "skill": "Audio/Sound",
+        "currentAvgRate": 82,
+        "percentageChange": 5,
+        "period": "Last Quarter",
+        "trend": "up"
+      },
+      {
+        "skill": "Lighting",
+        "currentAvgRate": 78,
+        "percentageChange": -2,
+        "period": "Last Quarter",
+        "trend": "down"
+      }
+    ],
+    "regionalInsights": [
+      {
+        "region": "Los Angeles",
+        "averageRate": 88,
+        "topSkill": "LED Wall",
+        "demandLevel": "High",
+        "percentageChange": 15
+      },
+      {
+        "region": "New York",
+        "averageRate": 92,
+        "topSkill": "Video",
+        "demandLevel": "High",
+        "percentageChange": 10
+      },
+      {
+        "region": "Nashville",
+        "averageRate": 72,
+        "topSkill": "Audio/Sound",
+        "demandLevel": "Medium",
+        "percentageChange": 8
+      },
+      {
+        "region": "Austin",
+        "averageRate": 68,
+        "topSkill": "Lighting",
+        "demandLevel": "Medium",
+        "percentageChange": 12
+      },
+      {
+        "region": "Miami",
+        "averageRate": 75,
+        "topSkill": "LED Wall",
+        "demandLevel": "Medium",
+        "percentageChange": 14
+      }
+    ],
+    "alerts": [
+      {
+        "id": "alert-1",
+        "type": "rate-increase",
+        "message": "Rates for Advanced tier lighting technicians increased 12% this quarter",
+        "severity": "info",
+        "timestamp": "2025-03-10T14:30:00Z"
+      },
+      {
+        "id": "alert-2",
+        "type": "skill-demand",
+        "message": "LED Wall technicians are in high demand across all regions",
+        "severity": "success",
+        "timestamp": "2025-03-08T09:15:00Z"
+      },
+      {
+        "id": "alert-3",
+        "type": "personal-benchmark",
+        "message": "Your rates are 8% above market average for your skill and tier",
+        "severity": "success",
+        "timestamp": "2025-03-05T11:00:00Z"
+      }
+    ]
+  },
+  "rateDataPoints": [
+    {
+      "id": "rate-1",
+      "skill": "Audio/Sound",
+      "tier": "Advanced",
+      "region": "Los Angeles",
+      "eventType": "Concert/Festival",
+      "period": "2025-03",
+      "averageRate": 95,
+      "minRate": 75,
+      "maxRate": 120,
+      "percentile25": 82,
+      "percentile50": 95,
+      "percentile75": 108,
+      "sampleSize": 145
+    },
+    {
+      "id": "rate-2",
+      "skill": "Audio/Sound",
+      "tier": "Advanced",
+      "region": "Los Angeles",
+      "eventType": "Concert/Festival",
+      "period": "2025-02",
+      "averageRate": 92,
+      "minRate": 72,
+      "maxRate": 115,
+      "percentile25": 80,
+      "percentile50": 92,
+      "percentile75": 105,
+      "sampleSize": 138
+    },
+    {
+      "id": "rate-3",
+      "skill": "Audio/Sound",
+      "tier": "Advanced",
+      "region": "Los Angeles",
+      "eventType": "Concert/Festival",
+      "period": "2025-01",
+      "averageRate": 88,
+      "minRate": 70,
+      "maxRate": 110,
+      "percentile25": 78,
+      "percentile50": 88,
+      "percentile75": 100,
+      "sampleSize": 122
+    },
+    {
+      "id": "rate-4",
+      "skill": "Audio/Sound",
+      "tier": "Advanced",
+      "region": "Los Angeles",
+      "eventType": "Concert/Festival",
+      "period": "2024-12",
+      "averageRate": 85,
+      "minRate": 68,
+      "maxRate": 108,
+      "percentile25": 75,
+      "percentile50": 85,
+      "percentile75": 98,
+      "sampleSize": 156
+    },
+    {
+      "id": "rate-5",
+      "skill": "LED Wall",
+      "tier": "Advanced",
+      "region": "Los Angeles",
+      "eventType": "Concert/Festival",
+      "period": "2025-03",
+      "averageRate": 115,
+      "minRate": 90,
+      "maxRate": 145,
+      "percentile25": 98,
+      "percentile50": 115,
+      "percentile75": 130,
+      "sampleSize": 89
+    },
+    {
+      "id": "rate-6",
+      "skill": "LED Wall",
+      "tier": "Advanced",
+      "region": "Los Angeles",
+      "eventType": "Concert/Festival",
+      "period": "2025-02",
+      "averageRate": 108,
+      "minRate": 85,
+      "maxRate": 138,
+      "percentile25": 92,
+      "percentile50": 108,
+      "percentile75": 122,
+      "sampleSize": 82
+    },
+    {
+      "id": "rate-7",
+      "skill": "LED Wall",
+      "tier": "Advanced",
+      "region": "Los Angeles",
+      "eventType": "Concert/Festival",
+      "period": "2025-01",
+      "averageRate": 102,
+      "minRate": 82,
+      "maxRate": 132,
+      "percentile25": 88,
+      "percentile50": 102,
+      "percentile75": 118,
+      "sampleSize": 76
+    },
+    {
+      "id": "rate-8",
+      "skill": "Lighting",
+      "tier": "Pro",
+      "region": "New York",
+      "eventType": "Corporate",
+      "period": "2025-03",
+      "averageRate": 125,
+      "minRate": 100,
+      "maxRate": 155,
+      "percentile25": 110,
+      "percentile50": 125,
+      "percentile75": 140,
+      "sampleSize": 67
+    },
+    {
+      "id": "rate-9",
+      "skill": "Video",
+      "tier": "Advanced",
+      "region": "New York",
+      "eventType": "Broadcast",
+      "period": "2025-03",
+      "averageRate": 105,
+      "minRate": 85,
+      "maxRate": 130,
+      "percentile25": 92,
+      "percentile50": 105,
+      "percentile75": 118,
+      "sampleSize": 94
+    },
+    {
+      "id": "rate-10",
+      "skill": "Rigging",
+      "tier": "Advanced",
+      "region": "Nashville",
+      "eventType": "Concert/Festival",
+      "period": "2025-03",
+      "averageRate": 98,
+      "minRate": 80,
+      "maxRate": 120,
+      "percentile25": 88,
+      "percentile50": 98,
+      "percentile75": 110,
+      "sampleSize": 45
+    },
+    {
+      "id": "rate-11",
+      "skill": "Audio/Sound",
+      "tier": "Beginner",
+      "region": "Austin",
+      "eventType": "Wedding",
+      "period": "2025-03",
+      "averageRate": 35,
+      "minRate": 25,
+      "maxRate": 45,
+      "percentile25": 30,
+      "percentile50": 35,
+      "percentile75": 40,
+      "sampleSize": 112
+    },
+    {
+      "id": "rate-12",
+      "skill": "Audio/Sound",
+      "tier": "Intermediate",
+      "region": "Austin",
+      "eventType": "Concert/Festival",
+      "period": "2025-03",
+      "averageRate": 62,
+      "minRate": 48,
+      "maxRate": 78,
+      "percentile25": 54,
+      "percentile50": 62,
+      "percentile75": 70,
+      "sampleSize": 88
+    },
+    {
+      "id": "rate-13",
+      "skill": "Lighting",
+      "tier": "Advanced",
+      "region": "Miami",
+      "eventType": "Corporate",
+      "period": "2025-03",
+      "averageRate": 88,
+      "minRate": 70,
+      "maxRate": 110,
+      "percentile25": 78,
+      "percentile50": 88,
+      "percentile75": 98,
+      "sampleSize": 56
+    },
+    {
+      "id": "rate-14",
+      "skill": "Video",
+      "tier": "Pro",
+      "region": "Los Angeles",
+      "eventType": "Broadcast",
+      "period": "2025-03",
+      "averageRate": 135,
+      "minRate": 110,
+      "maxRate": 165,
+      "percentile25": 120,
+      "percentile50": 135,
+      "percentile75": 150,
+      "sampleSize": 71
+    },
+    {
+      "id": "rate-15",
+      "skill": "LED Wall",
+      "tier": "Master",
+      "region": "New York",
+      "eventType": "Concert/Festival",
+      "period": "2025-03",
+      "averageRate": 165,
+      "minRate": 140,
+      "maxRate": 195,
+      "percentile25": 150,
+      "percentile50": 165,
+      "percentile75": 180,
+      "sampleSize": 28
+    }
+  ],
+  "namedEvents": [
+    {
+      "id": "event-1",
+      "name": "Coachella",
+      "year": 2025,
+      "location": "Indio, CA",
+      "eventType": "Concert/Festival",
+      "dates": "2025-04-11 to 2025-04-20",
+      "rateData": {
+        "averageRate": 125,
+        "minRate": 85,
+        "maxRate": 180,
+        "topSkills": ["LED Wall", "Audio/Sound", "Lighting"],
+        "technicianCount": 450
+      }
+    },
+    {
+      "id": "event-2",
+      "name": "Coachella",
+      "year": 2024,
+      "location": "Indio, CA",
+      "eventType": "Concert/Festival",
+      "dates": "2024-04-12 to 2024-04-21",
+      "rateData": {
+        "averageRate": 112,
+        "minRate": 75,
+        "maxRate": 165,
+        "topSkills": ["LED Wall", "Audio/Sound", "Lighting"],
+        "technicianCount": 425
+      }
+    },
+    {
+      "id": "event-3",
+      "name": "SXSW",
+      "year": 2025,
+      "location": "Austin, TX",
+      "eventType": "Concert/Festival",
+      "dates": "2025-03-07 to 2025-03-16",
+      "rateData": {
+        "averageRate": 85,
+        "minRate": 55,
+        "maxRate": 135,
+        "topSkills": ["Audio/Sound", "Lighting", "Video"],
+        "technicianCount": 320
+      }
+    },
+    {
+      "id": "event-4",
+      "name": "SXSW",
+      "year": 2024,
+      "location": "Austin, TX",
+      "eventType": "Concert/Festival",
+      "dates": "2024-03-08 to 2024-03-17",
+      "rateData": {
+        "averageRate": 78,
+        "minRate": 50,
+        "maxRate": 125,
+        "topSkills": ["Audio/Sound", "Lighting", "Video"],
+        "technicianCount": 295
+      }
+    },
+    {
+      "id": "event-5",
+      "name": "CES",
+      "year": 2025,
+      "location": "Las Vegas, NV",
+      "eventType": "Corporate",
+      "dates": "2025-01-07 to 2025-01-10",
+      "rateData": {
+        "averageRate": 145,
+        "minRate": 100,
+        "maxRate": 200,
+        "topSkills": ["LED Wall", "Video", "Audio/Sound"],
+        "technicianCount": 580
+      }
+    },
+    {
+      "id": "event-6",
+      "name": "CES",
+      "year": 2024,
+      "location": "Las Vegas, NV",
+      "eventType": "Corporate",
+      "dates": "2024-01-09 to 2024-01-12",
+      "rateData": {
+        "averageRate": 135,
+        "minRate": 95,
+        "maxRate": 185,
+        "topSkills": ["LED Wall", "Video", "Audio/Sound"],
+        "technicianCount": 560
+      }
+    },
+    {
+      "id": "event-7",
+      "name": "Lollapalooza",
+      "year": 2024,
+      "location": "Chicago, IL",
+      "eventType": "Concert/Festival",
+      "dates": "2024-08-01 to 2024-08-04",
+      "rateData": {
+        "averageRate": 105,
+        "minRate": 70,
+        "maxRate": 155,
+        "topSkills": ["Audio/Sound", "Lighting", "LED Wall"],
+        "technicianCount": 380
+      }
+    },
+    {
+      "id": "event-8",
+      "name": "Electric Daisy Carnival",
+      "year": 2024,
+      "location": "Las Vegas, NV",
+      "eventType": "Concert/Festival",
+      "dates": "2024-05-17 to 2024-05-19",
+      "rateData": {
+        "averageRate": 118,
+        "minRate": 80,
+        "maxRate": 170,
+        "topSkills": ["LED Wall", "Lighting", "Audio/Sound"],
+        "technicianCount": 425
+      }
+    }
+  ],
+  "personalBenchmark": {
+    "userId": "tech-12345",
+    "userName": "Alex Rivera",
+    "primarySkill": "Audio/Sound",
+    "tier": "Advanced",
+    "region": "Los Angeles",
+    "historicalRates": [
+      {
+        "period": "2025-03",
+        "averageRate": 102,
+        "bookingCount": 8,
+        "marketAverage": 95
+      },
+      {
+        "period": "2025-02",
+        "averageRate": 98,
+        "bookingCount": 7,
+        "marketAverage": 92
+      },
+      {
+        "period": "2025-01",
+        "averageRate": 94,
+        "bookingCount": 6,
+        "marketAverage": 88
+      },
+      {
+        "period": "2024-12",
+        "averageRate": 90,
+        "bookingCount": 9,
+        "marketAverage": 85
+      },
+      {
+        "period": "2024-11",
+        "averageRate": 88,
+        "bookingCount": 7,
+        "marketAverage": 84
+      },
+      {
+        "period": "2024-10",
+        "averageRate": 86,
+        "bookingCount": 8,
+        "marketAverage": 83
+      }
+    ],
+    "performanceMetrics": {
+      "averageVsMarket": 8,
+      "trend": "up",
+      "totalBookingsLast12Months": 92,
+      "averageRating": 4.8
+    },
+    "personalAlerts": [
+      {
+        "id": "personal-alert-1",
+        "message": "Your rates are 8% above market average - great positioning!",
+        "type": "benchmark",
+        "timestamp": "2025-03-10T08:00:00Z"
+      },
+      {
+        "id": "personal-alert-2",
+        "message": "You've completed 92 bookings this year, 23% more than similar technicians",
+        "type": "achievement",
+        "timestamp": "2025-03-05T14:30:00Z"
+      }
+    ]
+  },
+  "aiInsights": [
+    {
+      "id": "insight-1",
+      "type": "prediction",
+      "category": "rate-forecast",
+      "title": "Your Rate Projection",
+      "message": "Based on current trends, rates for Advanced Audio/Sound technicians in Los Angeles are projected to increase 8% next quarter",
+      "confidence": 87,
+      "timeframe": "Next Quarter (Q2 2025)",
+      "projectedData": [
+        {
+          "period": "2025-04",
+          "projectedRate": 98,
+          "confidenceLow": 94,
+          "confidenceHigh": 103
+        },
+        {
+          "period": "2025-05",
+          "projectedRate": 101,
+          "confidenceLow": 96,
+          "confidenceHigh": 106
+        },
+        {
+          "period": "2025-06",
+          "projectedRate": 103,
+          "confidenceLow": 98,
+          "confidenceHigh": 108
+        }
+      ],
+      "timestamp": "2025-03-15T06:00:00Z"
+    },
+    {
+      "id": "insight-2",
+      "type": "recommendation",
+      "category": "skill-certification",
+      "title": "Certification Opportunity",
+      "message": "Sound engineers with Dante certification earn 15% more on average",
+      "confidence": 92,
+      "potentialIncrease": {
+        "percentage": 15,
+        "estimatedRateIncrease": 14.25,
+        "currentAverage": 95,
+        "projectedAverage": 109.25
+      },
+      "actionable": true,
+      "timestamp": "2025-03-12T10:30:00Z"
+    },
+    {
+      "id": "insight-3",
+      "type": "demand-forecast",
+      "category": "skill-demand",
+      "title": "High Demand Alert",
+      "message": "High demand expected for LED Wall technicians in Q3 2025",
+      "confidence": 85,
+      "timeframe": "Q3 2025 (Jul-Sep)",
+      "affectedSkills": ["LED Wall"],
+      "affectedRegions": ["Los Angeles", "New York", "Miami"],
+      "demandIncrease": 35,
+      "timestamp": "2025-03-10T12:00:00Z"
+    },
+    {
+      "id": "insight-4",
+      "type": "recommendation",
+      "category": "regional-opportunity",
+      "title": "Regional Opportunity",
+      "message": "Corporate events in New York are paying 18% above national average for Video technicians",
+      "confidence": 89,
+      "potentialIncrease": {
+        "percentage": 18,
+        "region": "New York",
+        "eventType": "Corporate",
+        "skill": "Video"
+      },
+      "timestamp": "2025-03-08T09:00:00Z"
+    },
+    {
+      "id": "insight-5",
+      "type": "prediction",
+      "category": "seasonal-trend",
+      "title": "Seasonal Trend",
+      "message": "Festival season (Apr-Sep) typically sees 22% higher rates for Rigging specialists",
+      "confidence": 94,
+      "timeframe": "Apr-Sep 2025",
+      "historicalBasis": "Last 3 years average",
+      "affectedSkills": ["Rigging"],
+      "timestamp": "2025-03-05T07:00:00Z"
+    },
+    {
+      "id": "insight-6",
+      "type": "recommendation",
+      "category": "personal-positioning",
+      "title": "Rate Positioning Recommendation",
+      "message": "Your current rate is optimal for your tier and region. Consider increasing by 5% for concert bookings",
+      "confidence": 81,
+      "personalizedFor": "tech-12345",
+      "suggestedAction": "Increase concert/festival rate from $102 to $107",
+      "timestamp": "2025-03-14T11:15:00Z"
+    }
+  ],
+  "savedLayouts": [
+    {
+      "id": "layout-1",
+      "name": "LA Sound Engineer Rates",
+      "userId": "tech-12345",
+      "filters": {
+        "skills": ["Audio/Sound"],
+        "tiers": ["Advanced", "Pro"],
+        "regions": ["Los Angeles"],
+        "eventTypes": ["Concert/Festival", "Corporate"],
+        "dateRange": {
+          "start": "2024-03-01",
+          "end": "2025-03-15"
+        }
+      },
+      "chartConfiguration": {
+        "visibleCharts": ["line-trend", "bar-comparison", "distribution"],
+        "primaryChart": "line-trend",
+        "showPersonalBenchmark": true,
+        "showPredictions": true
+      },
+      "createdAt": "2025-02-10T14:20:00Z",
+      "lastModified": "2025-03-08T09:45:00Z",
+      "isDefault": true
+    },
+    {
+      "id": "layout-2",
+      "name": "LED Wall Market Overview",
+      "userId": "tech-12345",
+      "filters": {
+        "skills": ["LED Wall"],
+        "tiers": ["Intermediate", "Advanced", "Pro", "Master"],
+        "regions": ["Los Angeles", "New York", "Miami"],
+        "eventTypes": ["Concert/Festival", "Corporate"],
+        "dateRange": {
+          "start": "2024-06-01",
+          "end": "2025-03-15"
+        }
+      },
+      "chartConfiguration": {
+        "visibleCharts": ["bar-comparison", "distribution"],
+        "primaryChart": "bar-comparison",
+        "showPersonalBenchmark": false,
+        "showPredictions": true
+      },
+      "createdAt": "2025-01-22T16:30:00Z",
+      "lastModified": "2025-03-01T11:20:00Z",
+      "isDefault": false
+    },
+    {
+      "id": "layout-3",
+      "name": "Festival Season Comparison",
+      "userId": "tech-12345",
+      "filters": {
+        "skills": ["Audio/Sound", "Lighting", "LED Wall"],
+        "tiers": ["Advanced", "Pro"],
+        "regions": ["Los Angeles", "Austin", "Nashville"],
+        "eventTypes": ["Concert/Festival"],
+        "dateRange": {
+          "start": "2024-04-01",
+          "end": "2024-09-30"
+        }
+      },
+      "chartConfiguration": {
+        "visibleCharts": ["line-trend", "bar-comparison"],
+        "primaryChart": "bar-comparison",
+        "showPersonalBenchmark": true,
+        "showPredictions": false
+      },
+      "createdAt": "2024-10-05T10:15:00Z",
+      "lastModified": "2024-10-12T15:40:00Z",
+      "isDefault": false
+    }
+  ],
+  "archiveAccess": {
+    "isEnabled": false,
+    "requiredTier": "Pro",
+    "currentUserTier": "Free",
+    "availableRange": {
+      "start": "2022-01-01",
+      "end": "2024-02-29"
+    },
+    "upgradePrompt": "Unlock 3 years of historical market data with Pro or Enterprise subscription"
+  }
+}

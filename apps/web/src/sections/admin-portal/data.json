@@ -1,0 +1,1831 @@
+{
+  "_meta": {
+    "description": "Sample data for the Admin Portal section - internal platform administration dashboard",
+    "models": [
+      {
+        "name": "AdminUser",
+        "description": "Admin user with role-based permissions",
+        "fields": {
+          "id": "Unique identifier",
+          "name": "Admin's full name",
+          "email": "Admin's email address",
+          "role": "Admin role (super_admin, support_admin, content_moderator, analytics_viewer)",
+          "permissions": "Array of permission strings",
+          "lastLogin": "ISO timestamp of last login",
+          "avatar": "URL to admin's avatar image",
+          "createdAt": "ISO timestamp of account creation"
+        }
+      },
+      {
+        "name": "DashboardMetrics",
+        "description": "Platform-wide metrics displayed on admin dashboard",
+        "fields": {
+          "totalUsers": "Total registered users (technicians + companies)",
+          "totalTechnicians": "Total technician accounts",
+          "totalCompanies": "Total company accounts",
+          "activeBookings": "Currently active bookings",
+          "completedBookingsThisMonth": "Bookings completed this month",
+          "revenue": "Revenue metrics with month-over-month comparison",
+          "disputes": "Dispute statistics",
+          "flaggedContent": "Content moderation statistics",
+          "userGrowth": "User growth statistics"
+        }
+      },
+      {
+        "name": "DashboardAlert",
+        "description": "Urgent alerts requiring admin attention",
+        "fields": {
+          "id": "Unique alert identifier",
+          "type": "Alert category (dispute, payment_issue, flagged_content, etc.)",
+          "severity": "Severity level (info, warning, critical)",
+          "message": "Alert message",
+          "timestamp": "ISO timestamp when alert was created",
+          "actionRequired": "Whether admin action is required",
+          "relatedEntityId": "ID of related entity (optional)",
+          "relatedEntityType": "Type of related entity (optional)"
+        }
+      },
+      {
+        "name": "ManagedUser",
+        "description": "Extended user profile for admin management with activity and financial data",
+        "fields": {
+          "id": "Unique user identifier",
+          "name": "User's name or company name",
+          "email": "User's email address",
+          "role": "User type (technician or company)",
+          "accountStatus": "Current account status",
+          "verificationStatus": "Verification status flags",
+          "location": "User's location",
+          "joinDate": "ISO timestamp of registration",
+          "lastActive": "ISO timestamp of last activity",
+          "totalBookings": "Total number of bookings",
+          "completionRate": "Percentage of completed bookings",
+          "averageRating": "Average rating (0-5)",
+          "flagCount": "Number of times flagged/reported",
+          "totalEarnings": "Total earnings (technicians only)",
+          "totalSpent": "Total spent (companies only)"
+        }
+      },
+      {
+        "name": "Dispute",
+        "description": "Dispute case with evidence, messages, and resolution",
+        "fields": {
+          "id": "Unique dispute identifier",
+          "bookingId": "Associated booking ID",
+          "type": "Dispute category",
+          "status": "Current dispute status",
+          "parties": "Technician and company involved",
+          "description": "Dispute description",
+          "evidence": "Array of evidence items",
+          "messages": "Communication thread",
+          "createdAt": "ISO timestamp when dispute was opened",
+          "assignedAdmin": "Admin assigned to resolve (optional)",
+          "resolution": "Resolution details (if resolved)"
+        }
+      },
+      {
+        "name": "FlaggedContent",
+        "description": "Content flagged for moderation review",
+        "fields": {
+          "id": "Unique flag identifier",
+          "type": "Content type (review, profile, message, photo)",
+          "content": "Original content text or description",
+          "reporter": "User who reported the content",
+          "reportedUser": "User who created the content",
+          "reason": "Reason for flagging",
+          "status": "Moderation status",
+          "createdAt": "ISO timestamp when flagged",
+          "action": "Action taken (if resolved)"
+        }
+      },
+      {
+        "name": "PlatformAnalytics",
+        "description": "Platform-wide analytics with time series data",
+        "fields": {
+          "userGrowth": "Time series of user registration",
+          "bookingTrends": "Time series of booking activity",
+          "revenueData": "Time series of revenue metrics",
+          "topCategories": "Top booking categories by volume",
+          "geographicalDistribution": "Users and bookings by location"
+        }
+      },
+      {
+        "name": "SystemHealth",
+        "description": "Overall system health and performance metrics",
+        "fields": {
+          "status": "Overall health status (healthy, degraded, down)",
+          "uptime": "Uptime percentage",
+          "errorRate": "Error rate percentage",
+          "averageResponseTime": "Average API response time in ms",
+          "activeUsers": "Current active users",
+          "peakConcurrentUsers": "Peak concurrent users (last 24h)"
+        }
+      }
+    ]
+  },
+  "currentAdmin": {
+    "id": "admin_1",
+    "name": "Alex Rivera",
+    "email": "alex.rivera@showcore.com",
+    "role": "super_admin",
+    "permissions": [
+      "manage_users",
+      "suspend_users",
+      "verify_credentials",
+      "resolve_disputes",
+      "moderate_content",
+      "view_analytics",
+      "manage_platform_settings",
+      "manage_admins",
+      "process_refunds",
+      "view_audit_logs",
+      "export_data"
+    ],
+    "lastLogin": "2024-12-20T10:30:00Z",
+    "avatar": "https://i.pravatar.cc/150?img=60",
+    "createdAt": "2023-01-15T09:00:00Z"
+  },
+  "sampleAdmins": [
+    {
+      "id": "admin_1",
+      "name": "Alex Rivera",
+      "email": "alex.rivera@showcore.com",
+      "role": "super_admin",
+      "permissions": [
+        "manage_users",
+        "suspend_users",
+        "verify_credentials",
+        "resolve_disputes",
+        "moderate_content",
+        "view_analytics",
+        "manage_platform_settings",
+        "manage_admins",
+        "process_refunds",
+        "view_audit_logs",
+        "export_data"
+      ],
+      "lastLogin": "2024-12-20T10:30:00Z",
+      "avatar": "https://i.pravatar.cc/150?img=60",
+      "createdAt": "2023-01-15T09:00:00Z"
+    },
+    {
+      "id": "admin_2",
+      "name": "Jordan Lee",
+      "email": "jordan.lee@showcore.com",
+      "role": "support_admin",
+      "permissions": [
+        "manage_users",
+        "suspend_users",
+        "verify_credentials",
+        "resolve_disputes",
+        "process_refunds",
+        "view_analytics"
+      ],
+      "lastLogin": "2024-12-20T14:15:00Z",
+      "avatar": "https://i.pravatar.cc/150?img=32",
+      "createdAt": "2023-03-10T10:30:00Z"
+    },
+    {
+      "id": "admin_3",
+      "name": "Taylor Morgan",
+      "email": "taylor.morgan@showcore.com",
+      "role": "content_moderator",
+      "permissions": [
+        "moderate_content",
+        "view_analytics"
+      ],
+      "lastLogin": "2024-12-19T16:45:00Z",
+      "avatar": "https://i.pravatar.cc/150?img=45",
+      "createdAt": "2023-06-20T11:00:00Z"
+    },
+    {
+      "id": "admin_4",
+      "name": "Sam Chen",
+      "email": "sam.chen@showcore.com",
+      "role": "analytics_viewer",
+      "permissions": [
+        "view_analytics",
+        "export_data"
+      ],
+      "lastLogin": "2024-12-18T09:20:00Z",
+      "avatar": "https://i.pravatar.cc/150?img=15",
+      "createdAt": "2023-09-05T14:30:00Z"
+    }
+  ],
+  "dashboardMetrics": {
+    "totalUsers": 8547,
+    "totalTechnicians": 5823,
+    "totalCompanies": 2724,
+    "activeBookings": 156,
+    "completedBookingsThisMonth": 1842,
+    "revenue": {
+      "thisMonth": 284750,
+      "lastMonth": 261380,
+      "percentChange": 8.9
+    },
+    "disputes": {
+      "open": 12,
+      "resolved": 8,
+      "averageResolutionTime": "2.5 days"
+    },
+    "flaggedContent": {
+      "pending": 7,
+      "resolvedToday": 3
+    },
+    "userGrowth": {
+      "newUsersToday": 23,
+      "newUsersThisWeek": 167,
+      "newUsersThisMonth": 689
+    }
+  },
+  "dashboardAlerts": [
+    {
+      "id": "alert_1",
+      "type": "dispute",
+      "severity": "critical",
+      "message": "High-value dispute ($5,200) requires immediate attention",
+      "timestamp": "2024-12-20T09:15:00Z",
+      "actionRequired": true,
+      "relatedEntityId": "dispute_3",
+      "relatedEntityType": "dispute"
+    },
+    {
+      "id": "alert_2",
+      "type": "payment_issue",
+      "severity": "warning",
+      "message": "3 failed payout attempts in the last hour",
+      "timestamp": "2024-12-20T10:45:00Z",
+      "actionRequired": true,
+      "relatedEntityType": "user"
+    },
+    {
+      "id": "alert_3",
+      "type": "flagged_content",
+      "severity": "warning",
+      "message": "Review flagged by multiple users for offensive language",
+      "timestamp": "2024-12-20T08:30:00Z",
+      "actionRequired": true,
+      "relatedEntityId": "flag_2",
+      "relatedEntityType": "content"
+    },
+    {
+      "id": "alert_4",
+      "type": "security",
+      "severity": "critical",
+      "message": "Multiple failed login attempts detected for user tech_892",
+      "timestamp": "2024-12-20T11:20:00Z",
+      "actionRequired": true,
+      "relatedEntityId": "tech_892",
+      "relatedEntityType": "user"
+    },
+    {
+      "id": "alert_5",
+      "type": "user_report",
+      "severity": "warning",
+      "message": "User reported for suspicious booking patterns",
+      "timestamp": "2024-12-19T22:10:00Z",
+      "actionRequired": true,
+      "relatedEntityId": "company_451",
+      "relatedEntityType": "user"
+    },
+    {
+      "id": "alert_6",
+      "type": "system_error",
+      "severity": "warning",
+      "message": "Payment gateway response time above threshold",
+      "timestamp": "2024-12-20T07:00:00Z",
+      "actionRequired": false
+    },
+    {
+      "id": "alert_7",
+      "type": "dispute",
+      "severity": "warning",
+      "message": "Dispute awaiting company response for 48+ hours",
+      "timestamp": "2024-12-19T14:30:00Z",
+      "actionRequired": true,
+      "relatedEntityId": "dispute_5",
+      "relatedEntityType": "dispute"
+    }
+  ],
+  "recentActivity": [
+    {
+      "id": "activity_1",
+      "type": "user_registered",
+      "description": "New company account registered: Apex Events Group",
+      "user": "Apex Events Group",
+      "timestamp": "2024-12-20T11:15:00Z"
+    },
+    {
+      "id": "activity_2",
+      "type": "booking_completed",
+      "description": "Booking #BK-78945 completed successfully",
+      "timestamp": "2024-12-20T10:45:00Z"
+    },
+    {
+      "id": "activity_3",
+      "type": "credential_verified",
+      "description": "Verified Dante Level 3 certification for Marcus Williams",
+      "user": "Marcus Williams",
+      "timestamp": "2024-12-20T10:20:00Z"
+    },
+    {
+      "id": "activity_4",
+      "type": "dispute_opened",
+      "description": "New payment dispute opened for booking #BK-78830",
+      "timestamp": "2024-12-20T09:55:00Z"
+    },
+    {
+      "id": "activity_5",
+      "type": "user_suspended",
+      "description": "User account suspended: Jennifer Clark (policy violation)",
+      "user": "Jennifer Clark",
+      "timestamp": "2024-12-20T09:30:00Z"
+    },
+    {
+      "id": "activity_6",
+      "type": "content_flagged",
+      "description": "Review flagged for inappropriate content",
+      "timestamp": "2024-12-20T08:45:00Z"
+    },
+    {
+      "id": "activity_7",
+      "type": "refund_processed",
+      "description": "Refund of $850 processed for booking #BK-78720",
+      "timestamp": "2024-12-20T08:15:00Z"
+    },
+    {
+      "id": "activity_8",
+      "type": "user_registered",
+      "description": "New technician registered: David Park (Los Angeles, CA)",
+      "user": "David Park",
+      "timestamp": "2024-12-20T07:30:00Z"
+    },
+    {
+      "id": "activity_9",
+      "type": "booking_completed",
+      "description": "Booking #BK-78941 completed successfully",
+      "timestamp": "2024-12-20T06:20:00Z"
+    },
+    {
+      "id": "activity_10",
+      "type": "credential_verified",
+      "description": "Verified general liability insurance for Audio Solutions Inc",
+      "user": "Audio Solutions Inc",
+      "timestamp": "2024-12-19T18:45:00Z"
+    }
+  ],
+  "sampleTechnicians": [
+    {
+      "id": "tech_1",
+      "name": "Marcus Williams",
+      "email": "marcus.w@example.com",
+      "phone": "+1 (323) 555-0198",
+      "role": "technician",
+      "accountStatus": "active",
+      "verificationStatus": {
+        "emailVerified": true,
+        "phoneVerified": true,
+        "credentialsVerified": true,
+        "insuranceVerified": true
+      },
+      "profilePhoto": "https://i.pravatar.cc/150?img=12",
+      "location": "Los Angeles, CA",
+      "joinDate": "2023-04-15T10:30:00Z",
+      "lastActive": "2024-12-20T09:45:00Z",
+      "totalBookings": 287,
+      "completionRate": 98.2,
+      "cancellationRate": 1.8,
+      "averageRating": 4.9,
+      "totalReviews": 156,
+      "flagCount": 0,
+      "totalEarnings": 142850,
+      "pendingPayouts": 3200,
+      "tier": "Pro",
+      "suspensionHistory": [],
+      "adminNotes": [
+        {
+          "id": "note_1",
+          "content": "Consistently high ratings and professionalism. Verified all credentials successfully.",
+          "createdBy": "Jordan Lee",
+          "createdAt": "2024-10-15T14:20:00Z",
+          "category": "positive"
+        }
+      ]
+    },
+    {
+      "id": "tech_2",
+      "name": "Jennifer Clark",
+      "email": "jclark.audio@example.com",
+      "phone": "+1 (512) 555-0142",
+      "role": "technician",
+      "accountStatus": "suspended",
+      "verificationStatus": {
+        "emailVerified": true,
+        "phoneVerified": true,
+        "credentialsVerified": true,
+        "insuranceVerified": false
+      },
+      "profilePhoto": "https://i.pravatar.cc/150?img=47",
+      "location": "Austin, TX",
+      "joinDate": "2024-02-08T11:00:00Z",
+      "lastActive": "2024-12-18T16:30:00Z",
+      "totalBookings": 42,
+      "completionRate": 88.1,
+      "cancellationRate": 11.9,
+      "averageRating": 3.8,
+      "totalReviews": 28,
+      "flagCount": 3,
+      "totalEarnings": 18950,
+      "pendingPayouts": 0,
+      "tier": "Experienced",
+      "suspensionHistory": [
+        {
+          "id": "susp_1",
+          "reason": "Multiple cancellations within policy violation threshold",
+          "duration": "14 days",
+          "startDate": "2024-12-20T09:30:00Z",
+          "endDate": "2025-01-03T09:30:00Z",
+          "adminId": "admin_2",
+          "adminName": "Jordan Lee",
+          "notes": "Final warning issued. Insurance verification expired and not renewed."
+        }
+      ],
+      "adminNotes": [
+        {
+          "id": "note_2",
+          "content": "Multiple last-minute cancellations reported. Monitor closely after suspension.",
+          "createdBy": "Jordan Lee",
+          "createdAt": "2024-12-20T09:35:00Z",
+          "category": "warning"
+        }
+      ]
+    },
+    {
+      "id": "tech_3",
+      "name": "David Park",
+      "email": "david.park.av@example.com",
+      "role": "technician",
+      "accountStatus": "pending_verification",
+      "verificationStatus": {
+        "emailVerified": true,
+        "phoneVerified": false,
+        "credentialsVerified": false,
+        "insuranceVerified": false
+      },
+      "profilePhoto": "https://i.pravatar.cc/150?img=33",
+      "location": "Los Angeles, CA",
+      "joinDate": "2024-12-20T07:30:00Z",
+      "lastActive": "2024-12-20T10:15:00Z",
+      "totalBookings": 0,
+      "completionRate": 0,
+      "cancellationRate": 0,
+      "averageRating": 0,
+      "totalReviews": 0,
+      "flagCount": 0,
+      "totalEarnings": 0,
+      "pendingPayouts": 0,
+      "tier": "Beginner",
+      "suspensionHistory": [],
+      "adminNotes": []
+    },
+    {
+      "id": "tech_4",
+      "name": "Rachel Kim",
+      "email": "rachel.kim@example.com",
+      "phone": "+1 (646) 555-0176",
+      "role": "technician",
+      "accountStatus": "active",
+      "verificationStatus": {
+        "emailVerified": true,
+        "phoneVerified": true,
+        "credentialsVerified": true,
+        "insuranceVerified": true
+      },
+      "profilePhoto": "https://i.pravatar.cc/150?img=45",
+      "location": "New York, NY",
+      "joinDate": "2023-08-22T09:15:00Z",
+      "lastActive": "2024-12-19T22:30:00Z",
+      "totalBookings": 134,
+      "completionRate": 96.3,
+      "cancellationRate": 3.7,
+      "averageRating": 4.7,
+      "totalReviews": 89,
+      "flagCount": 1,
+      "totalEarnings": 98450,
+      "pendingPayouts": 5200,
+      "tier": "Advanced",
+      "suspensionHistory": [],
+      "adminNotes": []
+    },
+    {
+      "id": "tech_5",
+      "name": "Carlos Rodriguez",
+      "email": "carlos.r.av@example.com",
+      "phone": "+1 (305) 555-0123",
+      "role": "technician",
+      "accountStatus": "active",
+      "verificationStatus": {
+        "emailVerified": true,
+        "phoneVerified": true,
+        "credentialsVerified": true,
+        "insuranceVerified": true
+      },
+      "profilePhoto": "https://i.pravatar.cc/150?img=11",
+      "location": "Miami, FL",
+      "joinDate": "2023-11-10T13:45:00Z",
+      "lastActive": "2024-12-20T08:20:00Z",
+      "totalBookings": 78,
+      "completionRate": 94.9,
+      "cancellationRate": 5.1,
+      "averageRating": 4.6,
+      "totalReviews": 52,
+      "flagCount": 0,
+      "totalEarnings": 52300,
+      "pendingPayouts": 2100,
+      "tier": "Experienced",
+      "suspensionHistory": [],
+      "adminNotes": []
+    }
+  ],
+  "sampleCompanies": [
+    {
+      "id": "company_1",
+      "name": "Premier Productions LLC",
+      "email": "hiring@premierproductions.com",
+      "phone": "+1 (213) 555-0199",
+      "role": "company",
+      "accountStatus": "active",
+      "verificationStatus": {
+        "emailVerified": true,
+        "phoneVerified": true,
+        "credentialsVerified": true,
+        "insuranceVerified": true
+      },
+      "profilePhoto": "https://ui-avatars.com/api/?name=Premier+Productions&background=6366f1&color=fff",
+      "location": "Los Angeles, CA",
+      "joinDate": "2023-03-20T10:00:00Z",
+      "lastActive": "2024-12-20T11:30:00Z",
+      "totalBookings": 412,
+      "completionRate": 97.8,
+      "cancellationRate": 2.2,
+      "averageRating": 4.8,
+      "totalReviews": 198,
+      "flagCount": 0,
+      "totalSpent": 328450,
+      "subscriptionTier": "Enterprise",
+      "suspensionHistory": [],
+      "adminNotes": []
+    },
+    {
+      "id": "company_2",
+      "name": "Stellar Events Group",
+      "email": "tech@stellar-events.com",
+      "phone": "+1 (702) 555-0145",
+      "role": "company",
+      "accountStatus": "active",
+      "verificationStatus": {
+        "emailVerified": true,
+        "phoneVerified": true,
+        "credentialsVerified": true,
+        "insuranceVerified": true
+      },
+      "profilePhoto": "https://ui-avatars.com/api/?name=Stellar+Events&background=8b5cf6&color=fff",
+      "location": "Las Vegas, NV",
+      "joinDate": "2023-07-15T14:30:00Z",
+      "lastActive": "2024-12-20T09:15:00Z",
+      "totalBookings": 189,
+      "completionRate": 95.2,
+      "cancellationRate": 4.8,
+      "averageRating": 4.5,
+      "totalReviews": 102,
+      "flagCount": 1,
+      "totalSpent": 156780,
+      "subscriptionTier": "Pro",
+      "suspensionHistory": [],
+      "adminNotes": [
+        {
+          "id": "note_3",
+          "content": "One dispute resolved in company's favor. Payment processed promptly.",
+          "createdBy": "Jordan Lee",
+          "createdAt": "2024-09-12T16:45:00Z",
+          "category": "general"
+        }
+      ]
+    },
+    {
+      "id": "company_3",
+      "name": "AudioTech Solutions",
+      "email": "contact@audiotech-sol.com",
+      "role": "company",
+      "accountStatus": "pending_verification",
+      "verificationStatus": {
+        "emailVerified": true,
+        "phoneVerified": false,
+        "credentialsVerified": false,
+        "insuranceVerified": false
+      },
+      "profilePhoto": "https://ui-avatars.com/api/?name=AudioTech+Solutions&background=ec4899&color=fff",
+      "location": "Nashville, TN",
+      "joinDate": "2024-12-18T15:20:00Z",
+      "lastActive": "2024-12-19T10:30:00Z",
+      "totalBookings": 0,
+      "completionRate": 0,
+      "cancellationRate": 0,
+      "averageRating": 0,
+      "totalReviews": 0,
+      "flagCount": 0,
+      "totalSpent": 0,
+      "subscriptionTier": "Free",
+      "suspensionHistory": [],
+      "adminNotes": []
+    },
+    {
+      "id": "company_4",
+      "name": "Summit Conference Services",
+      "email": "bookings@summitconference.com",
+      "phone": "+1 (415) 555-0187",
+      "role": "company",
+      "accountStatus": "active",
+      "verificationStatus": {
+        "emailVerified": true,
+        "phoneVerified": true,
+        "credentialsVerified": true,
+        "insuranceVerified": true
+      },
+      "profilePhoto": "https://ui-avatars.com/api/?name=Summit+Conference&background=10b981&color=fff",
+      "location": "San Francisco, CA",
+      "joinDate": "2023-05-08T11:45:00Z",
+      "lastActive": "2024-12-19T17:20:00Z",
+      "totalBookings": 256,
+      "completionRate": 98.4,
+      "cancellationRate": 1.6,
+      "averageRating": 4.9,
+      "totalReviews": 145,
+      "flagCount": 0,
+      "totalSpent": 242190,
+      "subscriptionTier": "Pro",
+      "suspensionHistory": [],
+      "adminNotes": []
+    },
+    {
+      "id": "company_5",
+      "name": "UrbanSound Venues",
+      "email": "ops@urbansound.com",
+      "phone": "+1 (312) 555-0165",
+      "role": "company",
+      "accountStatus": "suspended",
+      "verificationStatus": {
+        "emailVerified": true,
+        "phoneVerified": true,
+        "credentialsVerified": true,
+        "insuranceVerified": true
+      },
+      "profilePhoto": "https://ui-avatars.com/api/?name=UrbanSound+Venues&background=f59e0b&color=fff",
+      "location": "Chicago, IL",
+      "joinDate": "2024-01-25T09:30:00Z",
+      "lastActive": "2024-12-10T14:15:00Z",
+      "totalBookings": 67,
+      "completionRate": 82.1,
+      "cancellationRate": 17.9,
+      "averageRating": 3.4,
+      "totalReviews": 41,
+      "flagCount": 5,
+      "totalSpent": 42380,
+      "subscriptionTier": "Basic",
+      "suspensionHistory": [
+        {
+          "id": "susp_2",
+          "reason": "Multiple payment disputes and late payments to technicians",
+          "duration": "30 days",
+          "startDate": "2024-12-12T10:00:00Z",
+          "endDate": "2025-01-11T10:00:00Z",
+          "adminId": "admin_2",
+          "adminName": "Jordan Lee",
+          "notes": "Must resolve outstanding payment issues before reactivation. 3 disputes currently unresolved."
+        }
+      ],
+      "adminNotes": [
+        {
+          "id": "note_4",
+          "content": "Pattern of late payments identified. Multiple technicians complained about delayed compensation.",
+          "createdBy": "Jordan Lee",
+          "createdAt": "2024-12-10T15:30:00Z",
+          "category": "warning"
+        },
+        {
+          "id": "note_5",
+          "content": "Under investigation for potential policy violations. Monitoring all future bookings.",
+          "createdBy": "Jordan Lee",
+          "createdAt": "2024-12-12T10:15:00Z",
+          "category": "investigation"
+        }
+      ]
+    }
+  ],
+  "sampleDisputes": [
+    {
+      "id": "dispute_1",
+      "bookingId": "BK-78825",
+      "type": "payment_issue",
+      "status": "resolved",
+      "parties": {
+        "technician": {
+          "id": "tech_1",
+          "name": "Marcus Williams",
+          "email": "marcus.w@example.com"
+        },
+        "company": {
+          "id": "company_2",
+          "name": "Stellar Events Group",
+          "email": "tech@stellar-events.com"
+        }
+      },
+      "description": "Technician claims company added 3 hours of overtime work that was not included in the final payment. Company disputes the overtime hours were pre-approved.",
+      "evidence": [
+        {
+          "type": "message",
+          "description": "Original booking agreement showing 8-hour shift",
+          "uploadedBy": "technician",
+          "uploadedAt": "2024-12-10T10:15:00Z"
+        },
+        {
+          "type": "message",
+          "description": "Text message conversation about extending the event",
+          "uploadedBy": "technician",
+          "uploadedAt": "2024-12-10T10:20:00Z"
+        },
+        {
+          "type": "booking_details",
+          "description": "Event timeline showing 11-hour actual duration",
+          "uploadedBy": "admin",
+          "uploadedAt": "2024-12-10T14:30:00Z"
+        }
+      ],
+      "messages": [
+        {
+          "id": "msg_1",
+          "sender": "technician",
+          "senderName": "Marcus Williams",
+          "content": "The event ran 3 hours over the agreed time. I stayed for the full duration and handled breakdown. The text messages show the production manager asking me to stay.",
+          "timestamp": "2024-12-10T10:15:00Z",
+          "attachments": []
+        },
+        {
+          "id": "msg_2",
+          "sender": "company",
+          "senderName": "Stellar Events Group",
+          "content": "While the event did run longer, overtime was not pre-approved as per our booking terms. The technician should have confirmed overtime rates before agreeing to stay.",
+          "timestamp": "2024-12-10T15:45:00Z",
+          "attachments": []
+        },
+        {
+          "id": "msg_3",
+          "sender": "admin",
+          "senderName": "Jordan Lee (Admin)",
+          "content": "I've reviewed the evidence. The text messages show a clear request from the production manager to extend work. While pre-approval is ideal, the company representative did request the additional work. I'm ruling in favor of the technician for 3 hours overtime at 1.5x rate.",
+          "timestamp": "2024-12-12T11:30:00Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2024-12-10T10:00:00Z",
+      "lastUpdatedAt": "2024-12-12T11:30:00Z",
+      "assignedAdmin": "Jordan Lee",
+      "resolution": {
+        "outcome": "technician_favor",
+        "refundAmount": 0,
+        "penaltyAmount": 337.50,
+        "appliedTo": "company",
+        "reasoning": "Text messages confirm company representative requested additional hours. Technician completed the work in good faith. Company must pay 3 hours overtime at 1.5x rate ($75 x 1.5 x 3 = $337.50).",
+        "resolvedBy": "admin_2",
+        "resolvedAt": "2024-12-12T11:30:00Z"
+      }
+    },
+    {
+      "id": "dispute_2",
+      "bookingId": "BK-78756",
+      "type": "no_show",
+      "status": "resolved",
+      "parties": {
+        "technician": {
+          "id": "tech_4",
+          "name": "Rachel Kim",
+          "email": "rachel.kim@example.com"
+        },
+        "company": {
+          "id": "company_4",
+          "name": "Summit Conference Services",
+          "email": "bookings@summitconference.com"
+        }
+      },
+      "description": "Company claims technician was a no-show for a corporate event. Technician claims she arrived on time but venue information was incorrect.",
+      "evidence": [
+        {
+          "type": "booking_details",
+          "description": "Original booking with venue address: 1234 Market St, Suite 500",
+          "uploadedBy": "admin",
+          "uploadedAt": "2024-12-08T14:00:00Z"
+        },
+        {
+          "type": "photo",
+          "url": "https://example.com/evidence/location-screenshot.jpg",
+          "description": "Screenshot of technician at 1234 Market St at event time",
+          "uploadedBy": "technician",
+          "uploadedAt": "2024-12-08T10:30:00Z"
+        },
+        {
+          "type": "message",
+          "description": "Text messages between technician and venue security",
+          "uploadedBy": "technician",
+          "uploadedAt": "2024-12-08T10:35:00Z"
+        }
+      ],
+      "messages": [
+        {
+          "id": "msg_4",
+          "sender": "company",
+          "senderName": "Summit Conference Services",
+          "content": "Our technician never showed up for the event. We had to scramble to find a replacement. The event was at Suite 800, not Suite 500.",
+          "timestamp": "2024-12-08T09:45:00Z",
+          "attachments": []
+        },
+        {
+          "id": "msg_5",
+          "sender": "technician",
+          "senderName": "Rachel Kim",
+          "content": "I arrived at the address in the booking details (Suite 500) 15 minutes early. Building security couldn't find the event. I tried calling the contact number but no answer. The booking clearly said Suite 500.",
+          "timestamp": "2024-12-08T10:30:00Z",
+          "attachments": ["location-screenshot.jpg"]
+        },
+        {
+          "id": "msg_6",
+          "sender": "admin",
+          "senderName": "Jordan Lee (Admin)",
+          "content": "The booking details confirm Suite 500 was listed. The company updated the venue to Suite 800 internally but never updated the booking. This is a company error. No fault to technician. Full cancellation fee waived for both parties.",
+          "timestamp": "2024-12-09T10:00:00Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2024-12-08T09:30:00Z",
+      "lastUpdatedAt": "2024-12-09T10:00:00Z",
+      "assignedAdmin": "Jordan Lee",
+      "resolution": {
+        "outcome": "no_fault",
+        "refundAmount": 0,
+        "penaltyAmount": 0,
+        "reasoning": "Incorrect venue information in booking. Company's internal miscommunication. Technician made good faith effort to fulfill booking. No penalties applied to either party.",
+        "resolvedBy": "admin_2",
+        "resolvedAt": "2024-12-09T10:00:00Z"
+      }
+    },
+    {
+      "id": "dispute_3",
+      "bookingId": "BK-78912",
+      "type": "quality_complaint",
+      "status": "under_review",
+      "parties": {
+        "technician": {
+          "id": "tech_892",
+          "name": "Steven Martinez",
+          "email": "steven.m@example.com"
+        },
+        "company": {
+          "id": "company_156",
+          "name": "Grand Theater Productions",
+          "email": "production@grandtheater.com"
+        }
+      },
+      "description": "Company claims technician's audio mix was substandard, causing feedback issues during live performance. Seeking full refund of $5,200. Technician claims venue equipment was faulty and was not disclosed in booking.",
+      "evidence": [
+        {
+          "type": "document",
+          "url": "https://example.com/evidence/booking-agreement.pdf",
+          "description": "Original booking agreement and equipment rider",
+          "uploadedBy": "admin",
+          "uploadedAt": "2024-12-15T11:00:00Z"
+        },
+        {
+          "type": "photo",
+          "url": "https://example.com/evidence/console-photo.jpg",
+          "description": "Photo of faulty mixing console with visible damage",
+          "uploadedBy": "technician",
+          "uploadedAt": "2024-12-15T08:45:00Z"
+        },
+        {
+          "type": "message",
+          "description": "Email thread between technician and venue technical director",
+          "uploadedBy": "technician",
+          "uploadedAt": "2024-12-15T09:00:00Z"
+        }
+      ],
+      "messages": [
+        {
+          "id": "msg_7",
+          "sender": "company",
+          "senderName": "Grand Theater Productions",
+          "content": "The audio quality was unacceptable. Multiple feedback incidents disrupted the performance. We hired an experienced A1 and this should not have happened. We're requesting a full refund.",
+          "timestamp": "2024-12-15T08:30:00Z",
+          "attachments": []
+        },
+        {
+          "id": "msg_8",
+          "sender": "technician",
+          "senderName": "Steven Martinez",
+          "content": "The venue's console had malfunctioning preamps on channels 8-12, which was not disclosed. I did the best I could with faulty equipment. I documented the issues and informed the technical director during setup. The equipment rider specified a working DiGiCo SD10, but what was provided was not functioning properly.",
+          "timestamp": "2024-12-15T08:45:00Z",
+          "attachments": ["console-photo.jpg", "email-thread.pdf"]
+        },
+        {
+          "id": "msg_9",
+          "sender": "admin",
+          "senderName": "Alex Rivera (Admin)",
+          "content": "This is a high-value dispute that requires careful review. I'm requesting additional documentation from both parties. Company: please provide any pre-event equipment checks. Technician: please provide detailed notes from sound check and any communication with venue staff.",
+          "timestamp": "2024-12-15T14:20:00Z",
+          "attachments": [],
+          "isInternal": false
+        },
+        {
+          "id": "msg_10",
+          "sender": "admin",
+          "senderName": "Alex Rivera (Admin)",
+          "content": "Internal note: This may require third-party equipment inspection. Technician has strong documentation. Need to verify if equipment issues were disclosed pre-event.",
+          "timestamp": "2024-12-15T14:25:00Z",
+          "attachments": [],
+          "isInternal": true
+        }
+      ],
+      "createdAt": "2024-12-15T08:00:00Z",
+      "lastUpdatedAt": "2024-12-15T14:25:00Z",
+      "assignedAdmin": "Alex Rivera"
+    },
+    {
+      "id": "dispute_4",
+      "bookingId": "BK-78650",
+      "type": "equipment_damage",
+      "status": "resolved",
+      "parties": {
+        "technician": {
+          "id": "tech_5",
+          "name": "Carlos Rodriguez",
+          "email": "carlos.r.av@example.com"
+        },
+        "company": {
+          "id": "company_78",
+          "name": "Beachside Events",
+          "email": "events@beachside.com"
+        }
+      },
+      "description": "Company claims technician damaged a wireless microphone receiver ($850 value). Technician claims damage existed before the event.",
+      "evidence": [
+        {
+          "type": "photo",
+          "url": "https://example.com/evidence/damaged-receiver.jpg",
+          "description": "Photo of damaged microphone receiver",
+          "uploadedBy": "company",
+          "uploadedAt": "2024-11-28T16:30:00Z"
+        },
+        {
+          "type": "document",
+          "url": "https://example.com/evidence/pre-event-checklist.pdf",
+          "description": "Pre-event equipment checklist signed by both parties",
+          "uploadedBy": "admin",
+          "uploadedAt": "2024-11-29T10:00:00Z"
+        }
+      ],
+      "messages": [
+        {
+          "id": "msg_11",
+          "sender": "company",
+          "senderName": "Beachside Events",
+          "content": "The wireless receiver was damaged during the event. It was working fine before. We need $850 for replacement.",
+          "timestamp": "2024-11-28T16:30:00Z",
+          "attachments": ["damaged-receiver.jpg"]
+        },
+        {
+          "id": "msg_12",
+          "sender": "technician",
+          "senderName": "Carlos Rodriguez",
+          "content": "I noted the cracked display on the pre-event checklist. The company representative signed acknowledging existing damage. I have a copy of the signed form.",
+          "timestamp": "2024-11-28T18:15:00Z",
+          "attachments": ["checklist-photo.jpg"]
+        },
+        {
+          "id": "msg_13",
+          "sender": "admin",
+          "senderName": "Jordan Lee (Admin)",
+          "content": "The pre-event checklist clearly shows the damage was noted and acknowledged before the event. Dispute resolved in technician's favor. No liability.",
+          "timestamp": "2024-11-29T11:00:00Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2024-11-28T16:00:00Z",
+      "lastUpdatedAt": "2024-11-29T11:00:00Z",
+      "assignedAdmin": "Jordan Lee",
+      "resolution": {
+        "outcome": "technician_favor",
+        "refundAmount": 0,
+        "penaltyAmount": 0,
+        "reasoning": "Pre-event documentation confirms damage existed before the event and was acknowledged by company representative. No fault to technician.",
+        "resolvedBy": "admin_2",
+        "resolvedAt": "2024-11-29T11:00:00Z"
+      }
+    },
+    {
+      "id": "dispute_5",
+      "bookingId": "BK-78701",
+      "type": "cancellation_fee",
+      "status": "awaiting_response",
+      "parties": {
+        "technician": {
+          "id": "tech_234",
+          "name": "Lisa Anderson",
+          "email": "lisa.a@example.com"
+        },
+        "company": {
+          "id": "company_1",
+          "name": "Premier Productions LLC",
+          "email": "hiring@premierproductions.com"
+        }
+      },
+      "description": "Company cancelled booking 36 hours before event (within 48-hour cancellation policy). Technician requesting 50% cancellation fee. Company claims cancellation was due to venue closure (force majeure).",
+      "evidence": [
+        {
+          "type": "document",
+          "url": "https://example.com/evidence/venue-closure-notice.pdf",
+          "description": "Official venue closure notice due to water main break",
+          "uploadedBy": "company",
+          "uploadedAt": "2024-12-18T14:00:00Z"
+        },
+        {
+          "type": "booking_details",
+          "description": "Booking agreement with cancellation policy",
+          "uploadedBy": "admin",
+          "uploadedAt": "2024-12-18T15:00:00Z"
+        }
+      ],
+      "messages": [
+        {
+          "id": "msg_14",
+          "sender": "technician",
+          "senderName": "Lisa Anderson",
+          "content": "I declined other opportunities for this date. The cancellation was within 48 hours, so I'm requesting the 50% cancellation fee as per platform policy.",
+          "timestamp": "2024-12-18T10:30:00Z",
+          "attachments": []
+        },
+        {
+          "id": "msg_15",
+          "sender": "company",
+          "senderName": "Premier Productions LLC",
+          "content": "The venue had a water main break and was forced to close. This is a force majeure situation beyond our control. We're willing to rebook for a future date but shouldn't be penalized for circumstances outside our control.",
+          "timestamp": "2024-12-18T14:00:00Z",
+          "attachments": ["venue-closure-notice.pdf"]
+        },
+        {
+          "id": "msg_16",
+          "sender": "admin",
+          "senderName": "Jordan Lee (Admin)",
+          "content": "Company, can you provide documentation that you attempted to secure an alternate venue? And timeline of when you were notified by the venue? This will help determine if force majeure applies.",
+          "timestamp": "2024-12-19T10:00:00Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2024-12-18T10:00:00Z",
+      "lastUpdatedAt": "2024-12-19T10:00:00Z",
+      "assignedAdmin": "Jordan Lee"
+    }
+  ],
+  "flaggedContent": [
+    {
+      "id": "flag_1",
+      "type": "review",
+      "content": "Worst technician ever. Complete waste of money. Don't hire this person unless you want your event ruined.",
+      "reporter": {
+        "id": "company_89",
+        "name": "Metro Events Co",
+        "email": "contact@metroevents.com"
+      },
+      "reportedUser": {
+        "id": "tech_1",
+        "name": "Marcus Williams",
+        "email": "marcus.w@example.com",
+        "role": "technician"
+      },
+      "reason": "False and defamatory review",
+      "additionalDetails": "This review is from a booking that was cancelled by the company 2 hours before the event. I never actually worked this event. This appears to be retaliation.",
+      "status": "resolved",
+      "createdAt": "2024-12-10T14:30:00Z",
+      "reviewedAt": "2024-12-11T10:00:00Z",
+      "reviewedBy": "Taylor Morgan",
+      "action": "remove",
+      "actionNotes": "Review removed. Verified that booking was cancelled by company before event occurred. Technician never provided services. Warning issued to company for false review."
+    },
+    {
+      "id": "flag_2",
+      "type": "review",
+      "content": "This company is a bunch of [offensive language]. They don't pay on time and treat people like [offensive language].",
+      "reporter": {
+        "id": "auto_system",
+        "name": "Auto Moderation System",
+        "email": "system@showcore.com"
+      },
+      "reportedUser": {
+        "id": "company_5",
+        "name": "UrbanSound Venues",
+        "email": "ops@urbansound.com",
+        "role": "company"
+      },
+      "reason": "Offensive language and profanity",
+      "additionalDetails": "Automatically flagged for profanity and offensive language",
+      "status": "under_review",
+      "createdAt": "2024-12-20T08:30:00Z",
+      "reviewedBy": "Taylor Morgan"
+    },
+    {
+      "id": "flag_3",
+      "type": "profile",
+      "content": "Professional audio engineer with 15+ years experience. Worked with Beyoncé, Taylor Swift, and Coldplay world tours.",
+      "reporter": {
+        "id": "company_112",
+        "name": "Verified Productions",
+        "email": "info@verifiedprod.com"
+      },
+      "reportedUser": {
+        "id": "tech_567",
+        "name": "John Smith",
+        "email": "jsmith@example.com",
+        "role": "technician"
+      },
+      "reason": "False credentials and experience claims",
+      "additionalDetails": "We know the touring crews for these artists. This person has never worked with them. False advertising.",
+      "status": "resolved",
+      "createdAt": "2024-12-05T16:20:00Z",
+      "reviewedAt": "2024-12-06T11:30:00Z",
+      "reviewedBy": "Taylor Morgan",
+      "action": "edit_content",
+      "actionNotes": "Contacted user to verify claims. Unable to provide evidence. Bio edited to remove false claims. User warned about accuracy in profile."
+    },
+    {
+      "id": "flag_4",
+      "type": "photo",
+      "contentUrl": "https://example.com/profiles/inappropriate-photo.jpg",
+      "content": "Profile photo appears to be inappropriate/not professional",
+      "reporter": {
+        "id": "tech_234",
+        "name": "Lisa Anderson",
+        "email": "lisa.a@example.com"
+      },
+      "reportedUser": {
+        "id": "tech_678",
+        "name": "Mike Johnson",
+        "email": "mjohnson@example.com",
+        "role": "technician"
+      },
+      "reason": "Inappropriate profile photo",
+      "additionalDetails": "Photo appears to show the user at a party, not professional attire or setting.",
+      "status": "dismissed",
+      "createdAt": "2024-11-28T09:15:00Z",
+      "reviewedAt": "2024-11-28T14:00:00Z",
+      "reviewedBy": "Taylor Morgan",
+      "action": "approve",
+      "actionNotes": "Photo reviewed. While casual, it does not violate community guidelines. Photo shows user at a legitimate industry event. Not inappropriate."
+    },
+    {
+      "id": "flag_5",
+      "type": "message",
+      "content": "Hey, let's take this conversation off the platform. Here's my personal cell: [phone number]. We can work out a better rate if we skip the platform fees.",
+      "reporter": {
+        "id": "auto_system",
+        "name": "Auto Moderation System",
+        "email": "system@showcore.com"
+      },
+      "reportedUser": {
+        "id": "tech_445",
+        "name": "Brian Lee",
+        "email": "blee@example.com",
+        "role": "technician"
+      },
+      "reason": "Attempting to circumvent platform (off-platform transaction)",
+      "additionalDetails": "Automated detection of off-platform solicitation",
+      "status": "pending",
+      "createdAt": "2024-12-19T15:45:00Z"
+    }
+  ],
+  "platformAnalytics": {
+    "userGrowth": {
+      "technicians": [
+        { "date": "2024-11-20", "value": 5156 },
+        { "date": "2024-11-21", "value": 5167 },
+        { "date": "2024-11-22", "value": 5178 },
+        { "date": "2024-11-23", "value": 5189 },
+        { "date": "2024-11-24", "value": 5201 },
+        { "date": "2024-11-25", "value": 5215 },
+        { "date": "2024-11-26", "value": 5228 },
+        { "date": "2024-11-27", "value": 5245 },
+        { "date": "2024-11-28", "value": 5258 },
+        { "date": "2024-11-29", "value": 5272 },
+        { "date": "2024-11-30", "value": 5289 },
+        { "date": "2024-12-01", "value": 5305 },
+        { "date": "2024-12-02", "value": 5321 },
+        { "date": "2024-12-03", "value": 5338 },
+        { "date": "2024-12-04", "value": 5356 },
+        { "date": "2024-12-05", "value": 5374 },
+        { "date": "2024-12-06", "value": 5392 },
+        { "date": "2024-12-07", "value": 5411 },
+        { "date": "2024-12-08", "value": 5429 },
+        { "date": "2024-12-09", "value": 5448 },
+        { "date": "2024-12-10", "value": 5469 },
+        { "date": "2024-12-11", "value": 5489 },
+        { "date": "2024-12-12", "value": 5512 },
+        { "date": "2024-12-13", "value": 5534 },
+        { "date": "2024-12-14", "value": 5558 },
+        { "date": "2024-12-15", "value": 5582 },
+        { "date": "2024-12-16", "value": 5607 },
+        { "date": "2024-12-17", "value": 5634 },
+        { "date": "2024-12-18", "value": 5662 },
+        { "date": "2024-12-19", "value": 5691 },
+        { "date": "2024-12-20", "value": 5823 }
+      ],
+      "companies": [
+        { "date": "2024-11-20", "value": 2557 },
+        { "date": "2024-11-21", "value": 2563 },
+        { "date": "2024-11-22", "value": 2568 },
+        { "date": "2024-11-23", "value": 2574 },
+        { "date": "2024-11-24", "value": 2580 },
+        { "date": "2024-11-25", "value": 2586 },
+        { "date": "2024-11-26", "value": 2593 },
+        { "date": "2024-11-27", "value": 2599 },
+        { "date": "2024-11-28", "value": 2606 },
+        { "date": "2024-11-29", "value": 2613 },
+        { "date": "2024-11-30", "value": 2620 },
+        { "date": "2024-12-01", "value": 2627 },
+        { "date": "2024-12-02", "value": 2634 },
+        { "date": "2024-12-03", "value": 2641 },
+        { "date": "2024-12-04", "value": 2649 },
+        { "date": "2024-12-05", "value": 2656 },
+        { "date": "2024-12-06", "value": 2664 },
+        { "date": "2024-12-07", "value": 2672 },
+        { "date": "2024-12-08", "value": 2680 },
+        { "date": "2024-12-09", "value": 2688 },
+        { "date": "2024-12-10", "value": 2696 },
+        { "date": "2024-12-11", "value": 2705 },
+        { "date": "2024-12-12", "value": 2714 },
+        { "date": "2024-12-13", "value": 2723 },
+        { "date": "2024-12-14", "value": 2732 },
+        { "date": "2024-12-15", "value": 2742 },
+        { "date": "2024-12-16", "value": 2752 },
+        { "date": "2024-12-17", "value": 2762 },
+        { "date": "2024-12-18", "value": 2773 },
+        { "date": "2024-12-19", "value": 2784 },
+        { "date": "2024-12-20", "value": 2724 }
+      ],
+      "total": [
+        { "date": "2024-11-20", "value": 7713 },
+        { "date": "2024-11-21", "value": 7730 },
+        { "date": "2024-11-22", "value": 7746 },
+        { "date": "2024-11-23", "value": 7763 },
+        { "date": "2024-11-24", "value": 7781 },
+        { "date": "2024-11-25", "value": 7801 },
+        { "date": "2024-11-26", "value": 7821 },
+        { "date": "2024-11-27", "value": 7844 },
+        { "date": "2024-11-28", "value": 7864 },
+        { "date": "2024-11-29", "value": 7885 },
+        { "date": "2024-11-30", "value": 7909 },
+        { "date": "2024-12-01", "value": 7932 },
+        { "date": "2024-12-02", "value": 7955 },
+        { "date": "2024-12-03", "value": 7979 },
+        { "date": "2024-12-04", "value": 8005 },
+        { "date": "2024-12-05", "value": 8030 },
+        { "date": "2024-12-06", "value": 8056 },
+        { "date": "2024-12-07", "value": 8083 },
+        { "date": "2024-12-08", "value": 8109 },
+        { "date": "2024-12-09", "value": 8136 },
+        { "date": "2024-12-10", "value": 8165 },
+        { "date": "2024-12-11", "value": 8194 },
+        { "date": "2024-12-12", "value": 8226 },
+        { "date": "2024-12-13", "value": 8257 },
+        { "date": "2024-12-14", "value": 8290 },
+        { "date": "2024-12-15", "value": 8324 },
+        { "date": "2024-12-16", "value": 8359 },
+        { "date": "2024-12-17", "value": 8396 },
+        { "date": "2024-12-18", "value": 8435 },
+        { "date": "2024-12-19", "value": 8475 },
+        { "date": "2024-12-20", "value": 8547 }
+      ]
+    },
+    "bookingTrends": {
+      "totalBookings": [
+        { "date": "2024-11-20", "value": 52 },
+        { "date": "2024-11-21", "value": 48 },
+        { "date": "2024-11-22", "value": 67 },
+        { "date": "2024-11-23", "value": 71 },
+        { "date": "2024-11-24", "value": 45 },
+        { "date": "2024-11-25", "value": 38 },
+        { "date": "2024-11-26", "value": 42 },
+        { "date": "2024-11-27", "value": 55 },
+        { "date": "2024-11-28", "value": 61 },
+        { "date": "2024-11-29", "value": 78 },
+        { "date": "2024-11-30", "value": 84 },
+        { "date": "2024-12-01", "value": 49 },
+        { "date": "2024-12-02", "value": 44 },
+        { "date": "2024-12-03", "value": 51 },
+        { "date": "2024-12-04", "value": 58 },
+        { "date": "2024-12-05", "value": 64 },
+        { "date": "2024-12-06", "value": 82 },
+        { "date": "2024-12-07", "value": 89 },
+        { "date": "2024-12-08", "value": 53 },
+        { "date": "2024-12-09", "value": 47 },
+        { "date": "2024-12-10", "value": 56 },
+        { "date": "2024-12-11", "value": 62 },
+        { "date": "2024-12-12", "value": 69 },
+        { "date": "2024-12-13", "value": 91 },
+        { "date": "2024-12-14", "value": 97 },
+        { "date": "2024-12-15", "value": 58 },
+        { "date": "2024-12-16", "value": 52 },
+        { "date": "2024-12-17", "value": 61 },
+        { "date": "2024-12-18", "value": 68 },
+        { "date": "2024-12-19", "value": 74 },
+        { "date": "2024-12-20", "value": 95 }
+      ],
+      "completedBookings": [
+        { "date": "2024-11-20", "value": 51 },
+        { "date": "2024-11-21", "value": 46 },
+        { "date": "2024-11-22", "value": 64 },
+        { "date": "2024-11-23", "value": 68 },
+        { "date": "2024-11-24", "value": 43 },
+        { "date": "2024-11-25", "value": 36 },
+        { "date": "2024-11-26", "value": 40 },
+        { "date": "2024-11-27", "value": 53 },
+        { "date": "2024-11-28", "value": 59 },
+        { "date": "2024-11-29", "value": 75 },
+        { "date": "2024-11-30", "value": 81 },
+        { "date": "2024-12-01", "value": 47 },
+        { "date": "2024-12-02", "value": 42 },
+        { "date": "2024-12-03", "value": 49 },
+        { "date": "2024-12-04", "value": 56 },
+        { "date": "2024-12-05", "value": 62 },
+        { "date": "2024-12-06", "value": 79 },
+        { "date": "2024-12-07", "value": 86 },
+        { "date": "2024-12-08", "value": 51 },
+        { "date": "2024-12-09", "value": 45 },
+        { "date": "2024-12-10", "value": 54 },
+        { "date": "2024-12-11", "value": 60 },
+        { "date": "2024-12-12", "value": 67 },
+        { "date": "2024-12-13", "value": 88 },
+        { "date": "2024-12-14", "value": 94 },
+        { "date": "2024-12-15", "value": 56 },
+        { "date": "2024-12-16", "value": 50 },
+        { "date": "2024-12-17", "value": 59 },
+        { "date": "2024-12-18", "value": 66 },
+        { "date": "2024-12-19", "value": 72 },
+        { "date": "2024-12-20", "value": 92 }
+      ],
+      "cancelledBookings": [
+        { "date": "2024-11-20", "value": 1 },
+        { "date": "2024-11-21", "value": 2 },
+        { "date": "2024-11-22", "value": 3 },
+        { "date": "2024-11-23", "value": 3 },
+        { "date": "2024-11-24", "value": 2 },
+        { "date": "2024-11-25", "value": 2 },
+        { "date": "2024-11-26", "value": 2 },
+        { "date": "2024-11-27", "value": 2 },
+        { "date": "2024-11-28", "value": 2 },
+        { "date": "2024-11-29", "value": 3 },
+        { "date": "2024-11-30", "value": 3 },
+        { "date": "2024-12-01", "value": 2 },
+        { "date": "2024-12-02", "value": 2 },
+        { "date": "2024-12-03", "value": 2 },
+        { "date": "2024-12-04", "value": 2 },
+        { "date": "2024-12-05", "value": 2 },
+        { "date": "2024-12-06", "value": 3 },
+        { "date": "2024-12-07", "value": 3 },
+        { "date": "2024-12-08", "value": 2 },
+        { "date": "2024-12-09", "value": 2 },
+        { "date": "2024-12-10", "value": 2 },
+        { "date": "2024-12-11", "value": 2 },
+        { "date": "2024-12-12", "value": 2 },
+        { "date": "2024-12-13", "value": 3 },
+        { "date": "2024-12-14", "value": 3 },
+        { "date": "2024-12-15", "value": 2 },
+        { "date": "2024-12-16", "value": 2 },
+        { "date": "2024-12-17", "value": 2 },
+        { "date": "2024-12-18", "value": 2 },
+        { "date": "2024-12-19", "value": 2 },
+        { "date": "2024-12-20", "value": 3 }
+      ],
+      "averageBookingValue": [
+        { "date": "2024-11-20", "value": 1247 },
+        { "date": "2024-11-21", "value": 1289 },
+        { "date": "2024-11-22", "value": 1356 },
+        { "date": "2024-11-23", "value": 1412 },
+        { "date": "2024-11-24", "value": 1385 },
+        { "date": "2024-11-25", "value": 1298 },
+        { "date": "2024-11-26", "value": 1276 },
+        { "date": "2024-11-27", "value": 1334 },
+        { "date": "2024-11-28", "value": 1398 },
+        { "date": "2024-11-29", "value": 1456 },
+        { "date": "2024-11-30", "value": 1523 },
+        { "date": "2024-12-01", "value": 1478 },
+        { "date": "2024-12-02", "value": 1421 },
+        { "date": "2024-12-03", "value": 1389 },
+        { "date": "2024-12-04", "value": 1445 },
+        { "date": "2024-12-05", "value": 1501 },
+        { "date": "2024-12-06", "value": 1589 },
+        { "date": "2024-12-07", "value": 1634 },
+        { "date": "2024-12-08", "value": 1567 },
+        { "date": "2024-12-09", "value": 1512 },
+        { "date": "2024-12-10", "value": 1478 },
+        { "date": "2024-12-11", "value": 1523 },
+        { "date": "2024-12-12", "value": 1578 },
+        { "date": "2024-12-13", "value": 1689 },
+        { "date": "2024-12-14", "value": 1745 },
+        { "date": "2024-12-15", "value": 1678 },
+        { "date": "2024-12-16", "value": 1623 },
+        { "date": "2024-12-17", "value": 1589 },
+        { "date": "2024-12-18", "value": 1634 },
+        { "date": "2024-12-19", "value": 1701 },
+        { "date": "2024-12-20", "value": 1812 }
+      ]
+    },
+    "revenueData": {
+      "gmv": [
+        { "date": "2024-11-20", "value": 64844 },
+        { "date": "2024-11-21", "value": 61872 },
+        { "date": "2024-11-22", "value": 90852 },
+        { "date": "2024-11-23", "value": 100252 },
+        { "date": "2024-11-24", "value": 62325 },
+        { "date": "2024-11-25", "value": 49324 },
+        { "date": "2024-11-26", "value": 53592 },
+        { "date": "2024-11-27", "value": 73370 },
+        { "date": "2024-11-28", "value": 85278 },
+        { "date": "2024-11-29", "value": 113568 },
+        { "date": "2024-11-30", "value": 127932 },
+        { "date": "2024-12-01", "value": 72422 },
+        { "date": "2024-12-02", "value": 62524 },
+        { "date": "2024-12-03", "value": 70839 },
+        { "date": "2024-12-04", "value": 83810 },
+        { "date": "2024-12-05", "value": 96064 },
+        { "date": "2024-12-06", "value": 130298 },
+        { "date": "2024-12-07", "value": 145426 },
+        { "date": "2024-12-08", "value": 83051 },
+        { "date": "2024-12-09", "value": 71064 },
+        { "date": "2024-12-10", "value": 82772 },
+        { "date": "2024-12-11", "value": 94426 },
+        { "date": "2024-12-12", "value": 108882 },
+        { "date": "2024-12-13", "value": 153699 },
+        { "date": "2024-12-14", "value": 169165 },
+        { "date": "2024-12-15", "value": 97324 },
+        { "date": "2024-12-16", "value": 84396 },
+        { "date": "2024-12-17", "value": 96929 },
+        { "date": "2024-12-18", "value": 111112 },
+        { "date": "2024-12-19", "value": 125874 },
+        { "date": "2024-12-20", "value": 172140 }
+      ],
+      "platformFees": [
+        { "date": "2024-11-20", "value": 6484 },
+        { "date": "2024-11-21", "value": 6187 },
+        { "date": "2024-11-22", "value": 9085 },
+        { "date": "2024-11-23", "value": 10025 },
+        { "date": "2024-11-24", "value": 6233 },
+        { "date": "2024-11-25", "value": 4932 },
+        { "date": "2024-11-26", "value": 5359 },
+        { "date": "2024-11-27", "value": 7337 },
+        { "date": "2024-11-28", "value": 8528 },
+        { "date": "2024-11-29", "value": 11357 },
+        { "date": "2024-11-30", "value": 12793 },
+        { "date": "2024-12-01", "value": 7242 },
+        { "date": "2024-12-02", "value": 6252 },
+        { "date": "2024-12-03", "value": 7084 },
+        { "date": "2024-12-04", "value": 8381 },
+        { "date": "2024-12-05", "value": 9606 },
+        { "date": "2024-12-06", "value": 13030 },
+        { "date": "2024-12-07", "value": 14543 },
+        { "date": "2024-12-08", "value": 8305 },
+        { "date": "2024-12-09", "value": 7106 },
+        { "date": "2024-12-10", "value": 8277 },
+        { "date": "2024-12-11", "value": 9443 },
+        { "date": "2024-12-12", "value": 10888 },
+        { "date": "2024-12-13", "value": 15370 },
+        { "date": "2024-12-14", "value": 16917 },
+        { "date": "2024-12-15", "value": 9732 },
+        { "date": "2024-12-16", "value": 8440 },
+        { "date": "2024-12-17", "value": 9693 },
+        { "date": "2024-12-18", "value": 11111 },
+        { "date": "2024-12-19", "value": 12587 },
+        { "date": "2024-12-20", "value": 17214 }
+      ],
+      "payoutVolume": [
+        { "date": "2024-11-20", "value": 58360 },
+        { "date": "2024-11-21", "value": 55685 },
+        { "date": "2024-11-22", "value": 81767 },
+        { "date": "2024-11-23", "value": 90227 },
+        { "date": "2024-11-24", "value": 56093 },
+        { "date": "2024-11-25", "value": 44392 },
+        { "date": "2024-11-26", "value": 48233 },
+        { "date": "2024-11-27", "value": 66033 },
+        { "date": "2024-11-28", "value": 76750 },
+        { "date": "2024-11-29", "value": 102211 },
+        { "date": "2024-11-30", "value": 115139 },
+        { "date": "2024-12-01", "value": 65180 },
+        { "date": "2024-12-02", "value": 56272 },
+        { "date": "2024-12-03", "value": 63755 },
+        { "date": "2024-12-04", "value": 75429 },
+        { "date": "2024-12-05", "value": 86458 },
+        { "date": "2024-12-06", "value": 117268 },
+        { "date": "2024-12-07", "value": 130883 },
+        { "date": "2024-12-08", "value": 74746 },
+        { "date": "2024-12-09", "value": 63958 },
+        { "date": "2024-12-10", "value": 74495 },
+        { "date": "2024-12-11", "value": 84983 },
+        { "date": "2024-12-12", "value": 97994 },
+        { "date": "2024-12-13", "value": 138329 },
+        { "date": "2024-12-14", "value": 152248 },
+        { "date": "2024-12-15", "value": 87592 },
+        { "date": "2024-12-16", "value": 75956 },
+        { "date": "2024-12-17", "value": 87236 },
+        { "date": "2024-12-18", "value": 100001 },
+        { "date": "2024-12-19", "value": 113287 },
+        { "date": "2024-12-20", "value": 154926 }
+      ]
+    },
+    "topCategories": [
+      {
+        "category": "Live Sound Engineering",
+        "bookingCount": 542,
+        "revenue": 856340
+      },
+      {
+        "category": "Lighting Design",
+        "bookingCount": 387,
+        "revenue": 623450
+      },
+      {
+        "category": "Video Production",
+        "bookingCount": 298,
+        "revenue": 512890
+      },
+      {
+        "category": "Stage Management",
+        "bookingCount": 245,
+        "revenue": 378950
+      },
+      {
+        "category": "RF Coordination",
+        "bookingCount": 189,
+        "revenue": 312670
+      }
+    ],
+    "geographicalDistribution": [
+      {
+        "location": "Los Angeles, CA",
+        "userCount": 1247,
+        "bookingCount": 2356
+      },
+      {
+        "location": "New York, NY",
+        "userCount": 1089,
+        "bookingCount": 2134
+      },
+      {
+        "location": "Nashville, TN",
+        "userCount": 687,
+        "bookingCount": 1289
+      },
+      {
+        "location": "Las Vegas, NV",
+        "userCount": 542,
+        "bookingCount": 1456
+      },
+      {
+        "location": "Chicago, IL",
+        "userCount": 498,
+        "bookingCount": 876
+      },
+      {
+        "location": "Austin, TX",
+        "userCount": 456,
+        "bookingCount": 823
+      },
+      {
+        "location": "Miami, FL",
+        "userCount": 389,
+        "bookingCount": 734
+      },
+      {
+        "location": "San Francisco, CA",
+        "userCount": 367,
+        "bookingCount": 656
+      }
+    ],
+    "engagementMetrics": {
+      "messagesSent": 15847,
+      "profileViews": 45623,
+      "searchQueries": 28934,
+      "reviewSubmissions": 892
+    }
+  },
+  "systemHealth": {
+    "status": "healthy",
+    "uptime": "99.97%",
+    "uptimeDays": 127,
+    "errorRate": 0.08,
+    "averageResponseTime": 142,
+    "activeUsers": 1247,
+    "peakConcurrentUsers": 3456,
+    "lastIncident": "2024-11-15T03:22:00Z"
+  },
+  "systemAlerts": [
+    {
+      "id": "sys_alert_1",
+      "severity": "warning",
+      "component": "payment_processor",
+      "message": "Payment gateway response time above threshold (avg 850ms)",
+      "timestamp": "2024-12-20T07:00:00Z",
+      "resolved": false
+    },
+    {
+      "id": "sys_alert_2",
+      "severity": "info",
+      "component": "database",
+      "message": "Database connection pool utilization at 78%",
+      "timestamp": "2024-12-20T06:30:00Z",
+      "resolved": true,
+      "resolvedAt": "2024-12-20T07:15:00Z"
+    }
+  ],
+  "performanceMetrics": [
+    {
+      "name": "API Response Time",
+      "value": 142,
+      "unit": "ms",
+      "status": "good",
+      "threshold": 200
+    },
+    {
+      "name": "Database Query Time",
+      "value": 45,
+      "unit": "ms",
+      "status": "good",
+      "threshold": 100
+    },
+    {
+      "name": "Error Rate",
+      "value": 0.08,
+      "unit": "%",
+      "status": "good",
+      "threshold": 1
+    },
+    {
+      "name": "CPU Utilization",
+      "value": 52,
+      "unit": "%",
+      "status": "good",
+      "threshold": 80
+    },
+    {
+      "name": "Memory Usage",
+      "value": 68,
+      "unit": "%",
+      "status": "good",
+      "threshold": 85
+    },
+    {
+      "name": "Disk I/O",
+      "value": 34,
+      "unit": "%",
+      "status": "good",
+      "threshold": 75
+    }
+  ],
+  "integrations": [
+    {
+      "name": "Stripe (Payment Processing)",
+      "status": "healthy",
+      "lastChecked": "2024-12-20T11:45:00Z",
+      "uptime": "99.99%",
+      "responseTime": 245,
+      "errorCount": 0
+    },
+    {
+      "name": "SendGrid (Email Service)",
+      "status": "healthy",
+      "lastChecked": "2024-12-20T11:45:00Z",
+      "uptime": "99.95%",
+      "responseTime": 156,
+      "errorCount": 2
+    },
+    {
+      "name": "Twilio (SMS Service)",
+      "status": "healthy",
+      "lastChecked": "2024-12-20T11:45:00Z",
+      "uptime": "99.98%",
+      "responseTime": 189,
+      "errorCount": 0
+    },
+    {
+      "name": "AWS S3 (Storage)",
+      "status": "healthy",
+      "lastChecked": "2024-12-20T11:45:00Z",
+      "uptime": "100%",
+      "responseTime": 78,
+      "errorCount": 0
+    },
+    {
+      "name": "Cloudflare (CDN)",
+      "status": "healthy",
+      "lastChecked": "2024-12-20T11:45:00Z",
+      "uptime": "100%",
+      "responseTime": 23,
+      "errorCount": 0
+    }
+  ],
+  "adminNavigation": [
+    {
+      "id": "dashboard",
+      "label": "Dashboard",
+      "icon": "layout-dashboard",
+      "path": "/admin/dashboard",
+      "requiredPermissions": []
+    },
+    {
+      "id": "users",
+      "label": "Users",
+      "icon": "users",
+      "path": "/admin/users",
+      "requiredPermissions": ["manage_users"],
+      "badgeCount": 3
+    },
+    {
+      "id": "disputes",
+      "label": "Disputes",
+      "icon": "scale",
+      "path": "/admin/disputes",
+      "requiredPermissions": ["resolve_disputes"],
+      "badgeCount": 12
+    },
+    {
+      "id": "moderation",
+      "label": "Moderation",
+      "icon": "shield-alert",
+      "path": "/admin/moderation",
+      "requiredPermissions": ["moderate_content"],
+      "badgeCount": 7
+    },
+    {
+      "id": "analytics",
+      "label": "Analytics",
+      "icon": "chart-bar",
+      "path": "/admin/analytics",
+      "requiredPermissions": ["view_analytics"]
+    },
+    {
+      "id": "system-health",
+      "label": "System Health",
+      "icon": "activity",
+      "path": "/admin/system-health",
+      "requiredPermissions": ["view_analytics"]
+    },
+    {
+      "id": "settings",
+      "label": "Platform Settings",
+      "icon": "settings",
+      "path": "/admin/settings",
+      "requiredPermissions": ["manage_platform_settings"]
+    },
+    {
+      "id": "admin-management",
+      "label": "Admin Management",
+      "icon": "shield-check",
+      "path": "/admin/admin-management",
+      "requiredPermissions": ["manage_admins"]
+    }
+  ],
+  "quickActions": [
+    {
+      "id": "suspend-user",
+      "label": "Suspend User",
+      "icon": "user-x",
+      "action": "suspend_user",
+      "requiredPermissions": ["suspend_users"]
+    },
+    {
+      "id": "verify-credentials",
+      "label": "Verify Credentials",
+      "icon": "badge-check",
+      "action": "verify_credentials",
+      "requiredPermissions": ["verify_credentials"]
+    },
+    {
+      "id": "process-refund",
+      "label": "Process Refund",
+      "icon": "receipt-refund",
+      "action": "process_refund",
+      "requiredPermissions": ["process_refunds"]
+    },
+    {
+      "id": "export-data",
+      "label": "Export Data",
+      "icon": "download",
+      "action": "export_data",
+      "requiredPermissions": ["export_data"]
+    }
+  ]
+}

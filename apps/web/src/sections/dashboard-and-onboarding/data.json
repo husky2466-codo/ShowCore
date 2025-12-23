@@ -1,0 +1,1051 @@
+{
+  "_meta": {
+    "description": "Sample data for the Dashboard section including onboarding progress, stats, activity feed, and AI suggestions",
+    "models": [
+      {
+        "name": "OnboardingProgress",
+        "description": "Tracks user's onboarding completion status with tasks grouped by category",
+        "fields": {
+          "totalTasks": "Total number of onboarding tasks",
+          "completedTasks": "Number of completed tasks",
+          "requiredCompleted": "Number of required tasks completed",
+          "requiredTotal": "Total number of required tasks",
+          "percentComplete": "Completion percentage (0-100)",
+          "canDismiss": "Whether checklist can be dismissed",
+          "isDismissed": "Whether user has dismissed the checklist",
+          "tasks": "Array of OnboardingTask items"
+        }
+      },
+      {
+        "name": "OnboardingTask",
+        "description": "Individual onboarding task with status and action details",
+        "fields": {
+          "id": "Unique task identifier",
+          "category": "Task category (profile/trust/payment/engagement)",
+          "title": "Task title",
+          "description": "Task description",
+          "icon": "Icon identifier",
+          "status": "Task status (pending/in-progress/completed/skipped)",
+          "xpReward": "XP reward for technicians (optional)",
+          "isRequired": "Whether task is required",
+          "actionLabel": "Button label",
+          "actionUrl": "Navigation URL",
+          "estimatedMinutes": "Estimated time to complete",
+          "order": "Display order"
+        }
+      },
+      {
+        "name": "DashboardStats",
+        "description": "Role-specific dashboard metrics and statistics",
+        "fields": {
+          "role": "User role (technician or company)",
+          "activeBookings": "Number of active bookings",
+          "unreadMessages": "Number of unread messages",
+          "currentTier": "Current tier (technicians only)",
+          "xp": "Current experience points (technicians only)",
+          "xpToNextTier": "XP needed for next tier (technicians only)",
+          "xpProgress": "XP progress percentage (technicians only)",
+          "pendingShowProofs": "Pending show proofs (technicians only)",
+          "pendingReviews": "Pending reviews (companies only)",
+          "techniciansHired": "Number of technicians hired (companies only)"
+        }
+      },
+      {
+        "name": "ActivityItem",
+        "description": "Individual activity feed item showing recent platform events",
+        "fields": {
+          "id": "Unique activity identifier",
+          "type": "Activity type (booking-request, message-received, etc.)",
+          "title": "Activity title",
+          "description": "Activity description",
+          "icon": "Icon identifier",
+          "iconColor": "Icon color (Tailwind class)",
+          "timestamp": "ISO datetime",
+          "relativeTime": "Human-readable time (e.g., '2 hours ago')",
+          "actionUrl": "Optional navigation URL",
+          "metadata": "Type-specific additional data"
+        }
+      },
+      {
+        "name": "AISuggestion",
+        "description": "AI-powered recommendation card with action",
+        "fields": {
+          "id": "Unique suggestion identifier",
+          "type": "Suggestion type",
+          "title": "Suggestion title",
+          "description": "Suggestion description",
+          "icon": "Icon identifier",
+          "priority": "Priority level (high/medium/low)",
+          "actionLabel": "Button label",
+          "actionUrl": "Navigation URL",
+          "dismissible": "Whether suggestion can be dismissed",
+          "estimatedImpact": "Expected impact description"
+        }
+      },
+      {
+        "name": "WelcomeBanner",
+        "description": "Personalized welcome banner data",
+        "fields": {
+          "greeting": "Time-based greeting",
+          "userName": "User's display name",
+          "userAvatar": "Avatar image URL",
+          "summaryMessage": "Summary status message",
+          "timeOfDay": "Time of day (morning/afternoon/evening)"
+        }
+      },
+      {
+        "name": "AIConversation",
+        "description": "AI Assistant conversation thread",
+        "fields": {
+          "id": "Unique conversation identifier",
+          "messages": "Array of AIMessage items",
+          "context": "Assistant context awareness data",
+          "createdAt": "ISO datetime when conversation started",
+          "lastMessageAt": "ISO datetime of last message"
+        }
+      },
+      {
+        "name": "AIMessage",
+        "description": "Individual message in AI conversation",
+        "fields": {
+          "id": "Unique message identifier",
+          "sender": "Message sender (user or assistant)",
+          "content": "Message text content",
+          "contentType": "Content type (text/action/suggestion)",
+          "timestamp": "ISO datetime",
+          "relativeTime": "Human-readable time",
+          "actions": "Optional suggested actions",
+          "isTyping": "Typing indicator flag"
+        }
+      }
+    ]
+  },
+  "technicianOnboardingProgress": {
+    "totalTasks": 11,
+    "completedTasks": 4,
+    "requiredCompleted": 2,
+    "requiredTotal": 6,
+    "percentComplete": 36,
+    "canDismiss": false,
+    "isDismissed": false,
+    "tasks": [
+      {
+        "id": "task_profile_1",
+        "category": "profile",
+        "title": "Complete your profile",
+        "description": "Add your bio, skills, and rate range to attract clients",
+        "icon": "user",
+        "status": "completed",
+        "xpReward": 50,
+        "isRequired": true,
+        "actionLabel": "Edit Profile",
+        "actionUrl": "/settings/profile",
+        "estimatedMinutes": 5,
+        "order": 1
+      },
+      {
+        "id": "task_profile_2",
+        "category": "profile",
+        "title": "Upload profile photo",
+        "description": "Add a professional photo to build trust",
+        "icon": "camera",
+        "status": "completed",
+        "xpReward": 25,
+        "isRequired": false,
+        "actionLabel": "Upload Photo",
+        "actionUrl": "/settings/profile",
+        "estimatedMinutes": 2,
+        "order": 2
+      },
+      {
+        "id": "task_profile_3",
+        "category": "profile",
+        "title": "Add portfolio links",
+        "description": "Link to your work samples and social profiles",
+        "icon": "link",
+        "status": "pending",
+        "xpReward": 25,
+        "isRequired": false,
+        "actionLabel": "Add Links",
+        "actionUrl": "/settings/profile",
+        "estimatedMinutes": 3,
+        "order": 3
+      },
+      {
+        "id": "task_trust_1",
+        "category": "trust",
+        "title": "Verify your skills",
+        "description": "Add certifications to showcase your expertise",
+        "icon": "badge-check",
+        "status": "pending",
+        "xpReward": 100,
+        "isRequired": true,
+        "actionLabel": "Add Certifications",
+        "actionUrl": "/settings/profile",
+        "estimatedMinutes": 10,
+        "order": 4
+      },
+      {
+        "id": "task_trust_2",
+        "category": "trust",
+        "title": "Upload insurance documents",
+        "description": "Verify your general liability insurance",
+        "icon": "shield",
+        "status": "pending",
+        "xpReward": 150,
+        "isRequired": true,
+        "actionLabel": "Upload Insurance",
+        "actionUrl": "/settings/profile",
+        "estimatedMinutes": 5,
+        "order": 5
+      },
+      {
+        "id": "task_trust_3",
+        "category": "trust",
+        "title": "Submit your first Show Proof",
+        "description": "Share evidence of past work to earn XP",
+        "icon": "image",
+        "status": "pending",
+        "xpReward": 200,
+        "isRequired": false,
+        "actionLabel": "Upload Show Proof",
+        "actionUrl": "/show-proof",
+        "estimatedMinutes": 15,
+        "order": 6
+      },
+      {
+        "id": "task_payment_1",
+        "category": "payment",
+        "title": "Set up payout method",
+        "description": "Add your bank account or PayPal to receive payments",
+        "icon": "credit-card",
+        "status": "completed",
+        "xpReward": 50,
+        "isRequired": true,
+        "actionLabel": "Add Payout Method",
+        "actionUrl": "/settings/payment",
+        "estimatedMinutes": 5,
+        "order": 7
+      },
+      {
+        "id": "task_payment_2",
+        "category": "payment",
+        "title": "Set your availability",
+        "description": "Configure your default working hours",
+        "icon": "calendar",
+        "status": "pending",
+        "xpReward": 25,
+        "isRequired": false,
+        "actionLabel": "Set Availability",
+        "actionUrl": "/settings/profile",
+        "estimatedMinutes": 5,
+        "order": 8
+      },
+      {
+        "id": "task_engagement_1",
+        "category": "engagement",
+        "title": "Browse open bookings",
+        "description": "Find and apply to your first job",
+        "icon": "search",
+        "status": "pending",
+        "xpReward": 50,
+        "isRequired": true,
+        "actionLabel": "Browse Jobs",
+        "actionUrl": "/discover",
+        "estimatedMinutes": 10,
+        "order": 9
+      },
+      {
+        "id": "task_engagement_2",
+        "category": "engagement",
+        "title": "Enable notifications",
+        "description": "Stay updated on booking requests and messages",
+        "icon": "bell",
+        "status": "completed",
+        "xpReward": 25,
+        "isRequired": false,
+        "actionLabel": "Notification Settings",
+        "actionUrl": "/settings/notifications",
+        "estimatedMinutes": 2,
+        "order": 10
+      },
+      {
+        "id": "task_engagement_3",
+        "category": "engagement",
+        "title": "Join the community",
+        "description": "Connect with other technicians and share tips",
+        "icon": "users",
+        "status": "pending",
+        "xpReward": 50,
+        "isRequired": false,
+        "actionLabel": "Explore Community",
+        "actionUrl": "/community",
+        "estimatedMinutes": 5,
+        "order": 11
+      }
+    ]
+  },
+  "companyOnboardingProgress": {
+    "totalTasks": 9,
+    "completedTasks": 3,
+    "requiredCompleted": 2,
+    "requiredTotal": 5,
+    "percentComplete": 33,
+    "canDismiss": false,
+    "isDismissed": false,
+    "tasks": [
+      {
+        "id": "task_profile_1",
+        "category": "profile",
+        "title": "Complete company profile",
+        "description": "Add your company details and hiring needs",
+        "icon": "building",
+        "status": "completed",
+        "isRequired": true,
+        "actionLabel": "Edit Profile",
+        "actionUrl": "/settings/profile",
+        "estimatedMinutes": 5,
+        "order": 1
+      },
+      {
+        "id": "task_profile_2",
+        "category": "profile",
+        "title": "Upload company logo",
+        "description": "Add your logo to build brand recognition",
+        "icon": "image",
+        "status": "completed",
+        "isRequired": false,
+        "actionLabel": "Upload Logo",
+        "actionUrl": "/settings/profile",
+        "estimatedMinutes": 2,
+        "order": 2
+      },
+      {
+        "id": "task_payment_1",
+        "category": "payment",
+        "title": "Add payment method",
+        "description": "Add a credit card for booking deposits",
+        "icon": "credit-card",
+        "status": "completed",
+        "isRequired": true,
+        "actionLabel": "Add Card",
+        "actionUrl": "/settings/billing",
+        "estimatedMinutes": 3,
+        "order": 3
+      },
+      {
+        "id": "task_payment_2",
+        "category": "payment",
+        "title": "Review subscription plans",
+        "description": "Choose the right plan for your hiring needs",
+        "icon": "star",
+        "status": "pending",
+        "isRequired": false,
+        "actionLabel": "View Plans",
+        "actionUrl": "/settings/billing",
+        "estimatedMinutes": 5,
+        "order": 4
+      },
+      {
+        "id": "task_trust_1",
+        "category": "trust",
+        "title": "Verify your business",
+        "description": "Add business documentation for increased trust",
+        "icon": "badge-check",
+        "status": "pending",
+        "isRequired": true,
+        "actionLabel": "Verify Business",
+        "actionUrl": "/settings/profile",
+        "estimatedMinutes": 10,
+        "order": 5
+      },
+      {
+        "id": "task_engagement_1",
+        "category": "engagement",
+        "title": "Post your first booking",
+        "description": "Create a job posting to find technicians",
+        "icon": "briefcase",
+        "status": "pending",
+        "isRequired": true,
+        "actionLabel": "Post Booking",
+        "actionUrl": "/bookings/new",
+        "estimatedMinutes": 10,
+        "order": 6
+      },
+      {
+        "id": "task_engagement_2",
+        "category": "engagement",
+        "title": "Search for technicians",
+        "description": "Browse profiles and build your shortlist",
+        "icon": "search",
+        "status": "pending",
+        "isRequired": false,
+        "actionLabel": "Search Technicians",
+        "actionUrl": "/discover",
+        "estimatedMinutes": 10,
+        "order": 7
+      },
+      {
+        "id": "task_engagement_3",
+        "category": "engagement",
+        "title": "Invite team members",
+        "description": "Add colleagues to help manage bookings",
+        "icon": "users",
+        "status": "pending",
+        "isRequired": true,
+        "actionLabel": "Invite Team",
+        "actionUrl": "/settings/team",
+        "estimatedMinutes": 5,
+        "order": 8
+      },
+      {
+        "id": "task_engagement_4",
+        "category": "engagement",
+        "title": "Enable notifications",
+        "description": "Get alerts for applications and messages",
+        "icon": "bell",
+        "status": "pending",
+        "isRequired": false,
+        "actionLabel": "Notification Settings",
+        "actionUrl": "/settings/notifications",
+        "estimatedMinutes": 2,
+        "order": 9
+      }
+    ]
+  },
+  "technicianStats": {
+    "role": "technician",
+    "currentTier": "Advanced",
+    "xp": 7250,
+    "xpToNextTier": 2750,
+    "xpProgress": 72.5,
+    "activeBookings": 3,
+    "pendingShowProofs": 2,
+    "unreadMessages": 5,
+    "totalEarnings": 12450,
+    "avgRating": 4.8,
+    "totalReviews": 24
+  },
+  "companyStats": {
+    "role": "company",
+    "subscriptionTier": "Pro",
+    "activeBookings": 5,
+    "pendingReviews": 2,
+    "unreadMessages": 8,
+    "techniciansHired": 15,
+    "totalSpent": 28750,
+    "avgRating": 4.9,
+    "totalReviews": 12
+  },
+  "technicianActivity": [
+    {
+      "id": "activity_1",
+      "type": "booking-confirmed",
+      "title": "Booking confirmed",
+      "description": "SoundStage Venues confirmed your booking for Dec 28",
+      "icon": "calendar-check",
+      "iconColor": "text-green-600",
+      "timestamp": "2024-12-20T14:30:00Z",
+      "relativeTime": "2 hours ago",
+      "actionUrl": "/bookings/booking_123",
+      "metadata": {
+        "bookingId": "booking_123",
+        "companyName": "SoundStage Venues",
+        "eventDate": "2024-12-28"
+      }
+    },
+    {
+      "id": "activity_2",
+      "type": "message-received",
+      "title": "New message",
+      "description": "Marcus from Live Nation asked about your equipment list",
+      "icon": "message-circle",
+      "iconColor": "text-blue-600",
+      "timestamp": "2024-12-20T13:15:00Z",
+      "relativeTime": "3 hours ago",
+      "actionUrl": "/messages/thread_456",
+      "metadata": {
+        "threadId": "thread_456",
+        "senderName": "Marcus Thompson",
+        "companyName": "Live Nation"
+      }
+    },
+    {
+      "id": "activity_3",
+      "type": "show-proof-approved",
+      "title": "Show Proof approved",
+      "description": "Your console file from Coachella 2024 earned +200 XP",
+      "icon": "badge-check",
+      "iconColor": "text-amber-600",
+      "timestamp": "2024-12-20T10:45:00Z",
+      "relativeTime": "6 hours ago",
+      "actionUrl": "/show-proof/proof_789",
+      "metadata": {
+        "proofId": "proof_789",
+        "xpEarned": 200,
+        "eventName": "Coachella 2024"
+      }
+    },
+    {
+      "id": "activity_4",
+      "type": "booking-request",
+      "title": "New booking request",
+      "description": "The Fillmore wants to book you for Jan 15-16",
+      "icon": "briefcase",
+      "iconColor": "text-purple-600",
+      "timestamp": "2024-12-19T16:20:00Z",
+      "relativeTime": "Yesterday",
+      "actionUrl": "/bookings/booking_234",
+      "metadata": {
+        "bookingId": "booking_234",
+        "companyName": "The Fillmore",
+        "eventDates": ["2024-01-15", "2024-01-16"]
+      }
+    },
+    {
+      "id": "activity_5",
+      "type": "payment-received",
+      "title": "Payment received",
+      "description": "$1,200 deposited to your account",
+      "icon": "dollar-sign",
+      "iconColor": "text-green-600",
+      "timestamp": "2024-12-19T11:00:00Z",
+      "relativeTime": "Yesterday",
+      "actionUrl": "/payments/payment_345",
+      "metadata": {
+        "paymentId": "payment_345",
+        "amount": 1200
+      }
+    },
+    {
+      "id": "activity_6",
+      "type": "review-received",
+      "title": "New review",
+      "description": "House of Blues left you a 5-star review",
+      "icon": "star",
+      "iconColor": "text-yellow-600",
+      "timestamp": "2024-12-18T14:30:00Z",
+      "relativeTime": "2 days ago",
+      "actionUrl": "/reviews/review_567",
+      "metadata": {
+        "reviewId": "review_567",
+        "companyName": "House of Blues",
+        "rating": 5
+      }
+    },
+    {
+      "id": "activity_7",
+      "type": "booking-completed",
+      "title": "Booking completed",
+      "description": "Marked Red Rocks Amphitheatre booking as complete",
+      "icon": "check-circle",
+      "iconColor": "text-green-600",
+      "timestamp": "2024-12-17T22:00:00Z",
+      "relativeTime": "3 days ago",
+      "actionUrl": "/bookings/booking_678",
+      "metadata": {
+        "bookingId": "booking_678",
+        "companyName": "Red Rocks Amphitheatre"
+      }
+    },
+    {
+      "id": "activity_8",
+      "type": "xp-earned",
+      "title": "XP earned",
+      "description": "Completed certification upload earned +150 XP",
+      "icon": "trending-up",
+      "iconColor": "text-amber-600",
+      "timestamp": "2024-12-16T09:15:00Z",
+      "relativeTime": "4 days ago",
+      "actionUrl": "/settings/profile",
+      "metadata": {
+        "xpEarned": 150,
+        "reason": "Certification upload"
+      }
+    },
+    {
+      "id": "activity_9",
+      "type": "message-received",
+      "title": "New message",
+      "description": "Jessica from AEG Presents sent you 2 new messages",
+      "icon": "message-circle",
+      "iconColor": "text-blue-600",
+      "timestamp": "2024-12-15T15:45:00Z",
+      "relativeTime": "5 days ago",
+      "actionUrl": "/messages/thread_890",
+      "metadata": {
+        "threadId": "thread_890",
+        "senderName": "Jessica Wong",
+        "companyName": "AEG Presents",
+        "messageCount": 2
+      }
+    },
+    {
+      "id": "activity_10",
+      "type": "application-accepted",
+      "title": "Application accepted",
+      "description": "Your application to Madison Square Garden was accepted",
+      "icon": "check",
+      "iconColor": "text-green-600",
+      "timestamp": "2024-12-14T13:20:00Z",
+      "relativeTime": "6 days ago",
+      "actionUrl": "/bookings/booking_901",
+      "metadata": {
+        "bookingId": "booking_901",
+        "companyName": "Madison Square Garden"
+      }
+    }
+  ],
+  "companyActivity": [
+    {
+      "id": "activity_1",
+      "type": "application-received",
+      "title": "New application",
+      "description": "Sarah Chen applied to your Feb 14 booking",
+      "icon": "user-plus",
+      "iconColor": "text-purple-600",
+      "timestamp": "2024-12-20T15:45:00Z",
+      "relativeTime": "1 hour ago",
+      "actionUrl": "/bookings/booking_201/applications",
+      "metadata": {
+        "bookingId": "booking_201",
+        "technicianName": "Sarah Chen",
+        "eventDate": "2024-02-14"
+      }
+    },
+    {
+      "id": "activity_2",
+      "type": "message-received",
+      "title": "New message",
+      "description": "Mike Davis sent equipment specifications",
+      "icon": "message-circle",
+      "iconColor": "text-blue-600",
+      "timestamp": "2024-12-20T14:20:00Z",
+      "relativeTime": "2 hours ago",
+      "actionUrl": "/messages/thread_301",
+      "metadata": {
+        "threadId": "thread_301",
+        "technicianName": "Mike Davis"
+      }
+    },
+    {
+      "id": "activity_3",
+      "type": "booking-completed",
+      "title": "Booking completed",
+      "description": "James Wilson completed your Dec 18 event",
+      "icon": "check-circle",
+      "iconColor": "text-green-600",
+      "timestamp": "2024-12-19T23:30:00Z",
+      "relativeTime": "Yesterday",
+      "actionUrl": "/bookings/booking_302",
+      "metadata": {
+        "bookingId": "booking_302",
+        "technicianName": "James Wilson",
+        "eventDate": "2024-12-18"
+      }
+    },
+    {
+      "id": "activity_4",
+      "type": "booking-confirmed",
+      "title": "Booking confirmed",
+      "description": "Rachel Kim accepted your booking for Jan 10",
+      "icon": "calendar-check",
+      "iconColor": "text-green-600",
+      "timestamp": "2024-12-19T11:15:00Z",
+      "relativeTime": "Yesterday",
+      "actionUrl": "/bookings/booking_303",
+      "metadata": {
+        "bookingId": "booking_303",
+        "technicianName": "Rachel Kim",
+        "eventDate": "2024-01-10"
+      }
+    },
+    {
+      "id": "activity_5",
+      "type": "review-received",
+      "title": "New review",
+      "description": "Alex Rivera left you a 5-star review",
+      "icon": "star",
+      "iconColor": "text-yellow-600",
+      "timestamp": "2024-12-18T16:40:00Z",
+      "relativeTime": "2 days ago",
+      "actionUrl": "/reviews/review_401",
+      "metadata": {
+        "reviewId": "review_401",
+        "technicianName": "Alex Rivera",
+        "rating": 5
+      }
+    },
+    {
+      "id": "activity_6",
+      "type": "payment-sent",
+      "title": "Payment processed",
+      "description": "$2,400 paid to Taylor Anderson",
+      "icon": "dollar-sign",
+      "iconColor": "text-blue-600",
+      "timestamp": "2024-12-18T10:00:00Z",
+      "relativeTime": "2 days ago",
+      "actionUrl": "/payments/payment_501",
+      "metadata": {
+        "paymentId": "payment_501",
+        "technicianName": "Taylor Anderson",
+        "amount": 2400
+      }
+    },
+    {
+      "id": "activity_7",
+      "type": "application-received",
+      "title": "New applications",
+      "description": "3 technicians applied to your Jan 20 booking",
+      "icon": "users",
+      "iconColor": "text-purple-600",
+      "timestamp": "2024-12-17T14:30:00Z",
+      "relativeTime": "3 days ago",
+      "actionUrl": "/bookings/booking_304/applications",
+      "metadata": {
+        "bookingId": "booking_304",
+        "applicationCount": 3,
+        "eventDate": "2024-01-20"
+      }
+    },
+    {
+      "id": "activity_8",
+      "type": "booking-confirmed",
+      "title": "Booking confirmed",
+      "description": "David Lee accepted your counter-offer for Feb 5",
+      "icon": "calendar-check",
+      "iconColor": "text-green-600",
+      "timestamp": "2024-12-16T09:20:00Z",
+      "relativeTime": "4 days ago",
+      "actionUrl": "/bookings/booking_305",
+      "metadata": {
+        "bookingId": "booking_305",
+        "technicianName": "David Lee",
+        "eventDate": "2024-02-05"
+      }
+    },
+    {
+      "id": "activity_9",
+      "type": "message-received",
+      "title": "New message",
+      "description": "Emma Thompson has questions about venue setup",
+      "icon": "message-circle",
+      "iconColor": "text-blue-600",
+      "timestamp": "2024-12-15T13:10:00Z",
+      "relativeTime": "5 days ago",
+      "actionUrl": "/messages/thread_601",
+      "metadata": {
+        "threadId": "thread_601",
+        "technicianName": "Emma Thompson"
+      }
+    },
+    {
+      "id": "activity_10",
+      "type": "booking-cancelled",
+      "title": "Booking cancelled",
+      "description": "Chris Martinez cancelled the Dec 22 booking",
+      "icon": "x-circle",
+      "iconColor": "text-red-600",
+      "timestamp": "2024-12-14T11:00:00Z",
+      "relativeTime": "6 days ago",
+      "actionUrl": "/bookings/booking_306",
+      "metadata": {
+        "bookingId": "booking_306",
+        "technicianName": "Chris Martinez",
+        "eventDate": "2024-12-22"
+      }
+    }
+  ],
+  "technicianAISuggestions": [
+    {
+      "id": "suggestion_1",
+      "type": "upload-show-proof",
+      "title": "Upload recent work",
+      "description": "Share photos or files from your last 3 bookings to earn up to 600 XP",
+      "icon": "image",
+      "priority": "high",
+      "actionLabel": "Upload Show Proof",
+      "actionUrl": "/show-proof/new",
+      "dismissible": true,
+      "estimatedImpact": "Earn 200-600 XP and boost profile visibility"
+    },
+    {
+      "id": "suggestion_2",
+      "type": "request-review",
+      "title": "Request reviews",
+      "description": "You have 2 completed bookings without reviews. Higher ratings increase booking rates by 40%",
+      "icon": "star",
+      "priority": "high",
+      "actionLabel": "Request Reviews",
+      "actionUrl": "/bookings?filter=completed",
+      "dismissible": true,
+      "estimatedImpact": "Increase booking rate by up to 40%"
+    },
+    {
+      "id": "suggestion_3",
+      "type": "verify-skill",
+      "title": "Add certifications",
+      "description": "Upload your Dante Level 3 and Meyer Sound certifications to stand out",
+      "icon": "badge-check",
+      "priority": "medium",
+      "actionLabel": "Add Certifications",
+      "actionUrl": "/settings/profile",
+      "dismissible": true,
+      "estimatedImpact": "Verified skills get 3x more views"
+    },
+    {
+      "id": "suggestion_4",
+      "type": "apply-to-booking",
+      "title": "Perfect match found",
+      "description": "3 open bookings match your skills and rate range in Los Angeles",
+      "icon": "briefcase",
+      "priority": "medium",
+      "actionLabel": "View Bookings",
+      "actionUrl": "/discover?filter=matches",
+      "dismissible": true,
+      "estimatedImpact": "High match score increases acceptance rate"
+    }
+  ],
+  "companyAISuggestions": [
+    {
+      "id": "suggestion_1",
+      "type": "post-booking",
+      "title": "Fill your Feb schedule",
+      "description": "You have 4 events in February without technicians assigned yet",
+      "icon": "calendar",
+      "priority": "high",
+      "actionLabel": "Post Bookings",
+      "actionUrl": "/bookings/new",
+      "dismissible": true,
+      "estimatedImpact": "Post early to get 60% more applications"
+    },
+    {
+      "id": "suggestion_2",
+      "type": "request-review",
+      "title": "Leave reviews",
+      "description": "2 recent bookings are waiting for your review. Reviews help technicians improve",
+      "icon": "star",
+      "priority": "high",
+      "actionLabel": "Write Reviews",
+      "actionUrl": "/bookings?filter=review-pending",
+      "dismissible": true,
+      "estimatedImpact": "Build relationships with top technicians"
+    },
+    {
+      "id": "suggestion_3",
+      "type": "upgrade-tier",
+      "title": "Upgrade to Enterprise",
+      "description": "Unlock priority support, bulk booking tools, and dedicated account manager",
+      "icon": "zap",
+      "priority": "medium",
+      "actionLabel": "View Plans",
+      "actionUrl": "/settings/billing",
+      "dismissible": true,
+      "estimatedImpact": "Save 20 hours/month on booking management"
+    },
+    {
+      "id": "suggestion_4",
+      "type": "respond-to-message",
+      "title": "Reply to applications",
+      "description": "3 qualified technicians are waiting for your response on the Jan 20 booking",
+      "icon": "message-circle",
+      "priority": "medium",
+      "actionLabel": "Review Applications",
+      "actionUrl": "/bookings/booking_304/applications",
+      "dismissible": true,
+      "estimatedImpact": "Fast responses improve acceptance rates"
+    }
+  ],
+  "technicianWelcomeBanner": {
+    "greeting": "Good afternoon",
+    "userName": "Sarah",
+    "userAvatar": "https://i.pravatar.cc/150?img=5",
+    "summaryMessage": "You're 36% set up. Complete 2 more required tasks to unlock full features!",
+    "timeOfDay": "afternoon"
+  },
+  "companyWelcomeBanner": {
+    "greeting": "Good afternoon",
+    "userName": "David",
+    "userAvatar": "https://i.pravatar.cc/150?img=12",
+    "summaryMessage": "You have 3 new applications to review",
+    "timeOfDay": "afternoon"
+  },
+  "technicianConversation": {
+    "id": "conv_tech_1",
+    "messages": [
+      {
+        "id": "msg_1",
+        "sender": "assistant",
+        "content": "Hi Sarah! I'm your AI assistant. I can help you complete your onboarding, find bookings, answer questions about the platform, or guide you through any feature. What would you like to do today?",
+        "contentType": "text",
+        "timestamp": "2024-12-20T10:00:00Z",
+        "relativeTime": "Just now",
+        "actions": [
+          {
+            "id": "action_1",
+            "label": "Complete onboarding",
+            "type": "navigate",
+            "url": "/",
+            "icon": "list-checks"
+          },
+          {
+            "id": "action_2",
+            "label": "Find bookings",
+            "type": "navigate",
+            "url": "/discover",
+            "icon": "search"
+          },
+          {
+            "id": "action_3",
+            "label": "Upload Show Proof",
+            "type": "navigate",
+            "url": "/show-proof/new",
+            "icon": "image"
+          }
+        ]
+      }
+    ],
+    "context": {
+      "currentPage": "/",
+      "userRole": "technician",
+      "userId": "user_tech_1",
+      "onboardingComplete": false,
+      "recentActions": ["viewed_dashboard", "completed_profile"]
+    },
+    "createdAt": "2024-12-20T10:00:00Z",
+    "lastMessageAt": "2024-12-20T10:00:00Z"
+  },
+  "companyConversation": {
+    "id": "conv_company_1",
+    "messages": [
+      {
+        "id": "msg_1",
+        "sender": "assistant",
+        "content": "Hi David! Welcome to ShowCore. I can help you post bookings, review applications, manage your team, or answer any questions. What would you like help with?",
+        "contentType": "text",
+        "timestamp": "2024-12-20T10:00:00Z",
+        "relativeTime": "Just now",
+        "actions": [
+          {
+            "id": "action_1",
+            "label": "Post a booking",
+            "type": "navigate",
+            "url": "/bookings/new",
+            "icon": "briefcase"
+          },
+          {
+            "id": "action_2",
+            "label": "Review applications",
+            "type": "navigate",
+            "url": "/bookings?filter=pending",
+            "icon": "users"
+          },
+          {
+            "id": "action_3",
+            "label": "Find technicians",
+            "type": "navigate",
+            "url": "/discover",
+            "icon": "search"
+          }
+        ]
+      }
+    ],
+    "context": {
+      "currentPage": "/",
+      "userRole": "company",
+      "userId": "user_company_1",
+      "onboardingComplete": false,
+      "recentActions": ["viewed_dashboard", "added_payment_method"]
+    },
+    "createdAt": "2024-12-20T10:00:00Z",
+    "lastMessageAt": "2024-12-20T10:00:00Z"
+  },
+  "technicianQuickActions": [
+    {
+      "id": "quick_1",
+      "label": "How do I earn XP?",
+      "icon": "trending-up",
+      "prompt": "How do I earn XP and advance my tier?",
+      "category": "help"
+    },
+    {
+      "id": "quick_2",
+      "label": "Find bookings near me",
+      "icon": "map-pin",
+      "prompt": "Show me open bookings in my area",
+      "category": "tasks"
+    },
+    {
+      "id": "quick_3",
+      "label": "Upload Show Proof",
+      "icon": "image",
+      "prompt": "How do I upload Show Proof?",
+      "category": "onboarding"
+    },
+    {
+      "id": "quick_4",
+      "label": "Set up payments",
+      "icon": "credit-card",
+      "prompt": "How do I add a payout method?",
+      "category": "onboarding"
+    },
+    {
+      "id": "quick_5",
+      "label": "Manage my calendar",
+      "icon": "calendar",
+      "prompt": "How do I set my availability?",
+      "category": "help"
+    },
+    {
+      "id": "quick_6",
+      "label": "Track my earnings",
+      "icon": "dollar-sign",
+      "prompt": "Show me my earnings and payment history",
+      "category": "tasks"
+    }
+  ],
+  "companyQuickActions": [
+    {
+      "id": "quick_1",
+      "label": "Post a booking",
+      "icon": "briefcase",
+      "prompt": "How do I post a new booking?",
+      "category": "tasks"
+    },
+    {
+      "id": "quick_2",
+      "label": "Review applications",
+      "icon": "users",
+      "prompt": "Show me pending applications",
+      "category": "tasks"
+    },
+    {
+      "id": "quick_3",
+      "label": "Find technicians",
+      "icon": "search",
+      "prompt": "How do I search for qualified technicians?",
+      "category": "help"
+    },
+    {
+      "id": "quick_4",
+      "label": "Manage team access",
+      "icon": "user-plus",
+      "prompt": "How do I invite team members?",
+      "category": "onboarding"
+    },
+    {
+      "id": "quick_5",
+      "label": "View my bookings",
+      "icon": "calendar",
+      "prompt": "Show me all my active bookings",
+      "category": "tasks"
+    },
+    {
+      "id": "quick_6",
+      "label": "Upgrade my plan",
+      "icon": "zap",
+      "prompt": "What are the benefits of upgrading?",
+      "category": "help"
+    }
+  ]
+}

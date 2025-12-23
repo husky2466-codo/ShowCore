@@ -1,0 +1,604 @@
+{
+  "_meta": {
+    "description": "Sample data for Show Proof & XP section",
+    "models": [
+      "ShowProof - Evidence of completed work with photos, documentation, and XP awards",
+      "TechnicianXPProfile - XP progression, tier status, and statistics",
+      "LotteryStatus - Ticket count, activity log, and visibility boost status",
+      "TierDefinition - XP requirements and tier progression rules"
+    ],
+    "relationships": [
+      "ShowProof belongs to Technician",
+      "ShowProof may be verified by Client",
+      "TechnicianXPProfile aggregates XP from all ShowProofs",
+      "LotteryStatus tracks tickets earned from activities"
+    ]
+  },
+  "showProofs": [
+    {
+      "id": "sp_001",
+      "technicianId": "tech_456",
+      "title": "Glastonbury Festival 2024 - Main Stage Audio",
+      "venue": "Worthy Farm, Pilton",
+      "eventType": "festival",
+      "eventDate": "2024-06-26",
+      "uploadDate": "2024-06-28T14:23:00Z",
+      "role": "FOH Audio Engineer",
+      "description": "Mixed main stage performances over 3 days using DiGiCo SD7 console. Handled multiple artists with quick changeovers. Coordinated with monitor engineers and system techs for d&b audiotechnik J-Series PA deployment.",
+      "mediaUrls": [
+        "/uploads/proofs/sp_001_console.jpg",
+        "/uploads/proofs/sp_001_stage_wide.jpg",
+        "/uploads/proofs/sp_001_mixing_position.jpg",
+        "/uploads/proofs/sp_001_crowd.jpg"
+      ],
+      "mediaTypes": ["photos", "console_screenshots"],
+      "privacy": "public",
+      "status": "approved",
+      "complexity": "complex",
+      "aiAnalysis": {
+        "detectedEquipment": ["DiGiCo SD7", "d&b audiotechnik J-Series"],
+        "venueType": "outdoor_festival",
+        "estimatedAttendance": "large_scale",
+        "confidence": 0.95,
+        "flags": []
+      },
+      "clientVerification": {
+        "verified": true,
+        "verifiedBy": "Glastonbury Festivals Ltd",
+        "verifiedByUserId": "company_789",
+        "verifiedDate": "2024-07-02T10:15:00Z",
+        "starRating": 5,
+        "feedback": "Exceptional work under pressure. Professional attitude and excellent sound quality throughout the festival."
+      },
+      "xpAwarded": {
+        "baseXp": 30,
+        "bonuses": [
+          { "type": "high_rating", "amount": 10, "reason": "5-star review" },
+          { "type": "complexity", "amount": 20, "reason": "Large scale festival production" }
+        ],
+        "totalXp": 60
+      }
+    },
+    {
+      "id": "sp_002",
+      "technicianId": "tech_456",
+      "title": "Corporate Product Launch - AV Tech",
+      "venue": "ExCeL London",
+      "eventType": "corporate",
+      "eventDate": "2024-05-15",
+      "uploadDate": "2024-05-16T09:30:00Z",
+      "role": "Video Engineer",
+      "description": "Set up and operated 3-camera live stream with LED wall display. Barco E2 video processing for presentation content. Managed live graphics integration and camera switching.",
+      "mediaUrls": [
+        "/uploads/proofs/sp_002_led_wall.jpg",
+        "/uploads/proofs/sp_002_control_booth.jpg"
+      ],
+      "mediaTypes": ["photos"],
+      "privacy": "clients_only",
+      "status": "approved",
+      "complexity": "standard",
+      "aiAnalysis": {
+        "detectedEquipment": ["Barco E2", "LED wall"],
+        "venueType": "conference_center",
+        "estimatedAttendance": "medium_scale",
+        "confidence": 0.88,
+        "flags": []
+      },
+      "clientVerification": {
+        "verified": true,
+        "verifiedBy": "TechCorp Events",
+        "verifiedByUserId": "company_234",
+        "verifiedDate": "2024-05-20T16:45:00Z",
+        "starRating": 4,
+        "feedback": "Great technical execution. Very responsive to last-minute changes."
+      },
+      "xpAwarded": {
+        "baseXp": 30,
+        "bonuses": [
+          { "type": "high_rating", "amount": 10, "reason": "4-star review" },
+          { "type": "new_client", "amount": 10, "reason": "First show with TechCorp Events" }
+        ],
+        "totalXp": 50
+      }
+    },
+    {
+      "id": "sp_003",
+      "technicianId": "tech_456",
+      "title": "West End Theatre - Sound Design Assistant",
+      "venue": "Apollo Theatre, London",
+      "eventType": "theater",
+      "eventDate": "2024-04-10",
+      "uploadDate": "2024-04-11T11:20:00Z",
+      "role": "A2 Sound Technician",
+      "description": "Assisted with wireless mic management and sound effects playback for musical production. QLab programming and Shure Axient wireless system maintenance.",
+      "mediaUrls": [
+        "/uploads/proofs/sp_003_backstage.jpg",
+        "/uploads/proofs/sp_003_wireless_rack.jpg",
+        "/uploads/proofs/sp_003_qlab.jpg"
+      ],
+      "mediaTypes": ["photos", "console_screenshots"],
+      "privacy": "public",
+      "status": "approved",
+      "complexity": "standard",
+      "aiAnalysis": {
+        "detectedEquipment": ["QLab", "Shure Axient"],
+        "venueType": "theater",
+        "estimatedAttendance": "small_scale",
+        "confidence": 0.91,
+        "flags": []
+      },
+      "clientVerification": {
+        "verified": true,
+        "verifiedBy": "West End Productions",
+        "verifiedByUserId": "company_567",
+        "verifiedDate": "2024-04-15T14:00:00Z",
+        "starRating": 5,
+        "feedback": "Reliable and detail-oriented. Would hire again."
+      },
+      "xpAwarded": {
+        "baseXp": 30,
+        "bonuses": [
+          { "type": "high_rating", "amount": 10, "reason": "5-star review" }
+        ],
+        "totalXp": 40
+      }
+    },
+    {
+      "id": "sp_004",
+      "technicianId": "tech_456",
+      "title": "Wedding Reception - Mobile DJ & Lighting",
+      "venue": "Claridge's Hotel, London",
+      "eventType": "wedding",
+      "eventDate": "2024-03-22",
+      "uploadDate": "2024-03-23T08:15:00Z",
+      "role": "Audio & Lighting Technician",
+      "description": "Provided sound and intelligent lighting for wedding reception. Pioneer DJ setup with wireless mics for speeches. Chauvet moving heads and uplighting.",
+      "mediaUrls": [
+        "/uploads/proofs/sp_004_setup.jpg",
+        "/uploads/proofs/sp_004_lighting.jpg"
+      ],
+      "mediaTypes": ["photos"],
+      "privacy": "private",
+      "status": "approved",
+      "complexity": "standard",
+      "aiAnalysis": {
+        "detectedEquipment": ["Pioneer DJ", "Chauvet"],
+        "venueType": "hotel_ballroom",
+        "estimatedAttendance": "small_scale",
+        "confidence": 0.85,
+        "flags": []
+      },
+      "clientVerification": {
+        "verified": true,
+        "verifiedBy": "Sarah & James Mitchell",
+        "verifiedByUserId": "client_891",
+        "verifiedDate": "2024-03-25T19:30:00Z",
+        "starRating": 5,
+        "feedback": "Made our special day perfect! So professional and accommodating."
+      },
+      "xpAwarded": {
+        "baseXp": 30,
+        "bonuses": [
+          { "type": "high_rating", "amount": 10, "reason": "5-star review" }
+        ],
+        "totalXp": 40
+      }
+    },
+    {
+      "id": "sp_005",
+      "technicianId": "tech_456",
+      "title": "Tech Conference - AV Systems Operator",
+      "venue": "Manchester Central",
+      "eventType": "conference",
+      "eventDate": "2024-02-08",
+      "uploadDate": "2024-02-09T13:45:00Z",
+      "role": "Technical Director",
+      "description": "Coordinated multi-room AV setup for 3-day tech conference. Allen & Heath Avantis consoles, Panasonic PTZ cameras, and Roland V-600UHD video switchers across 4 breakout rooms.",
+      "mediaUrls": [
+        "/uploads/proofs/sp_005_main_hall.jpg",
+        "/uploads/proofs/sp_005_control.jpg",
+        "/uploads/proofs/sp_005_breakout.jpg"
+      ],
+      "mediaTypes": ["photos"],
+      "privacy": "public",
+      "status": "pending_admin",
+      "complexity": "complex",
+      "aiAnalysis": {
+        "detectedEquipment": ["Allen & Heath Avantis", "Panasonic PTZ", "Roland V-600UHD"],
+        "venueType": "conference_center",
+        "estimatedAttendance": "large_scale",
+        "confidence": 0.93,
+        "flags": []
+      },
+      "clientVerification": {
+        "verified": false,
+        "verifiedBy": null,
+        "verifiedByUserId": null,
+        "verifiedDate": null,
+        "starRating": null,
+        "feedback": null
+      },
+      "xpAwarded": null
+    },
+    {
+      "id": "sp_006",
+      "technicianId": "tech_456",
+      "title": "Live Concert - Monitor Engineer",
+      "venue": "O2 Academy Birmingham",
+      "eventType": "concert",
+      "eventDate": "2024-01-18",
+      "uploadDate": "2024-01-19T10:00:00Z",
+      "role": "Monitor Engineer",
+      "description": "Mixed monitors for 6-piece rock band on Midas M32. 8 stereo IEM mixes plus wedge mixes for backline. Soundcheck and show went smoothly.",
+      "mediaUrls": [
+        "/uploads/proofs/sp_006_monitor_console.jpg",
+        "/uploads/proofs/sp_006_stage.jpg"
+      ],
+      "mediaTypes": ["photos", "console_screenshots"],
+      "privacy": "public",
+      "status": "approved",
+      "complexity": "standard",
+      "aiAnalysis": {
+        "detectedEquipment": ["Midas M32"],
+        "venueType": "music_venue",
+        "estimatedAttendance": "medium_scale",
+        "confidence": 0.90,
+        "flags": []
+      },
+      "clientVerification": {
+        "verified": true,
+        "verifiedBy": "Touring Productions Ltd",
+        "verifiedByUserId": "company_345",
+        "verifiedDate": "2024-01-22T11:30:00Z",
+        "starRating": 4,
+        "feedback": "Solid work. Band was happy with monitor mixes."
+      },
+      "xpAwarded": {
+        "baseXp": 30,
+        "bonuses": [
+          { "type": "high_rating", "amount": 10, "reason": "4-star review" }
+        ],
+        "totalXp": 40
+      }
+    },
+    {
+      "id": "sp_007",
+      "technicianId": "tech_456",
+      "title": "Festival Stage Build - Rigging Assistant",
+      "venue": "Download Festival, Donington Park",
+      "eventType": "festival",
+      "eventDate": "2023-12-05",
+      "uploadDate": "2023-12-06T15:20:00Z",
+      "role": "Rigging Technician",
+      "description": "Assisted with stage rigging and PA hang for outdoor stage. Worked under certified rigger supervision. Safety protocols followed throughout.",
+      "mediaUrls": [
+        "/uploads/proofs/sp_007_rigging.jpg"
+      ],
+      "mediaTypes": ["photos"],
+      "privacy": "public",
+      "status": "rejected",
+      "complexity": "standard",
+      "aiAnalysis": {
+        "detectedEquipment": [],
+        "venueType": "outdoor_festival",
+        "estimatedAttendance": "large_scale",
+        "confidence": 0.65,
+        "flags": ["insufficient_documentation", "unclear_role_verification"]
+      },
+      "clientVerification": {
+        "verified": false,
+        "verifiedBy": null,
+        "verifiedByUserId": null,
+        "verifiedDate": null,
+        "starRating": null,
+        "feedback": null
+      },
+      "xpAwarded": null,
+      "rejectionReason": "Insufficient documentation. Please include more photos showing your specific role and equipment setup. Client verification required for rigging work."
+    },
+    {
+      "id": "sp_008",
+      "technicianId": "tech_456",
+      "title": "Corporate Gala Dinner - Lighting Designer",
+      "venue": "The Dorchester, London",
+      "eventType": "corporate",
+      "eventDate": "2023-11-14",
+      "uploadDate": "2023-11-15T09:00:00Z",
+      "role": "Lighting Designer",
+      "description": "Designed and programmed lighting for annual charity gala. ETC Eos console controlling Robe moving lights and LED wash fixtures. Created elegant lighting states for dinner service and dynamic looks for entertainment segments.",
+      "mediaUrls": [
+        "/uploads/proofs/sp_008_ballroom.jpg",
+        "/uploads/proofs/sp_008_eos_console.jpg",
+        "/uploads/proofs/sp_008_stage_lighting.jpg"
+      ],
+      "mediaTypes": ["photos", "console_screenshots"],
+      "privacy": "public",
+      "status": "pending_ai",
+      "complexity": "standard",
+      "aiAnalysis": null,
+      "clientVerification": {
+        "verified": false,
+        "verifiedBy": null,
+        "verifiedByUserId": null,
+        "verifiedDate": null,
+        "starRating": null,
+        "feedback": null
+      },
+      "xpAwarded": null
+    },
+    {
+      "id": "sp_009",
+      "technicianId": "tech_456",
+      "title": "Stadium Concert - PA Crew",
+      "venue": "Wembley Stadium, London",
+      "eventType": "concert",
+      "eventDate": "2023-10-20",
+      "uploadDate": "2023-10-21T16:40:00Z",
+      "role": "PA Technician",
+      "description": "Part of crew deploying L-Acoustics K1 system for stadium show. Assisted with array rigging, system optimization using LA Network Manager, and RF coordination for wireless systems.",
+      "mediaUrls": [
+        "/uploads/proofs/sp_009_pa_hang.jpg",
+        "/uploads/proofs/sp_009_network_manager.jpg",
+        "/uploads/proofs/sp_009_stadium_wide.jpg",
+        "/uploads/proofs/sp_009_delay_towers.jpg"
+      ],
+      "mediaTypes": ["photos", "console_screenshots"],
+      "privacy": "public",
+      "status": "approved",
+      "complexity": "complex",
+      "aiAnalysis": {
+        "detectedEquipment": ["L-Acoustics K1", "LA Network Manager"],
+        "venueType": "stadium",
+        "estimatedAttendance": "large_scale",
+        "confidence": 0.97,
+        "flags": []
+      },
+      "clientVerification": {
+        "verified": true,
+        "verifiedBy": "Stadium Sound Productions",
+        "verifiedByUserId": "company_678",
+        "verifiedDate": "2023-10-25T13:15:00Z",
+        "starRating": 5,
+        "feedback": "Outstanding technical skills and professionalism. An asset to any crew."
+      },
+      "xpAwarded": {
+        "baseXp": 30,
+        "bonuses": [
+          { "type": "high_rating", "amount": 10, "reason": "5-star review" },
+          { "type": "complexity", "amount": 20, "reason": "Stadium-scale production" },
+          { "type": "new_client", "amount": 10, "reason": "First show with Stadium Sound Productions" }
+        ],
+        "totalXp": 70
+      }
+    },
+    {
+      "id": "sp_010",
+      "technicianId": "tech_456",
+      "title": "Live Stream Production - Vision Mixer",
+      "venue": "BBC Studios, Manchester",
+      "eventType": "corporate",
+      "eventDate": "2023-09-12",
+      "uploadDate": "2023-09-13T10:30:00Z",
+      "role": "Vision Mixer",
+      "description": "Operated Blackmagic ATEM 2 M/E for multi-camera live stream. 5-camera setup with graphics integration and remote guest feeds via Zoom.",
+      "mediaUrls": [
+        "/uploads/proofs/sp_010_control_room.jpg",
+        "/uploads/proofs/sp_010_atem.jpg"
+      ],
+      "mediaTypes": ["photos"],
+      "privacy": "clients_only",
+      "status": "approved",
+      "complexity": "standard",
+      "aiAnalysis": {
+        "detectedEquipment": ["Blackmagic ATEM"],
+        "venueType": "broadcast_studio",
+        "estimatedAttendance": "virtual_only",
+        "confidence": 0.89,
+        "flags": []
+      },
+      "clientVerification": {
+        "verified": true,
+        "verifiedBy": "BBC Studios Events",
+        "verifiedByUserId": "company_901",
+        "verifiedDate": "2023-09-18T15:00:00Z",
+        "starRating": 4,
+        "feedback": "Handled technical challenges well. Good communication with production team."
+      },
+      "xpAwarded": {
+        "baseXp": 30,
+        "bonuses": [
+          { "type": "high_rating", "amount": 10, "reason": "4-star review" }
+        ],
+        "totalXp": 40
+      }
+    }
+  ],
+  "technicianProfile": {
+    "technicianId": "tech_456",
+    "currentTier": "Advanced",
+    "totalXp": 3420,
+    "xpToNextTier": 2580,
+    "totalShows": 90,
+    "verifiedShows": 88,
+    "averageRating": 4.7,
+    "xpBreakdown": {
+      "verifiedShows": 2640,
+      "highRatings": 540,
+      "complexity": 180,
+      "newClients": 60,
+      "milestones": 0
+    },
+    "recentActivity": [
+      {
+        "date": "2024-06-28T14:23:00Z",
+        "type": "show_verified",
+        "description": "Glastonbury Festival 2024 - Main Stage Audio verified",
+        "xpEarned": 60
+      },
+      {
+        "date": "2024-05-20T16:45:00Z",
+        "type": "show_verified",
+        "description": "Corporate Product Launch - AV Tech verified",
+        "xpEarned": 50
+      },
+      {
+        "date": "2024-04-15T14:00:00Z",
+        "type": "show_verified",
+        "description": "West End Theatre - Sound Design Assistant verified",
+        "xpEarned": 40
+      },
+      {
+        "date": "2024-03-25T19:30:00Z",
+        "type": "show_verified",
+        "description": "Wedding Reception - Mobile DJ & Lighting verified",
+        "xpEarned": 40
+      },
+      {
+        "date": "2024-01-22T11:30:00Z",
+        "type": "show_verified",
+        "description": "Live Concert - Monitor Engineer verified",
+        "xpEarned": 40
+      }
+    ]
+  },
+  "lotteryStatus": {
+    "technicianId": "tech_456",
+    "currentTickets": 18,
+    "nextDrawDate": "2024-07-07T20:00:00Z",
+    "ticketHistory": [
+      {
+        "date": "2024-06-28T14:23:00Z",
+        "earned": 1,
+        "reason": "Completed show: Glastonbury Festival 2024",
+        "type": "show_completion"
+      },
+      {
+        "date": "2024-07-02T10:15:00Z",
+        "earned": 2,
+        "reason": "Received 5-star review from Glastonbury Festivals Ltd",
+        "type": "five_star_review"
+      },
+      {
+        "date": "2024-05-16T09:30:00Z",
+        "earned": 1,
+        "reason": "Completed show: Corporate Product Launch",
+        "type": "show_completion"
+      },
+      {
+        "date": "2024-04-11T11:20:00Z",
+        "earned": 1,
+        "reason": "Completed show: West End Theatre",
+        "type": "show_completion"
+      },
+      {
+        "date": "2024-04-15T14:00:00Z",
+        "earned": 2,
+        "reason": "Received 5-star review from West End Productions",
+        "type": "five_star_review"
+      },
+      {
+        "date": "2024-03-23T08:15:00Z",
+        "earned": 1,
+        "reason": "Completed show: Wedding Reception",
+        "type": "show_completion"
+      },
+      {
+        "date": "2024-03-25T19:30:00Z",
+        "earned": 2,
+        "reason": "Received 5-star review from Sarah & James Mitchell",
+        "type": "five_star_review"
+      },
+      {
+        "date": "2024-03-10T14:00:00Z",
+        "earned": 3,
+        "reason": "Referred technician James Peterson who completed onboarding",
+        "type": "referral"
+      },
+      {
+        "date": "2024-02-20T16:30:00Z",
+        "earned": 2,
+        "reason": "Completed mentorship program with Emma Richards",
+        "type": "mentorship"
+      },
+      {
+        "date": "2024-01-19T10:00:00Z",
+        "earned": 1,
+        "reason": "Completed show: Live Concert",
+        "type": "show_completion"
+      },
+      {
+        "date": "2023-10-21T16:40:00Z",
+        "earned": 1,
+        "reason": "Completed show: Stadium Concert",
+        "type": "show_completion"
+      },
+      {
+        "date": "2023-10-25T13:15:00Z",
+        "earned": 2,
+        "reason": "Received 5-star review from Stadium Sound Productions",
+        "type": "five_star_review"
+      }
+    ],
+    "activeBoost": null,
+    "featuredNewcomer": false,
+    "lifetimeTicketsEarned": 47,
+    "lifetimeDrawsEntered": 12,
+    "lifetimeWins": 0
+  },
+  "tierDefinitions": [
+    {
+      "tier": "Beginner",
+      "minXp": 0,
+      "maxXp": 999,
+      "badge": "beginner",
+      "benefits": [
+        "Basic profile visibility",
+        "Can apply to jobs",
+        "Eligible for lottery system",
+        "Access to community resources"
+      ]
+    },
+    {
+      "tier": "Experienced",
+      "minXp": 1000,
+      "maxXp": 2999,
+      "badge": "experienced",
+      "benefits": [
+        "Enhanced profile visibility",
+        "Priority job matching",
+        "Verified badge on profile",
+        "Access to mentorship program",
+        "Featured in search results"
+      ]
+    },
+    {
+      "tier": "Advanced",
+      "minXp": 3000,
+      "maxXp": 5999,
+      "badge": "advanced",
+      "benefits": [
+        "Premium profile visibility",
+        "Direct booking requests from top clients",
+        "Exclusive job opportunities",
+        "Mentor other technicians",
+        "Premium badge on profile",
+        "Featured in recommended lists"
+      ]
+    },
+    {
+      "tier": "Pro",
+      "minXp": 6000,
+      "maxXp": null,
+      "badge": "pro",
+      "benefits": [
+        "Maximum profile visibility",
+        "Automatic featured placement",
+        "Access to enterprise clients",
+        "Lead mentor status",
+        "Pro badge on profile",
+        "Priority customer support",
+        "Beta access to new features"
+      ]
+    }
+  ]
+}

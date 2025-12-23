@@ -1,0 +1,439 @@
+{
+  "_meta": {
+    "description": "Sample data for the Authentication section",
+    "models": [
+      {
+        "name": "User",
+        "description": "Represents a user account with role-based profile data. Role determines whether this is a technician or company account.",
+        "fields": {
+          "id": "Unique identifier for the user",
+          "email": "User's email address for authentication",
+          "role": "Either 'technician' or 'company' - determines profile requirements and platform experience",
+          "emailVerified": "Whether the user has verified their email address",
+          "profileComplete": "Whether the user has completed role-specific profile setup",
+          "createdAt": "ISO timestamp of account creation",
+          "profile": "Role-specific profile data (TechnicianProfile or CompanyProfile)"
+        }
+      },
+      {
+        "name": "TechnicianProfile",
+        "description": "Profile data specific to technician users",
+        "fields": {
+          "name": "Full name of the technician",
+          "skills": "Array of skills/specializations",
+          "location": "City and state/country",
+          "hourlyRateRange": "Min/max hourly rate range",
+          "bio": "Professional biography",
+          "profilePhoto": "URL to profile photo (optional)",
+          "portfolioLinks": "Array of portfolio URLs (optional)"
+        }
+      },
+      {
+        "name": "CompanyProfile",
+        "description": "Profile data specific to company users",
+        "fields": {
+          "companyName": "Name of the company",
+          "industry": "Primary industry/sector",
+          "location": "City and state/country",
+          "typicalHiringNeeds": "Description of typical technician requirements",
+          "companyLogo": "URL to company logo (optional)",
+          "website": "Company website URL (optional)"
+        }
+      },
+      {
+        "name": "OAuthProvider",
+        "description": "Configuration for OAuth authentication providers",
+        "fields": {
+          "id": "Provider identifier (google, apple, microsoft)",
+          "name": "Display name for the provider",
+          "icon": "Icon identifier for the provider button",
+          "enabled": "Whether this provider is currently available"
+        }
+      },
+      {
+        "name": "AuthError",
+        "description": "Error messages for various authentication failures",
+        "fields": {
+          "code": "Error code identifier",
+          "message": "User-facing error message",
+          "field": "Form field associated with the error (optional)"
+        }
+      }
+    ]
+  },
+  "users": [
+    {
+      "id": "user_tech_1",
+      "email": "sarah.chen@example.com",
+      "role": "technician",
+      "emailVerified": true,
+      "profileComplete": true,
+      "createdAt": "2024-01-15T10:30:00Z",
+      "profile": {
+        "name": "Sarah Chen",
+        "skills": ["Audio Engineering", "Live Sound", "System Tuning"],
+        "location": "Los Angeles, CA",
+        "hourlyRateRange": {
+          "min": 75,
+          "max": 150
+        },
+        "bio": "Professional audio engineer with 8+ years experience in live events and installations. Specialized in line array systems and digital mixing consoles.",
+        "profilePhoto": "https://i.pravatar.cc/150?img=5",
+        "portfolioLinks": [
+          "https://soundbetter.com/sarahchen",
+          "https://linkedin.com/in/sarahchen"
+        ]
+      }
+    },
+    {
+      "id": "user_tech_2",
+      "email": "mike.rodriguez@example.com",
+      "role": "technician",
+      "emailVerified": true,
+      "profileComplete": false,
+      "createdAt": "2024-02-20T14:45:00Z",
+      "profile": {
+        "name": "Mike Rodriguez",
+        "skills": [],
+        "location": "",
+        "hourlyRateRange": {
+          "min": 0,
+          "max": 0
+        },
+        "bio": ""
+      }
+    },
+    {
+      "id": "user_tech_3",
+      "email": "alex.kim@example.com",
+      "role": "technician",
+      "emailVerified": false,
+      "profileComplete": false,
+      "createdAt": "2024-03-10T09:15:00Z",
+      "profile": {
+        "name": "Alex Kim",
+        "skills": [],
+        "location": "",
+        "hourlyRateRange": {
+          "min": 0,
+          "max": 0
+        },
+        "bio": ""
+      }
+    },
+    {
+      "id": "user_company_1",
+      "email": "bookings@soundstage-venues.com",
+      "role": "company",
+      "emailVerified": true,
+      "profileComplete": true,
+      "createdAt": "2024-01-20T11:00:00Z",
+      "profile": {
+        "companyName": "SoundStage Venues",
+        "industry": "Live Events & Entertainment",
+        "location": "New York, NY",
+        "typicalHiringNeeds": "We regularly need audio engineers for concerts, corporate events, and theater productions. Looking for experienced technicians with digital console experience.",
+        "companyLogo": "https://ui-avatars.com/api/?name=SoundStage+Venues&background=6366f1&color=fff",
+        "website": "https://soundstage-venues.com"
+      }
+    },
+    {
+      "id": "user_company_2",
+      "email": "tech@brightlight-productions.com",
+      "role": "company",
+      "emailVerified": true,
+      "profileComplete": false,
+      "createdAt": "2024-02-28T16:20:00Z",
+      "profile": {
+        "companyName": "BrightLight Productions",
+        "industry": "",
+        "location": "",
+        "typicalHiringNeeds": ""
+      }
+    },
+    {
+      "id": "user_company_3",
+      "email": "admin@festival-grounds.com",
+      "role": "company",
+      "emailVerified": false,
+      "profileComplete": false,
+      "createdAt": "2024-03-15T13:30:00Z",
+      "profile": {
+        "companyName": "Festival Grounds",
+        "industry": "",
+        "location": "",
+        "typicalHiringNeeds": ""
+      }
+    }
+  ],
+  "oauthProviders": [
+    {
+      "id": "google",
+      "name": "Google",
+      "icon": "google",
+      "enabled": true
+    },
+    {
+      "id": "apple",
+      "name": "Apple",
+      "icon": "apple",
+      "enabled": true
+    },
+    {
+      "id": "microsoft",
+      "name": "Microsoft",
+      "icon": "microsoft",
+      "enabled": true
+    }
+  ],
+  "authErrors": [
+    {
+      "code": "invalid_credentials",
+      "message": "Invalid email or password. Please try again."
+    },
+    {
+      "code": "email_not_found",
+      "message": "No account found with this email address.",
+      "field": "email"
+    },
+    {
+      "code": "email_already_exists",
+      "message": "An account with this email already exists.",
+      "field": "email"
+    },
+    {
+      "code": "weak_password",
+      "message": "Password must be at least 8 characters with uppercase, lowercase, and numbers.",
+      "field": "password"
+    },
+    {
+      "code": "email_not_verified",
+      "message": "Please verify your email address before logging in. Check your inbox for the verification link."
+    },
+    {
+      "code": "magic_link_expired",
+      "message": "This magic link has expired. Please request a new one."
+    },
+    {
+      "code": "reset_token_invalid",
+      "message": "This password reset link is invalid or has expired."
+    },
+    {
+      "code": "oauth_failed",
+      "message": "Authentication with {provider} failed. Please try again."
+    },
+    {
+      "code": "account_locked",
+      "message": "This account has been temporarily locked due to multiple failed login attempts. Please try again in 15 minutes."
+    },
+    {
+      "code": "network_error",
+      "message": "Unable to connect to the server. Please check your internet connection and try again."
+    }
+  ],
+  "formValidationStates": {
+    "login": {
+      "valid": {
+        "email": "sarah.chen@example.com",
+        "password": "SecurePass123!",
+        "errors": {}
+      },
+      "invalidEmail": {
+        "email": "invalid-email",
+        "password": "SecurePass123!",
+        "errors": {
+          "email": "Please enter a valid email address."
+        }
+      },
+      "emptyFields": {
+        "email": "",
+        "password": "",
+        "errors": {
+          "email": "Email is required.",
+          "password": "Password is required."
+        }
+      }
+    },
+    "register": {
+      "valid": {
+        "email": "newuser@example.com",
+        "password": "SecurePass123!",
+        "confirmPassword": "SecurePass123!",
+        "role": "technician",
+        "errors": {}
+      },
+      "passwordMismatch": {
+        "email": "newuser@example.com",
+        "password": "SecurePass123!",
+        "confirmPassword": "DifferentPass456!",
+        "role": "technician",
+        "errors": {
+          "confirmPassword": "Passwords do not match."
+        }
+      },
+      "weakPassword": {
+        "email": "newuser@example.com",
+        "password": "password",
+        "confirmPassword": "password",
+        "role": "technician",
+        "errors": {
+          "password": "Password must be at least 8 characters with uppercase, lowercase, and numbers."
+        }
+      },
+      "noRole": {
+        "email": "newuser@example.com",
+        "password": "SecurePass123!",
+        "confirmPassword": "SecurePass123!",
+        "role": null,
+        "errors": {
+          "role": "Please select whether you're a technician or company."
+        }
+      }
+    },
+    "passwordReset": {
+      "valid": {
+        "email": "sarah.chen@example.com",
+        "errors": {}
+      },
+      "invalidEmail": {
+        "email": "invalid-email",
+        "errors": {
+          "email": "Please enter a valid email address."
+        }
+      }
+    },
+    "profileCompletion": {
+      "technician": {
+        "valid": {
+          "name": "Sarah Chen",
+          "skills": ["Audio Engineering", "Live Sound"],
+          "location": "Los Angeles, CA",
+          "hourlyRateRange": {
+            "min": 75,
+            "max": 150
+          },
+          "bio": "Professional audio engineer with 8+ years experience.",
+          "errors": {}
+        },
+        "missingRequired": {
+          "name": "",
+          "skills": [],
+          "location": "",
+          "hourlyRateRange": {
+            "min": 0,
+            "max": 0
+          },
+          "bio": "",
+          "errors": {
+            "name": "Name is required.",
+            "skills": "Please add at least one skill.",
+            "location": "Location is required.",
+            "hourlyRateRange": "Please provide your hourly rate range.",
+            "bio": "Please add a brief bio."
+          }
+        },
+        "invalidRateRange": {
+          "name": "Sarah Chen",
+          "skills": ["Audio Engineering"],
+          "location": "Los Angeles, CA",
+          "hourlyRateRange": {
+            "min": 150,
+            "max": 75
+          },
+          "bio": "Professional audio engineer.",
+          "errors": {
+            "hourlyRateRange": "Maximum rate must be greater than minimum rate."
+          }
+        }
+      },
+      "company": {
+        "valid": {
+          "companyName": "SoundStage Venues",
+          "industry": "Live Events & Entertainment",
+          "location": "New York, NY",
+          "typicalHiringNeeds": "We regularly need audio engineers for concerts and corporate events.",
+          "errors": {}
+        },
+        "missingRequired": {
+          "companyName": "",
+          "industry": "",
+          "location": "",
+          "typicalHiringNeeds": "",
+          "errors": {
+            "companyName": "Company name is required.",
+            "industry": "Industry is required.",
+            "location": "Location is required.",
+            "typicalHiringNeeds": "Please describe your typical hiring needs."
+          }
+        }
+      }
+    }
+  },
+  "authenticationStates": {
+    "unauthenticated": {
+      "isAuthenticated": false,
+      "user": null,
+      "isLoading": false
+    },
+    "loading": {
+      "isAuthenticated": false,
+      "user": null,
+      "isLoading": true
+    },
+    "authenticatedComplete": {
+      "isAuthenticated": true,
+      "user": {
+        "id": "user_tech_1",
+        "email": "sarah.chen@example.com",
+        "role": "technician",
+        "emailVerified": true,
+        "profileComplete": true
+      },
+      "isLoading": false
+    },
+    "authenticatedPendingVerification": {
+      "isAuthenticated": true,
+      "user": {
+        "id": "user_tech_3",
+        "email": "alex.kim@example.com",
+        "role": "technician",
+        "emailVerified": false,
+        "profileComplete": false
+      },
+      "isLoading": false
+    },
+    "authenticatedPendingProfile": {
+      "isAuthenticated": true,
+      "user": {
+        "id": "user_tech_2",
+        "email": "mike.rodriguez@example.com",
+        "role": "technician",
+        "emailVerified": true,
+        "profileComplete": false
+      },
+      "isLoading": false
+    }
+  },
+  "confirmationMessages": {
+    "magicLinkSent": {
+      "title": "Check your email",
+      "message": "We've sent a magic link to {email}. Click the link in the email to sign in.",
+      "action": "Didn't receive it? Send again"
+    },
+    "passwordResetSent": {
+      "title": "Password reset email sent",
+      "message": "We've sent password reset instructions to {email}. Check your inbox and follow the link to create a new password.",
+      "action": "Didn't receive it? Send again"
+    },
+    "emailVerificationSent": {
+      "title": "Verify your email",
+      "message": "We've sent a verification link to {email}. Please check your inbox and click the link to verify your account.",
+      "action": "Resend verification email"
+    },
+    "profileCompletionRequired": {
+      "title": "Complete your profile",
+      "message": "Before you can access the platform, please complete your profile with a few more details.",
+      "action": "Complete profile"
+    }
+  }
+}

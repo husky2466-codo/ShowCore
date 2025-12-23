@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+:root {
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+
+code, .font-mono {
+  font-family: 'IBM Plex Mono', monospace;
+}

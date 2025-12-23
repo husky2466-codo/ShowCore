@@ -1,0 +1,825 @@
+{
+  "_meta": {
+    "description": "Sample data for Reviews & Trust section",
+    "models": {
+      "Review": "Rating and feedback left after a completed booking. Reviews are mandatory for technicians to gain XP. Includes helpful voting, edit tracking, and skill-specific ratings.",
+      "TrustProfile": "Collection of optional verification signals (verified ID, insurance, certifications, background check) that increase technician credibility.",
+      "Dispute": "Formal complaint process with three stages: self-resolution, admin mediation, and formal arbitration.",
+      "ReviewStats": "Aggregate statistics for displaying review performance on technician profiles."
+    },
+    "relationships": {
+      "Review": "Belongs to a Booking, links reviewer (client/technician) to reviewee (technician/client)",
+      "TrustProfile": "Belongs to a Technician",
+      "Dispute": "Belongs to a Booking, involves two parties (client and technician)"
+    }
+  },
+  "reviews": [
+    {
+      "id": "rev_001",
+      "bookingId": "bkg_789",
+      "reviewerId": "usr_client_042",
+      "reviewerName": "Sarah Chen",
+      "reviewerCompany": "Horizon Events",
+      "revieweeId": "usr_tech_015",
+      "revieweeName": "Marcus Rodriguez",
+      "reviewerType": "client",
+      "rating": 5,
+      "feedback": "Marcus absolutely crushed it at our corporate summit. His attention to detail on the audio mix was impeccable - every presenter sounded crystal clear even in that challenging ballroom space. He showed up early, stayed late, and solved a last-minute issue with our wireless mics without breaking a sweat. Would hire again in a heartbeat.",
+      "skillRatings": {
+        "punctuality": 5,
+        "communication": 5,
+        "technicalSkill": 5,
+        "professionalism": 5
+      },
+      "createdAt": "2025-12-10T14:30:00Z",
+      "editedAt": null,
+      "isEdited": false,
+      "helpfulVotes": 12,
+      "notHelpfulVotes": 0,
+      "xpAwarded": 250,
+      "isAnonymous": false
+    },
+    {
+      "id": "rev_002",
+      "bookingId": "bkg_456",
+      "reviewerId": "usr_client_018",
+      "reviewerName": "David Park",
+      "reviewerCompany": "TechConnect Conference",
+      "revieweeId": "usr_tech_027",
+      "revieweeName": "Jamie Torres",
+      "reviewerType": "client",
+      "rating": 4,
+      "feedback": "Jamie did solid work on our three-day conference. The lighting looked great and she was very responsive to our requests. One small hiccup on day two with a moving light that needed reset, but she handled it quickly. Overall very professional and would recommend.",
+      "skillRatings": {
+        "punctuality": 5,
+        "communication": 4,
+        "technicalSkill": 4,
+        "professionalism": 5
+      },
+      "createdAt": "2025-12-08T09:15:00Z",
+      "editedAt": "2025-12-09T16:20:00Z",
+      "isEdited": true,
+      "helpfulVotes": 7,
+      "notHelpfulVotes": 1,
+      "xpAwarded": 200,
+      "isAnonymous": false
+    },
+    {
+      "id": "rev_003",
+      "bookingId": "bkg_234",
+      "reviewerId": "usr_tech_015",
+      "reviewerName": "Marcus Rodriguez",
+      "reviewerCompany": null,
+      "revieweeId": "usr_client_042",
+      "revieweeName": "Sarah Chen",
+      "reviewerType": "technician",
+      "rating": 5,
+      "feedback": "Sarah and the Horizon Events team were fantastic to work with. Clear communication from the start, realistic expectations, and they actually stuck to the timeline they promised. Load-in was organized, they had proper power distribution already sorted, and payment came through immediately after the show. This is how clients should operate.",
+      "skillRatings": {
+        "communication": 5,
+        "organization": 5,
+        "paymentPromptness": 5,
+        "professionalism": 5
+      },
+      "createdAt": "2025-12-11T10:45:00Z",
+      "editedAt": null,
+      "isEdited": false,
+      "helpfulVotes": 8,
+      "notHelpfulVotes": 0,
+      "xpAwarded": null,
+      "isAnonymous": false
+    },
+    {
+      "id": "rev_004",
+      "bookingId": "bkg_891",
+      "reviewerId": "usr_client_055",
+      "reviewerName": "Anonymous",
+      "reviewerCompany": null,
+      "revieweeId": "usr_tech_033",
+      "revieweeName": "Alex Kim",
+      "reviewerType": "client",
+      "rating": 3,
+      "feedback": "Alex knew the gear but communication was lacking. Had to follow up multiple times before the show to confirm details. The actual work during the event was fine, but the pre-production coordination was frustrating.",
+      "skillRatings": {
+        "punctuality": 4,
+        "communication": 2,
+        "technicalSkill": 4,
+        "professionalism": 3
+      },
+      "createdAt": "2025-12-05T13:00:00Z",
+      "editedAt": null,
+      "isEdited": false,
+      "helpfulVotes": 4,
+      "notHelpfulVotes": 2,
+      "xpAwarded": 150,
+      "isAnonymous": true
+    },
+    {
+      "id": "rev_005",
+      "bookingId": "bkg_567",
+      "reviewerId": "usr_client_029",
+      "reviewerName": "Rachel Morrison",
+      "reviewerCompany": "Summit Productions",
+      "revieweeId": "usr_tech_015",
+      "revieweeName": "Marcus Rodriguez",
+      "reviewerType": "client",
+      "rating": 5,
+      "feedback": "Second time hiring Marcus and he continues to exceed expectations. His knowledge of RF coordination saved us from potential disaster at our outdoor festival. Great attitude, excellent troubleshooting skills, and a genuine team player.",
+      "skillRatings": {
+        "punctuality": 5,
+        "communication": 5,
+        "technicalSkill": 5,
+        "professionalism": 5
+      },
+      "createdAt": "2025-11-28T16:30:00Z",
+      "editedAt": null,
+      "isEdited": false,
+      "helpfulVotes": 15,
+      "notHelpfulVotes": 0,
+      "xpAwarded": 300,
+      "isAnonymous": false
+    },
+    {
+      "id": "rev_006",
+      "bookingId": "bkg_112",
+      "reviewerId": "usr_client_073",
+      "reviewerName": "Kevin O'Brien",
+      "reviewerCompany": "O'Brien Events",
+      "revieweeId": "usr_tech_041",
+      "revieweeName": "Priya Patel",
+      "reviewerType": "client",
+      "rating": 2,
+      "feedback": "Expected more based on profile. Multiple audio issues during the presentation that took too long to resolve. Seemed unprepared for the venue's acoustic challenges. May have been overwhelmed by the scope of the event.",
+      "skillRatings": {
+        "punctuality": 4,
+        "communication": 3,
+        "technicalSkill": 2,
+        "professionalism": 3
+      },
+      "createdAt": "2025-11-22T11:00:00Z",
+      "editedAt": "2025-11-25T14:30:00Z",
+      "isEdited": true,
+      "helpfulVotes": 3,
+      "notHelpfulVotes": 6,
+      "xpAwarded": 100,
+      "isAnonymous": false
+    },
+    {
+      "id": "rev_007",
+      "bookingId": "bkg_445",
+      "reviewerId": "usr_tech_027",
+      "reviewerName": "Jamie Torres",
+      "reviewerCompany": null,
+      "revieweeId": "usr_client_018",
+      "revieweeName": "David Park",
+      "reviewerType": "technician",
+      "rating": 4,
+      "feedback": "TechConnect was well-organized overall. The production schedule was clear and they had a good crew. Only issue was some confusion about load-out timing on the final day - would have appreciated clearer communication there. But they were respectful, professional, and the venue was great to work in.",
+      "skillRatings": {
+        "communication": 4,
+        "organization": 4,
+        "paymentPromptness": 5,
+        "professionalism": 5
+      },
+      "createdAt": "2025-12-09T08:20:00Z",
+      "editedAt": null,
+      "isEdited": false,
+      "helpfulVotes": 5,
+      "notHelpfulVotes": 0,
+      "xpAwarded": null,
+      "isAnonymous": false
+    },
+    {
+      "id": "rev_008",
+      "bookingId": "bkg_778",
+      "reviewerId": "usr_client_091",
+      "reviewerName": "Lisa Zhang",
+      "reviewerCompany": "Innovate Summit",
+      "revieweeId": "usr_tech_027",
+      "revieweeName": "Jamie Torres",
+      "reviewerType": "client",
+      "rating": 5,
+      "feedback": "Jamie is an absolute lighting wizard. She transformed our generic hotel ballroom into something that looked like a high-end production studio. Loved her creative suggestions and she was incredibly patient with our last-minute changes. Already booked her for next year's event.",
+      "skillRatings": {
+        "punctuality": 5,
+        "communication": 5,
+        "technicalSkill": 5,
+        "professionalism": 5
+      },
+      "createdAt": "2025-11-15T15:45:00Z",
+      "editedAt": null,
+      "isEdited": false,
+      "helpfulVotes": 19,
+      "notHelpfulVotes": 0,
+      "xpAwarded": 350,
+      "isAnonymous": false
+    },
+    {
+      "id": "rev_009",
+      "bookingId": "bkg_334",
+      "reviewerId": "usr_client_012",
+      "reviewerName": "Tom Bradshaw",
+      "reviewerCompany": "Bradshaw Productions",
+      "revieweeId": "usr_tech_055",
+      "revieweeName": "Chris Anderson",
+      "reviewerType": "client",
+      "rating": 4,
+      "feedback": "Chris handled our complex video switching setup with confidence. A few minor glitches during transitions but nothing that affected the livestream quality. Strong technical knowledge and good under pressure. Would hire again for similar events.",
+      "skillRatings": {
+        "punctuality": 5,
+        "communication": 4,
+        "technicalSkill": 4,
+        "professionalism": 4
+      },
+      "createdAt": "2025-11-10T12:30:00Z",
+      "editedAt": null,
+      "isEdited": false,
+      "helpfulVotes": 6,
+      "notHelpfulVotes": 1,
+      "xpAwarded": 200,
+      "isAnonymous": false
+    },
+    {
+      "id": "rev_010",
+      "bookingId": "bkg_223",
+      "reviewerId": "usr_client_038",
+      "reviewerName": "Maria Santos",
+      "reviewerCompany": "Elevate Events",
+      "revieweeId": "usr_tech_015",
+      "revieweeName": "Marcus Rodriguez",
+      "reviewerType": "client",
+      "rating": 5,
+      "feedback": "Marcus went above and beyond for our annual gala. When our original sound system vendor fell through at the last minute, he brought in backup gear and still delivered flawless audio. His network of contacts and problem-solving ability saved our event. Cannot recommend him highly enough.",
+      "skillRatings": {
+        "punctuality": 5,
+        "communication": 5,
+        "technicalSkill": 5,
+        "professionalism": 5
+      },
+      "createdAt": "2025-10-28T09:00:00Z",
+      "editedAt": null,
+      "isEdited": false,
+      "helpfulVotes": 24,
+      "notHelpfulVotes": 0,
+      "xpAwarded": 400,
+      "isAnonymous": false
+    },
+    {
+      "id": "rev_011",
+      "bookingId": "bkg_667",
+      "reviewerId": "usr_tech_041",
+      "reviewerName": "Priya Patel",
+      "reviewerCompany": null,
+      "revieweeId": "usr_client_073",
+      "revieweeName": "Kevin O'Brien",
+      "reviewerType": "technician",
+      "rating": 2,
+      "feedback": "This was a challenging booking. The venue details provided beforehand didn't match reality - we were told it was a simple setup but arrived to find major acoustic issues that weren't mentioned. Felt like I was set up to fail. Payment was on time but the lack of accurate information made it nearly impossible to deliver the quality I normally provide.",
+      "skillRatings": {
+        "communication": 2,
+        "organization": 2,
+        "paymentPromptness": 4,
+        "professionalism": 3
+      },
+      "createdAt": "2025-11-23T10:15:00Z",
+      "editedAt": null,
+      "isEdited": false,
+      "helpfulVotes": 11,
+      "notHelpfulVotes": 2,
+      "xpAwarded": null,
+      "isAnonymous": false
+    },
+    {
+      "id": "rev_012",
+      "bookingId": "bkg_990",
+      "reviewerId": "usr_client_104",
+      "reviewerName": "Jennifer Lee",
+      "reviewerCompany": "Velocity Media",
+      "revieweeId": "usr_tech_027",
+      "revieweeName": "Jamie Torres",
+      "reviewerType": "client",
+      "rating": 5,
+      "feedback": "Third event with Jamie and she continues to deliver exceptional work. Her lighting design for our product launch was stunning - really captured the aesthetic we were going for. Collaborative, creative, and technically flawless. She's our go-to for any lighting-critical events.",
+      "skillRatings": {
+        "punctuality": 5,
+        "communication": 5,
+        "technicalSkill": 5,
+        "professionalism": 5
+      },
+      "createdAt": "2025-10-15T14:00:00Z",
+      "editedAt": null,
+      "isEdited": false,
+      "helpfulVotes": 17,
+      "notHelpfulVotes": 0,
+      "xpAwarded": 350,
+      "isAnonymous": false
+    }
+  ],
+  "trustProfiles": [
+    {
+      "id": "trust_001",
+      "technicianId": "usr_tech_015",
+      "technicianName": "Marcus Rodriguez",
+      "verifiedId": {
+        "status": "verified",
+        "verifiedAt": "2025-09-15T10:00:00Z",
+        "documentType": "Driver's License",
+        "expiresAt": null
+      },
+      "insurance": {
+        "status": "verified",
+        "verifiedAt": "2025-09-20T14:30:00Z",
+        "provider": "EventGuard Insurance",
+        "policyNumber": "EG-2025-847392",
+        "coverageAmount": 2000000,
+        "expiresAt": "2026-09-20T23:59:59Z"
+      },
+      "certifications": [
+        {
+          "id": "cert_001",
+          "name": "CTS - Certified Technology Specialist",
+          "issuingOrganization": "AVIXA",
+          "status": "verified",
+          "verifiedAt": "2025-09-22T11:00:00Z",
+          "issuedAt": "2024-06-10T00:00:00Z",
+          "expiresAt": "2027-06-10T23:59:59Z"
+        },
+        {
+          "id": "cert_002",
+          "name": "OSHA 10-Hour Safety Certification",
+          "issuingOrganization": "OSHA",
+          "status": "verified",
+          "verifiedAt": "2025-09-22T11:15:00Z",
+          "issuedAt": "2025-03-15T00:00:00Z",
+          "expiresAt": null
+        },
+        {
+          "id": "cert_003",
+          "name": "Dante Level 2 Certification",
+          "issuingOrganization": "Audinate",
+          "status": "verified",
+          "verifiedAt": "2025-10-05T09:30:00Z",
+          "issuedAt": "2024-11-20T00:00:00Z",
+          "expiresAt": null
+        }
+      ],
+      "backgroundCheck": {
+        "status": "completed",
+        "completedAt": "2025-09-25T16:00:00Z",
+        "provider": "SecureCheck Pro",
+        "expiresAt": "2026-09-25T23:59:59Z",
+        "disclaimer": "Background checks are primarily needed for high-security or confidential events. Most shows don't require this verification unless specifically requested by the client."
+      },
+      "trustScore": 98,
+      "lastUpdated": "2025-10-05T09:30:00Z"
+    },
+    {
+      "id": "trust_002",
+      "technicianId": "usr_tech_027",
+      "technicianName": "Jamie Torres",
+      "verifiedId": {
+        "status": "verified",
+        "verifiedAt": "2025-08-10T13:20:00Z",
+        "documentType": "Passport",
+        "expiresAt": null
+      },
+      "insurance": {
+        "status": "verified",
+        "verifiedAt": "2025-08-12T10:00:00Z",
+        "provider": "TechPro Insurance",
+        "policyNumber": "TPI-2025-556281",
+        "coverageAmount": 1000000,
+        "expiresAt": "2026-08-12T23:59:59Z"
+      },
+      "certifications": [
+        {
+          "id": "cert_004",
+          "name": "ETCP Certified Entertainment Electrician",
+          "issuingOrganization": "ETCP",
+          "status": "verified",
+          "verifiedAt": "2025-08-15T14:00:00Z",
+          "issuedAt": "2023-05-20T00:00:00Z",
+          "expiresAt": "2028-05-20T23:59:59Z"
+        },
+        {
+          "id": "cert_005",
+          "name": "MA Lighting grandMA2 Certification",
+          "issuingOrganization": "MA Lighting",
+          "status": "verified",
+          "verifiedAt": "2025-08-15T14:30:00Z",
+          "issuedAt": "2024-02-10T00:00:00Z",
+          "expiresAt": null
+        }
+      ],
+      "backgroundCheck": {
+        "status": "not_submitted",
+        "completedAt": null,
+        "provider": null,
+        "expiresAt": null,
+        "disclaimer": "Background checks are primarily needed for high-security or confidential events. Most shows don't require this verification unless specifically requested by the client."
+      },
+      "trustScore": 89,
+      "lastUpdated": "2025-08-15T14:30:00Z"
+    },
+    {
+      "id": "trust_003",
+      "technicianId": "usr_tech_033",
+      "technicianName": "Alex Kim",
+      "verifiedId": {
+        "status": "pending",
+        "verifiedAt": null,
+        "documentType": "Driver's License",
+        "expiresAt": null,
+        "submittedAt": "2025-12-15T09:00:00Z"
+      },
+      "insurance": {
+        "status": "verified",
+        "verifiedAt": "2025-11-01T11:30:00Z",
+        "provider": "ProAV Coverage",
+        "policyNumber": "PAC-2025-334129",
+        "coverageAmount": 1500000,
+        "expiresAt": "2026-11-01T23:59:59Z"
+      },
+      "certifications": [
+        {
+          "id": "cert_006",
+          "name": "CTS - Certified Technology Specialist",
+          "issuingOrganization": "AVIXA",
+          "status": "verified",
+          "verifiedAt": "2025-11-05T10:00:00Z",
+          "issuedAt": "2023-09-12T00:00:00Z",
+          "expiresAt": "2026-09-12T23:59:59Z"
+        }
+      ],
+      "backgroundCheck": {
+        "status": "not_submitted",
+        "completedAt": null,
+        "provider": null,
+        "expiresAt": null,
+        "disclaimer": "Background checks are primarily needed for high-security or confidential events. Most shows don't require this verification unless specifically requested by the client."
+      },
+      "trustScore": 72,
+      "lastUpdated": "2025-12-15T09:00:00Z"
+    },
+    {
+      "id": "trust_004",
+      "technicianId": "usr_tech_041",
+      "technicianName": "Priya Patel",
+      "verifiedId": {
+        "status": "not_submitted",
+        "verifiedAt": null,
+        "documentType": null,
+        "expiresAt": null
+      },
+      "insurance": {
+        "status": "expired",
+        "verifiedAt": "2024-10-15T12:00:00Z",
+        "provider": "EventGuard Insurance",
+        "policyNumber": "EG-2024-229183",
+        "coverageAmount": 1000000,
+        "expiresAt": "2025-10-15T23:59:59Z"
+      },
+      "certifications": [],
+      "backgroundCheck": {
+        "status": "not_submitted",
+        "completedAt": null,
+        "provider": null,
+        "expiresAt": null,
+        "disclaimer": "Background checks are primarily needed for high-security or confidential events. Most shows don't require this verification unless specifically requested by the client."
+      },
+      "trustScore": 45,
+      "lastUpdated": "2025-11-01T08:00:00Z"
+    }
+  ],
+  "disputes": [
+    {
+      "id": "dsp_001",
+      "bookingId": "bkg_112",
+      "initiatorId": "usr_tech_041",
+      "initiatorName": "Priya Patel",
+      "initiatorType": "technician",
+      "respondentId": "usr_client_073",
+      "respondentName": "Kevin O'Brien",
+      "respondentType": "client",
+      "stage": "self_resolution",
+      "category": "inaccurate_venue_information",
+      "description": "The venue information provided before the booking did not match the actual conditions on site. I was told it was a standard ballroom setup with typical acoustics, but arrived to find a space with severe echo issues, low ceilings with HVAC noise, and no acoustic treatment. This made it extremely difficult to deliver quality audio without additional equipment that wasn't budgeted or discussed.",
+      "createdAt": "2025-11-22T18:00:00Z",
+      "updatedAt": "2025-11-25T10:30:00Z",
+      "status": "active",
+      "messages": [
+        {
+          "id": "msg_001",
+          "senderId": "usr_tech_041",
+          "senderName": "Priya Patel",
+          "content": "Hi Kevin, I wanted to reach out about the event last week. I feel the venue information provided beforehand wasn't accurate, which made it really challenging to deliver the quality I normally provide. The acoustic issues weren't mentioned at all in the brief.",
+          "timestamp": "2025-11-22T18:00:00Z"
+        },
+        {
+          "id": "msg_002",
+          "senderId": "usr_client_073",
+          "senderName": "Kevin O'Brien",
+          "content": "I understand your concern, but we provided photos and the venue specs we received from the hotel. The acoustics were mentioned in the notes we sent.",
+          "timestamp": "2025-11-23T09:15:00Z"
+        },
+        {
+          "id": "msg_003",
+          "senderId": "usr_tech_041",
+          "senderName": "Priya Patel",
+          "content": "I reviewed the notes again and didn't see any mention of the severe echo or HVAC noise levels. Photos don't really convey acoustic challenges. Would you be willing to update the review to reflect that the venue conditions were more challenging than anticipated?",
+          "timestamp": "2025-11-23T14:20:00Z"
+        },
+        {
+          "id": "msg_004",
+          "senderId": "usr_client_073",
+          "senderName": "Kevin O'Brien",
+          "content": "I've updated the review to mention the venue challenges. I still think the technical execution could have been better, but I acknowledge the venue was difficult.",
+          "timestamp": "2025-11-25T10:30:00Z"
+        }
+      ],
+      "resolution": null,
+      "resolvedAt": null
+    },
+    {
+      "id": "dsp_002",
+      "bookingId": "bkg_543",
+      "initiatorId": "usr_client_067",
+      "initiatorName": "Michael Chang",
+      "initiatorType": "client",
+      "respondentId": "usr_tech_088",
+      "respondentName": "Taylor Brooks",
+      "respondentType": "technician",
+      "stage": "mediation",
+      "category": "no_show",
+      "description": "Technician did not show up for the booked event. Received a text message 30 minutes before load-in time saying they had a family emergency, but no advance notice or attempt to find a replacement. This left us scrambling to find last-minute coverage.",
+      "createdAt": "2025-12-01T10:00:00Z",
+      "updatedAt": "2025-12-08T15:45:00Z",
+      "status": "under_review",
+      "messages": [
+        {
+          "id": "msg_005",
+          "senderId": "usr_client_067",
+          "senderName": "Michael Chang",
+          "content": "Taylor, I understand emergencies happen, but the lack of advance notice put us in a very difficult position. We had to pay rush rates to find a replacement. I'm requesting a full refund of your booking deposit.",
+          "timestamp": "2025-12-01T10:00:00Z"
+        },
+        {
+          "id": "msg_006",
+          "senderId": "usr_tech_088",
+          "senderName": "Taylor Brooks",
+          "content": "I completely understand your frustration and I'm truly sorry. It was a genuine family emergency with my father being hospitalized. I'm happy to refund the deposit, but I also incurred costs preparing for the show. Can we discuss a partial refund?",
+          "timestamp": "2025-12-01T16:30:00Z"
+        },
+        {
+          "id": "msg_007",
+          "senderId": "usr_client_067",
+          "senderName": "Michael Chang",
+          "content": "I appreciate the apology but I paid $500 extra in rush fees to cover your absence. I'm requesting both the deposit refund and compensation for the additional costs I incurred.",
+          "timestamp": "2025-12-02T09:00:00Z"
+        },
+        {
+          "id": "msg_008",
+          "senderId": "usr_tech_088",
+          "senderName": "Taylor Brooks",
+          "content": "I'm willing to refund the full deposit but I can't cover your rush fees - that's not in the contract. Can we escalate this to mediation?",
+          "timestamp": "2025-12-02T14:20:00Z"
+        }
+      ],
+      "mediatorId": "usr_admin_003",
+      "mediatorName": "Jessica Martinez",
+      "mediatorNotes": "Reviewing contract terms and emergency protocols. Technician had legitimate emergency but communication timing was problematic. Client incurred real costs due to late notice. Considering fair compensation that accounts for both emergency circumstances and business impact.",
+      "resolution": null,
+      "resolvedAt": null
+    },
+    {
+      "id": "dsp_003",
+      "bookingId": "bkg_321",
+      "initiatorId": "usr_tech_019",
+      "initiatorName": "Sam Patel",
+      "initiatorType": "technician",
+      "respondentId": "usr_client_045",
+      "respondentName": "Amanda Foster",
+      "respondentType": "client",
+      "stage": "arbitration",
+      "category": "non_payment",
+      "description": "Completed full three-day conference setup and operation. Invoice was due 15 days after event completion (Nov 15) but payment still hasn't been received. Multiple follow-up emails have been sent with no response.",
+      "createdAt": "2025-11-20T11:00:00Z",
+      "updatedAt": "2025-12-10T14:20:00Z",
+      "status": "awaiting_decision",
+      "messages": [
+        {
+          "id": "msg_009",
+          "senderId": "usr_tech_019",
+          "senderName": "Sam Patel",
+          "content": "Hi Amanda, just following up on the invoice from our October event. Payment was due Nov 15 and I haven't received it yet. Can you provide an update on when I can expect payment?",
+          "timestamp": "2025-11-20T11:00:00Z"
+        },
+        {
+          "id": "msg_010",
+          "senderId": "usr_client_045",
+          "senderName": "Amanda Foster",
+          "content": "Hi Sam, I apologize for the delay. Our accounting department is backed up. I'll check on the status and get back to you.",
+          "timestamp": "2025-11-22T15:30:00Z"
+        },
+        {
+          "id": "msg_011",
+          "senderId": "usr_tech_019",
+          "senderName": "Sam Patel",
+          "content": "It's been a week since your last message and I still haven't received payment or an update. According to the contract, late payment incurs a 1.5% monthly interest charge. Please process payment immediately.",
+          "timestamp": "2025-11-29T09:15:00Z"
+        },
+        {
+          "id": "msg_012",
+          "senderId": "usr_client_045",
+          "senderName": "Amanda Foster",
+          "content": "We're disputing the invoice amount. You billed for 3 days but only worked 2.5 days according to our records. We'll be issuing payment for the adjusted amount.",
+          "timestamp": "2025-12-01T10:00:00Z"
+        },
+        {
+          "id": "msg_013",
+          "senderId": "usr_tech_019",
+          "senderName": "Sam Patel",
+          "content": "That's incorrect. I have signed timesheets from your on-site coordinator confirming all three full days plus load-in and load-out. This dispute seems to be in bad faith. I'm escalating to formal arbitration.",
+          "timestamp": "2025-12-01T14:30:00Z"
+        }
+      ],
+      "mediatorId": "usr_admin_003",
+      "mediatorName": "Jessica Martinez",
+      "mediatorNotes": "Mediation failed to reach agreement. Client continued to dispute hours worked despite signed documentation. Escalated to arbitration with recommendation for full payment plus interest based on documented evidence.",
+      "arbitrationDetails": {
+        "arbitratorId": "arb_external_001",
+        "arbitratorName": "Robert Harrison, Esq.",
+        "filingDate": "2025-12-05T10:00:00Z",
+        "hearingDate": "2025-12-15T14:00:00Z",
+        "technicianEvidence": [
+          "Signed daily timesheets",
+          "Email thread confirming three-day booking",
+          "Original contract",
+          "Photos with timestamps from all three days"
+        ],
+        "clientEvidence": [
+          "Internal attendance logs (disputed accuracy)",
+          "Financial hardship documentation"
+        ]
+      },
+      "resolution": null,
+      "resolvedAt": null
+    },
+    {
+      "id": "dsp_004",
+      "bookingId": "bkg_678",
+      "initiatorId": "usr_client_082",
+      "initiatorName": "Daniel Rodriguez",
+      "initiatorType": "client",
+      "respondentId": "usr_tech_051",
+      "respondentName": "Morgan Kelly",
+      "respondentType": "technician",
+      "stage": "arbitration",
+      "category": "equipment_damage",
+      "description": "During teardown, technician damaged our company's projection screen (valued at $3,500). The screen was torn while being lowered from the rigging. Technician claims the screen was already damaged, but our pre-event inspection showed it was in perfect condition.",
+      "createdAt": "2025-10-20T16:00:00Z",
+      "updatedAt": "2025-11-30T11:00:00Z",
+      "status": "resolved",
+      "messages": [
+        {
+          "id": "msg_014",
+          "senderId": "usr_client_082",
+          "senderName": "Daniel Rodriguez",
+          "content": "Morgan, we need to discuss the damage to our projection screen during teardown. The screen has a significant tear that wasn't there before the event. Our insurance deductible is $2,000 and we need you to cover that cost.",
+          "timestamp": "2025-10-20T16:00:00Z"
+        },
+        {
+          "id": "msg_015",
+          "senderId": "usr_tech_051",
+          "senderName": "Morgan Kelly",
+          "content": "I understand your concern, but I noticed wear on that screen when we rigged it. The tear could have been pre-existing and only became visible when we lowered it. I don't think I should be held responsible for equipment that was already compromised.",
+          "timestamp": "2025-10-21T09:30:00Z"
+        },
+        {
+          "id": "msg_016",
+          "senderId": "usr_client_082",
+          "senderName": "Daniel Rodriguez",
+          "content": "We have photos from our pre-event inspection showing the screen in perfect condition. I'm attaching them here. The damage clearly occurred during your teardown process.",
+          "timestamp": "2025-10-21T14:00:00Z"
+        }
+      ],
+      "mediatorId": "usr_admin_005",
+      "mediatorName": "Carlos Mendoza",
+      "mediatorNotes": "Reviewed photo evidence from both parties. Pre-event photos clearly show screen in good condition. Teardown video shows screen catching on rigging point during lowering. Technician's insurance should cover this. Recommended 70/30 split - technician covers $1,400, client covers $600 as partial responsibility for not having adequate rigging protection.",
+      "arbitrationDetails": {
+        "arbitratorId": "arb_external_002",
+        "arbitratorName": "Patricia Wong, Esq.",
+        "filingDate": "2025-11-01T10:00:00Z",
+        "hearingDate": "2025-11-20T10:00:00Z",
+        "technicianEvidence": [
+          "Testimony about screen condition",
+          "Rigging procedure documentation"
+        ],
+        "clientEvidence": [
+          "Pre-event inspection photos",
+          "Post-event damage photos",
+          "Teardown video footage",
+          "Screen purchase receipt and warranty info"
+        ]
+      },
+      "resolution": {
+        "decision": "Arbitrator ruled in favor of client with partial responsibility. Technician to pay $1,400 (70% of deductible), client responsible for remaining $600. Decision based on clear photographic evidence of pre-existing good condition and video showing inadequate care during teardown. Technician's insurance provider has been notified.",
+        "decidedBy": "arb_external_002",
+        "decidedAt": "2025-11-30T11:00:00Z",
+        "paymentDeadline": "2025-12-15T23:59:59Z",
+        "paymentStatus": "pending"
+      },
+      "resolvedAt": "2025-11-30T11:00:00Z"
+    }
+  ],
+  "reviewStats": {
+    "usr_tech_015": {
+      "technicianId": "usr_tech_015",
+      "technicianName": "Marcus Rodriguez",
+      "averageRating": 5.0,
+      "totalReviews": 4,
+      "ratingBreakdown": {
+        "5": 4,
+        "4": 0,
+        "3": 0,
+        "2": 0,
+        "1": 0
+      },
+      "skillAverages": {
+        "punctuality": 5.0,
+        "communication": 5.0,
+        "technicalSkill": 5.0,
+        "professionalism": 5.0
+      },
+      "totalHelpfulVotes": 63,
+      "portfolioItemsWithXP": 4,
+      "portfolioItemsWithoutXP": 2
+    },
+    "usr_tech_027": {
+      "technicianId": "usr_tech_027",
+      "technicianName": "Jamie Torres",
+      "averageRating": 4.75,
+      "totalReviews": 4,
+      "ratingBreakdown": {
+        "5": 3,
+        "4": 1,
+        "3": 0,
+        "2": 0,
+        "1": 0
+      },
+      "skillAverages": {
+        "punctuality": 5.0,
+        "communication": 4.75,
+        "technicalSkill": 4.75,
+        "professionalism": 5.0
+      },
+      "totalHelpfulVotes": 48,
+      "portfolioItemsWithXP": 4,
+      "portfolioItemsWithoutXP": 1
+    },
+    "usr_tech_033": {
+      "technicianId": "usr_tech_033",
+      "technicianName": "Alex Kim",
+      "averageRating": 3.0,
+      "totalReviews": 1,
+      "ratingBreakdown": {
+        "5": 0,
+        "4": 0,
+        "3": 1,
+        "2": 0,
+        "1": 0
+      },
+      "skillAverages": {
+        "punctuality": 4.0,
+        "communication": 2.0,
+        "technicalSkill": 4.0,
+        "professionalism": 3.0
+      },
+      "totalHelpfulVotes": 2,
+      "portfolioItemsWithXP": 1,
+      "portfolioItemsWithoutXP": 3
+    },
+    "usr_tech_041": {
+      "technicianId": "usr_tech_041",
+      "technicianName": "Priya Patel",
+      "averageRating": 2.0,
+      "totalReviews": 1,
+      "ratingBreakdown": {
+        "5": 0,
+        "4": 0,
+        "3": 0,
+        "2": 1,
+        "1": 0
+      },
+      "skillAverages": {
+        "punctuality": 4.0,
+        "communication": 3.0,
+        "technicalSkill": 2.0,
+        "professionalism": 3.0
+      },
+      "totalHelpfulVotes": -3,
+      "portfolioItemsWithXP": 1,
+      "portfolioItemsWithoutXP": 5
+    }
+  }
+}

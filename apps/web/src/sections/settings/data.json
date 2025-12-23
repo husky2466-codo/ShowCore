@@ -1,0 +1,962 @@
+{
+  "_meta": {
+    "description": "Sample data for the Settings section",
+    "models": [
+      {
+        "name": "TechnicianSettingsProfile",
+        "description": "Complete settings profile for technician users including professional details, tier status, availability, and certifications",
+        "fields": {
+          "id": "Unique identifier for the user",
+          "email": "User's email address",
+          "phone": "Phone number (optional)",
+          "role": "Always 'technician' for this profile type",
+          "name": "Full name of the technician",
+          "profilePhoto": "URL to profile photo (optional)",
+          "bio": "Professional biography",
+          "location": "City and state/country",
+          "skills": "Array of skills/specializations",
+          "hourlyRateRange": "Min/max hourly rate range",
+          "portfolioLinks": "Array of portfolio URLs",
+          "certifications": "Array of certification documents",
+          "insuranceDocuments": "Array of insurance verification documents",
+          "tier": "Current technician tier (Beginner/Experienced/Advanced/Pro)",
+          "xp": "Current experience points",
+          "xpToNextTier": "XP needed to reach next tier",
+          "defaultAvailability": "Default working hours and blackout dates",
+          "timezone": "User's timezone for availability",
+          "profileVisibility": "Whether profile is publicly searchable or private",
+          "createdAt": "ISO timestamp of account creation",
+          "lastUpdatedAt": "ISO timestamp of last profile update"
+        }
+      },
+      {
+        "name": "CompanySettingsProfile",
+        "description": "Complete settings profile for company users including team, billing, and subscription information",
+        "fields": {
+          "id": "Unique identifier for the user",
+          "email": "Company email address",
+          "phone": "Company phone number (optional)",
+          "role": "Always 'company' for this profile type",
+          "companyName": "Name of the company",
+          "companyLogo": "URL to company logo (optional)",
+          "industry": "Primary industry/sector",
+          "website": "Company website URL (optional)",
+          "location": "City and state/country",
+          "hiringNeeds": "Description of typical technician requirements",
+          "teamMembers": "Array of team members with roles and permissions",
+          "subscriptionTier": "Current subscription tier (Free/Basic/Pro/Enterprise)",
+          "billingInfo": "Payment methods, billing address, and invoice history",
+          "createdAt": "ISO timestamp of account creation",
+          "lastUpdatedAt": "ISO timestamp of last profile update"
+        }
+      },
+      {
+        "name": "NotificationPreferences",
+        "description": "User preferences for email, push, and SMS notifications across different categories",
+        "fields": {
+          "bookings": "Notification settings for booking updates",
+          "messages": "Notification settings for new messages",
+          "reviews": "Notification settings for reviews",
+          "systemUpdates": "Notification settings for platform updates",
+          "marketingCommunications": "Notification settings for marketing emails"
+        }
+      },
+      {
+        "name": "PayoutMethod",
+        "description": "Payout method for technicians (bank account or PayPal)",
+        "fields": {
+          "id": "Unique identifier for the payout method",
+          "type": "Type of payout method (bank_account or paypal)",
+          "isDefault": "Whether this is the default payout method",
+          "createdAt": "ISO timestamp when method was added"
+        }
+      },
+      {
+        "name": "BillingInfo",
+        "description": "Billing information for company subscriptions including payment methods and invoices",
+        "fields": {
+          "paymentMethods": "Array of saved payment methods",
+          "billingAddress": "Company billing address",
+          "invoices": "Array of past invoices"
+        }
+      },
+      {
+        "name": "ConnectedAccount",
+        "description": "OAuth account connected to user's profile",
+        "fields": {
+          "id": "Unique identifier for the connected account",
+          "provider": "OAuth provider (google, apple, microsoft)",
+          "email": "Email address associated with the OAuth account",
+          "connectedAt": "ISO timestamp when account was connected",
+          "isConnected": "Whether account is currently connected"
+        }
+      },
+      {
+        "name": "PrivacySettings",
+        "description": "User privacy preferences for profile visibility and data sharing",
+        "fields": {
+          "emailVisibility": "Who can see user's email (public/connections/private)",
+          "phoneVisibility": "Who can see user's phone (public/connections/private)",
+          "profileVisibility": "Whether profile is publicly searchable (for technicians)",
+          "allowDataSharing": "Whether to share anonymized data for platform improvements",
+          "allowMarketingCommunications": "Whether to receive marketing emails"
+        }
+      },
+      {
+        "name": "AppearanceSettings",
+        "description": "User preferences for UI appearance and accessibility",
+        "fields": {
+          "theme": "Theme preference (light/dark/system)",
+          "fontSize": "Font size preference (small/medium/large)",
+          "reducedMotion": "Whether to reduce animations",
+          "language": "Preferred language (ISO code)"
+        }
+      },
+      {
+        "name": "SecuritySettings",
+        "description": "Security configuration including 2FA and active sessions",
+        "fields": {
+          "twoFactorAuth": "Two-factor authentication settings",
+          "activeSessions": "Array of active login sessions",
+          "lastPasswordChange": "ISO timestamp of last password change"
+        }
+      },
+      {
+        "name": "ActiveSession",
+        "description": "Active login session on a device",
+        "fields": {
+          "id": "Unique session identifier",
+          "deviceName": "Name of the device",
+          "deviceType": "Type of device (desktop/mobile/tablet)",
+          "browser": "Browser name and version",
+          "ipAddress": "IP address of the session",
+          "location": "Approximate location based on IP",
+          "lastActive": "ISO timestamp of last activity",
+          "isCurrent": "Whether this is the current session"
+        }
+      },
+      {
+        "name": "SettingsSection",
+        "description": "Individual settings section in navigation",
+        "fields": {
+          "id": "Section identifier",
+          "label": "Display label for the section",
+          "icon": "Icon identifier for the section",
+          "visible": "Whether section is visible based on user role"
+        }
+      }
+    ]
+  },
+  "technicianProfile": {
+    "id": "user_tech_1",
+    "email": "sarah.chen@example.com",
+    "phone": "+1 (310) 555-0142",
+    "role": "technician",
+    "name": "Sarah Chen",
+    "profilePhoto": "https://i.pravatar.cc/150?img=5",
+    "bio": "Professional audio engineer with 8+ years experience in live events and installations. Specialized in line array systems and digital mixing consoles. I've worked on everything from intimate jazz clubs to 50,000+ capacity festivals.",
+    "location": "Los Angeles, CA",
+    "skills": [
+      "Audio Engineering",
+      "Live Sound",
+      "System Tuning",
+      "RF Coordination",
+      "Digital Consoles",
+      "Dante Networking",
+      "Meyer Sound",
+      "d&b audiotechnik"
+    ],
+    "hourlyRateRange": {
+      "min": 75,
+      "max": 150
+    },
+    "portfolioLinks": [
+      "https://soundbetter.com/sarahchen",
+      "https://linkedin.com/in/sarahchen",
+      "https://instagram.com/sarahchen_audio"
+    ],
+    "certifications": [
+      {
+        "id": "cert_1",
+        "name": "Dante Level 3 Certification",
+        "issuingOrganization": "Audinate",
+        "issueDate": "2023-06-15",
+        "expiryDate": "2026-06-15",
+        "documentUrl": "https://example.com/certs/dante-level3.pdf",
+        "verified": true
+      },
+      {
+        "id": "cert_2",
+        "name": "Meyer Sound System Design",
+        "issuingOrganization": "Meyer Sound",
+        "issueDate": "2022-11-20",
+        "documentUrl": "https://example.com/certs/meyer-design.pdf",
+        "verified": true
+      },
+      {
+        "id": "cert_3",
+        "name": "OSHA 10-Hour Construction Safety",
+        "issuingOrganization": "OSHA",
+        "issueDate": "2024-01-10",
+        "expiryDate": "2029-01-10",
+        "documentUrl": "https://example.com/certs/osha-10.pdf",
+        "verified": true
+      }
+    ],
+    "insuranceDocuments": [
+      {
+        "id": "ins_1",
+        "type": "general-liability",
+        "provider": "Travelers Insurance",
+        "policyNumber": "GL-9847562-01",
+        "coverageAmount": 2000000,
+        "expiryDate": "2025-12-31",
+        "documentUrl": "https://example.com/insurance/general-liability.pdf",
+        "verified": true
+      },
+      {
+        "id": "ins_2",
+        "type": "equipment",
+        "provider": "MusicPro Insurance",
+        "policyNumber": "EQ-4582193-02",
+        "coverageAmount": 50000,
+        "expiryDate": "2025-08-15",
+        "documentUrl": "https://example.com/insurance/equipment.pdf",
+        "verified": true
+      }
+    ],
+    "tier": "Advanced",
+    "xp": 7250,
+    "xpToNextTier": 2750,
+    "defaultAvailability": {
+      "defaultWorkingHours": {
+        "monday": {
+          "start": "10:00",
+          "end": "22:00"
+        },
+        "tuesday": {
+          "start": "10:00",
+          "end": "22:00"
+        },
+        "wednesday": {
+          "start": "10:00",
+          "end": "22:00"
+        },
+        "thursday": {
+          "start": "10:00",
+          "end": "22:00"
+        },
+        "friday": {
+          "start": "10:00",
+          "end": "23:00"
+        },
+        "saturday": {
+          "start": "09:00",
+          "end": "23:00"
+        },
+        "sunday": null
+      },
+      "blackoutDates": [
+        "2025-12-24",
+        "2025-12-25",
+        "2025-12-31",
+        "2026-01-01"
+      ]
+    },
+    "timezone": "America/Los_Angeles",
+    "profileVisibility": "public",
+    "createdAt": "2024-01-15T10:30:00Z",
+    "lastUpdatedAt": "2024-11-20T14:22:00Z"
+  },
+  "companyProfile": {
+    "id": "user_company_1",
+    "email": "bookings@soundstage-venues.com",
+    "phone": "+1 (212) 555-0198",
+    "role": "company",
+    "companyName": "SoundStage Venues",
+    "companyLogo": "https://ui-avatars.com/api/?name=SoundStage+Venues&background=6366f1&color=fff",
+    "industry": "Live Events & Entertainment",
+    "website": "https://soundstage-venues.com",
+    "location": "New York, NY",
+    "hiringNeeds": "We regularly need audio engineers for concerts, corporate events, and theater productions. Looking for experienced technicians with digital console experience (DiGiCo, Yamaha CL/QL series). Most events are evening/weekend. We value reliability and professional communication.",
+    "teamMembers": [
+      {
+        "id": "member_1",
+        "name": "David Martinez",
+        "email": "david@soundstage-venues.com",
+        "role": "owner",
+        "joinedAt": "2024-01-20T11:00:00Z",
+        "lastActive": "2024-12-19T16:45:00Z",
+        "avatar": "https://i.pravatar.cc/150?img=12"
+      },
+      {
+        "id": "member_2",
+        "name": "Jessica Wong",
+        "email": "jessica@soundstage-venues.com",
+        "role": "admin",
+        "joinedAt": "2024-02-10T09:30:00Z",
+        "lastActive": "2024-12-20T10:15:00Z",
+        "avatar": "https://i.pravatar.cc/150?img=47"
+      },
+      {
+        "id": "member_3",
+        "name": "Marcus Thompson",
+        "email": "marcus@soundstage-venues.com",
+        "role": "member",
+        "joinedAt": "2024-05-15T14:20:00Z",
+        "lastActive": "2024-12-18T18:30:00Z",
+        "avatar": "https://i.pravatar.cc/150?img=33"
+      }
+    ],
+    "subscriptionTier": "Pro",
+    "billingInfo": {
+      "paymentMethods": [
+        {
+          "id": "pm_1",
+          "type": "card",
+          "isDefault": true,
+          "cardBrand": "visa",
+          "last4": "4242",
+          "expiryMonth": 8,
+          "expiryYear": 2027,
+          "createdAt": "2024-01-20T11:15:00Z"
+        },
+        {
+          "id": "pm_2",
+          "type": "card",
+          "isDefault": false,
+          "cardBrand": "mastercard",
+          "last4": "8888",
+          "expiryMonth": 3,
+          "expiryYear": 2026,
+          "createdAt": "2024-06-10T15:30:00Z"
+        }
+      ],
+      "billingAddress": {
+        "line1": "450 West 42nd Street",
+        "line2": "Suite 1200",
+        "city": "New York",
+        "state": "NY",
+        "postalCode": "10036",
+        "country": "US"
+      },
+      "invoices": [
+        {
+          "id": "inv_1",
+          "invoiceNumber": "INV-2024-12-001",
+          "date": "2024-12-01T00:00:00Z",
+          "amount": 99.00,
+          "status": "paid",
+          "description": "Pro Plan - December 2024",
+          "downloadUrl": "https://example.com/invoices/inv-2024-12-001.pdf"
+        },
+        {
+          "id": "inv_2",
+          "invoiceNumber": "INV-2024-11-001",
+          "date": "2024-11-01T00:00:00Z",
+          "amount": 99.00,
+          "status": "paid",
+          "description": "Pro Plan - November 2024",
+          "downloadUrl": "https://example.com/invoices/inv-2024-11-001.pdf"
+        },
+        {
+          "id": "inv_3",
+          "invoiceNumber": "INV-2024-10-001",
+          "date": "2024-10-01T00:00:00Z",
+          "amount": 99.00,
+          "status": "paid",
+          "description": "Pro Plan - October 2024",
+          "downloadUrl": "https://example.com/invoices/inv-2024-10-001.pdf"
+        },
+        {
+          "id": "inv_4",
+          "invoiceNumber": "INV-2024-09-001",
+          "date": "2024-09-01T00:00:00Z",
+          "amount": 99.00,
+          "status": "paid",
+          "description": "Pro Plan - September 2024",
+          "downloadUrl": "https://example.com/invoices/inv-2024-09-001.pdf"
+        }
+      ]
+    },
+    "createdAt": "2024-01-20T11:00:00Z",
+    "lastUpdatedAt": "2024-12-15T09:45:00Z"
+  },
+  "notificationPreferences": {
+    "bookings": {
+      "email": true,
+      "push": true,
+      "sms": true
+    },
+    "messages": {
+      "email": true,
+      "push": true,
+      "sms": false
+    },
+    "reviews": {
+      "email": true,
+      "push": true,
+      "sms": false
+    },
+    "systemUpdates": {
+      "email": true,
+      "push": false,
+      "sms": false
+    },
+    "marketingCommunications": {
+      "email": false,
+      "push": false,
+      "sms": false
+    }
+  },
+  "samplePayoutMethods": [
+    {
+      "id": "payout_1",
+      "type": "bank_account",
+      "isDefault": true,
+      "bankName": "Chase Bank",
+      "accountHolderName": "Sarah Chen",
+      "accountNumberLast4": "4892",
+      "routingNumber": "021000021",
+      "accountType": "checking",
+      "createdAt": "2024-01-20T12:00:00Z"
+    },
+    {
+      "id": "payout_2",
+      "type": "paypal",
+      "isDefault": false,
+      "email": "sarah.chen@paypal.com",
+      "verified": true,
+      "createdAt": "2024-03-15T14:30:00Z"
+    }
+  ],
+  "sampleBillingInfo": {
+    "paymentMethods": [
+      {
+        "id": "pm_1",
+        "type": "card",
+        "isDefault": true,
+        "cardBrand": "visa",
+        "last4": "4242",
+        "expiryMonth": 8,
+        "expiryYear": 2027,
+        "createdAt": "2024-01-20T11:15:00Z"
+      }
+    ],
+    "billingAddress": {
+      "line1": "450 West 42nd Street",
+      "line2": "Suite 1200",
+      "city": "New York",
+      "state": "NY",
+      "postalCode": "10036",
+      "country": "US"
+    },
+    "invoices": [
+      {
+        "id": "inv_1",
+        "invoiceNumber": "INV-2024-12-001",
+        "date": "2024-12-01T00:00:00Z",
+        "amount": 99.00,
+        "status": "paid",
+        "description": "Pro Plan - December 2024",
+        "downloadUrl": "https://example.com/invoices/inv-2024-12-001.pdf"
+      }
+    ]
+  },
+  "connectedAccounts": [
+    {
+      "id": "oauth_1",
+      "provider": "google",
+      "email": "sarah.chen@gmail.com",
+      "connectedAt": "2024-01-15T10:35:00Z",
+      "isConnected": true
+    },
+    {
+      "id": "oauth_2",
+      "provider": "apple",
+      "email": "sarah.chen@icloud.com",
+      "connectedAt": "2024-02-20T15:20:00Z",
+      "isConnected": true
+    },
+    {
+      "id": "oauth_3",
+      "provider": "microsoft",
+      "email": "",
+      "connectedAt": "",
+      "isConnected": false
+    }
+  ],
+  "privacySettings": {
+    "emailVisibility": "connections",
+    "phoneVisibility": "private",
+    "profileVisibility": "public",
+    "allowDataSharing": true,
+    "allowMarketingCommunications": false
+  },
+  "appearanceSettings": {
+    "theme": "system",
+    "fontSize": "medium",
+    "reducedMotion": false,
+    "language": "en-US"
+  },
+  "securitySettings": {
+    "twoFactorAuth": {
+      "enabled": true,
+      "method": "authenticator",
+      "backupCodes": [
+        "A1B2C3D4",
+        "E5F6G7H8",
+        "I9J0K1L2",
+        "M3N4O5P6"
+      ]
+    },
+    "activeSessions": [
+      {
+        "id": "session_1",
+        "deviceName": "MacBook Pro",
+        "deviceType": "desktop",
+        "browser": "Chrome 120.0",
+        "ipAddress": "192.168.1.105",
+        "location": "Los Angeles, CA",
+        "lastActive": "2024-12-20T14:30:00Z",
+        "isCurrent": true
+      },
+      {
+        "id": "session_2",
+        "deviceName": "iPhone 15 Pro",
+        "deviceType": "mobile",
+        "browser": "Safari 17.2",
+        "ipAddress": "192.168.1.112",
+        "location": "Los Angeles, CA",
+        "lastActive": "2024-12-20T12:15:00Z",
+        "isCurrent": false
+      },
+      {
+        "id": "session_3",
+        "deviceName": "iPad Air",
+        "deviceType": "tablet",
+        "browser": "Safari 17.2",
+        "ipAddress": "192.168.1.118",
+        "location": "Los Angeles, CA",
+        "lastActive": "2024-12-18T19:45:00Z",
+        "isCurrent": false
+      }
+    ],
+    "lastPasswordChange": "2024-09-15T10:20:00Z"
+  },
+  "accountManagement": {
+    "status": "active",
+    "dataExportRequested": false
+  },
+  "settingsNavigation": {
+    "technician": [
+      {
+        "label": "Account",
+        "sections": [
+          {
+            "id": "profile",
+            "label": "Profile",
+            "icon": "user",
+            "visible": true
+          },
+          {
+            "id": "security",
+            "label": "Security",
+            "icon": "shield",
+            "visible": true
+          },
+          {
+            "id": "notifications",
+            "label": "Notifications",
+            "icon": "bell",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "label": "Professional",
+        "sections": [
+          {
+            "id": "payment",
+            "label": "Payout Methods",
+            "icon": "credit-card",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "label": "Preferences",
+        "sections": [
+          {
+            "id": "privacy",
+            "label": "Privacy",
+            "icon": "lock",
+            "visible": true
+          },
+          {
+            "id": "appearance",
+            "label": "Appearance",
+            "icon": "palette",
+            "visible": true
+          },
+          {
+            "id": "connected-accounts",
+            "label": "Connected Accounts",
+            "icon": "link",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "label": "Advanced",
+        "sections": [
+          {
+            "id": "account",
+            "label": "Account Management",
+            "icon": "settings",
+            "visible": true
+          }
+        ]
+      }
+    ],
+    "company": [
+      {
+        "label": "Account",
+        "sections": [
+          {
+            "id": "profile",
+            "label": "Company Profile",
+            "icon": "building",
+            "visible": true
+          },
+          {
+            "id": "security",
+            "label": "Security",
+            "icon": "shield",
+            "visible": true
+          },
+          {
+            "id": "notifications",
+            "label": "Notifications",
+            "icon": "bell",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "label": "Business",
+        "sections": [
+          {
+            "id": "billing",
+            "label": "Billing & Subscription",
+            "icon": "credit-card",
+            "visible": true
+          },
+          {
+            "id": "team",
+            "label": "Team Management",
+            "icon": "users",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "label": "Preferences",
+        "sections": [
+          {
+            "id": "privacy",
+            "label": "Privacy",
+            "icon": "lock",
+            "visible": true
+          },
+          {
+            "id": "appearance",
+            "label": "Appearance",
+            "icon": "palette",
+            "visible": true
+          },
+          {
+            "id": "connected-accounts",
+            "label": "Connected Accounts",
+            "icon": "link",
+            "visible": true
+          }
+        ]
+      },
+      {
+        "label": "Advanced",
+        "sections": [
+          {
+            "id": "account",
+            "label": "Account Management",
+            "icon": "settings",
+            "visible": true
+          }
+        ]
+      }
+    ]
+  },
+  "availableSkills": [
+    "Audio Engineering",
+    "Live Sound",
+    "System Tuning",
+    "RF Coordination",
+    "Digital Consoles",
+    "Analog Consoles",
+    "Dante Networking",
+    "AVB Networking",
+    "Meyer Sound",
+    "d&b audiotechnik",
+    "L-Acoustics",
+    "JBL Professional",
+    "Shure Wireless",
+    "Sennheiser Wireless",
+    "DiGiCo Consoles",
+    "Yamaha CL/QL",
+    "Avid VENUE",
+    "Allen & Heath",
+    "Stage Monitoring",
+    "In-Ear Monitoring",
+    "Video Engineering",
+    "Lighting Design",
+    "Lighting Programming",
+    "Moving Lights",
+    "LED Video Walls",
+    "Projection Mapping",
+    "Rigging",
+    "Stage Management",
+    "Production Management",
+    "Broadcast Audio",
+    "Recording Engineering",
+    "Live Streaming"
+  ],
+  "availableIndustries": [
+    "Live Events & Entertainment",
+    "Corporate Events",
+    "Theater & Performing Arts",
+    "Houses of Worship",
+    "Broadcast & Media",
+    "Education",
+    "Hospitality & Hotels",
+    "Sports & Recreation",
+    "Government & Military",
+    "Healthcare",
+    "Retail",
+    "Museums & Exhibitions",
+    "Music Venues",
+    "Convention Centers",
+    "Film & Television Production"
+  ],
+  "availableTimezones": [
+    "America/New_York",
+    "America/Chicago",
+    "America/Denver",
+    "America/Phoenix",
+    "America/Los_Angeles",
+    "America/Anchorage",
+    "Pacific/Honolulu",
+    "Europe/London",
+    "Europe/Paris",
+    "Europe/Berlin",
+    "Asia/Tokyo",
+    "Asia/Shanghai",
+    "Asia/Dubai",
+    "Australia/Sydney",
+    "Pacific/Auckland"
+  ],
+  "availableLanguages": [
+    {
+      "code": "en-US",
+      "name": "English (US)"
+    },
+    {
+      "code": "en-GB",
+      "name": "English (UK)"
+    },
+    {
+      "code": "es-ES",
+      "name": "Spanish"
+    },
+    {
+      "code": "fr-FR",
+      "name": "French"
+    },
+    {
+      "code": "de-DE",
+      "name": "German"
+    },
+    {
+      "code": "it-IT",
+      "name": "Italian"
+    },
+    {
+      "code": "pt-BR",
+      "name": "Portuguese (Brazil)"
+    },
+    {
+      "code": "ja-JP",
+      "name": "Japanese"
+    },
+    {
+      "code": "zh-CN",
+      "name": "Chinese (Simplified)"
+    },
+    {
+      "code": "ko-KR",
+      "name": "Korean"
+    }
+  ],
+  "toastExamples": {
+    "profileUpdated": {
+      "id": "toast_1",
+      "type": "success",
+      "message": "Profile updated successfully",
+      "duration": 3000
+    },
+    "passwordChanged": {
+      "id": "toast_2",
+      "type": "success",
+      "message": "Password changed successfully",
+      "duration": 3000
+    },
+    "payoutMethodAdded": {
+      "id": "toast_3",
+      "type": "success",
+      "message": "Payout method added successfully",
+      "duration": 3000
+    },
+    "sessionRevoked": {
+      "id": "toast_4",
+      "type": "success",
+      "message": "Session revoked successfully",
+      "duration": 3000
+    },
+    "updateError": {
+      "id": "toast_5",
+      "type": "error",
+      "message": "Failed to update settings. Please try again.",
+      "duration": 5000
+    },
+    "invalidCard": {
+      "id": "toast_6",
+      "type": "error",
+      "message": "Invalid card details. Please check and try again.",
+      "duration": 5000
+    },
+    "2faEnabled": {
+      "id": "toast_7",
+      "type": "success",
+      "message": "Two-factor authentication enabled",
+      "duration": 3000
+    },
+    "accountConnected": {
+      "id": "toast_8",
+      "type": "success",
+      "message": "Google account connected successfully",
+      "duration": 3000
+    }
+  },
+  "validationErrors": {
+    "profile": {
+      "emptyName": "Name is required",
+      "emptyLocation": "Location is required",
+      "noSkills": "Please add at least one skill",
+      "invalidRateRange": "Maximum rate must be greater than minimum rate",
+      "minRateTooLow": "Minimum rate must be at least $25/hour",
+      "maxRateTooHigh": "Maximum rate cannot exceed $500/hour",
+      "bioTooShort": "Bio must be at least 50 characters",
+      "bioTooLong": "Bio cannot exceed 500 characters",
+      "invalidUrl": "Please enter a valid URL",
+      "invalidPhone": "Please enter a valid phone number"
+    },
+    "security": {
+      "wrongCurrentPassword": "Current password is incorrect",
+      "passwordTooShort": "Password must be at least 8 characters",
+      "passwordMismatch": "Passwords do not match",
+      "weakPassword": "Password must include uppercase, lowercase, number, and special character"
+    },
+    "payment": {
+      "invalidRoutingNumber": "Invalid routing number",
+      "invalidAccountNumber": "Invalid account number",
+      "invalidEmail": "Please enter a valid email address",
+      "emptyField": "This field is required"
+    },
+    "billing": {
+      "invalidCardNumber": "Invalid card number",
+      "invalidExpiry": "Invalid expiration date",
+      "invalidCvv": "Invalid CVV",
+      "cardExpired": "This card has expired"
+    }
+  },
+  "confirmationDialogs": {
+    "removePayoutMethod": {
+      "title": "Remove Payout Method",
+      "message": "Are you sure you want to remove this payout method? This action cannot be undone.",
+      "confirmText": "Remove Method",
+      "cancelText": "Cancel"
+    },
+    "revokeSession": {
+      "title": "Revoke Session",
+      "message": "Are you sure you want to revoke this session? The device will be signed out immediately.",
+      "confirmText": "Revoke Session",
+      "cancelText": "Cancel"
+    },
+    "disable2FA": {
+      "title": "Disable Two-Factor Authentication",
+      "message": "Disabling 2FA will make your account less secure. Are you sure you want to continue?",
+      "confirmText": "Disable 2FA",
+      "cancelText": "Cancel"
+    },
+    "disconnectAccount": {
+      "title": "Disconnect Account",
+      "message": "Are you sure you want to disconnect your Google account? You'll still be able to sign in with your password.",
+      "confirmText": "Disconnect",
+      "cancelText": "Cancel"
+    },
+    "removeMember": {
+      "title": "Remove Team Member",
+      "message": "Are you sure you want to remove {memberName} from your team? They will lose access to your company account.",
+      "confirmText": "Remove Member",
+      "cancelText": "Cancel"
+    },
+    "deactivateAccount": {
+      "title": "Deactivate Account",
+      "message": "Your account will be hidden from searches and you won't be able to book or be booked. You can reactivate anytime. Are you sure?",
+      "confirmText": "Deactivate Account",
+      "cancelText": "Cancel"
+    },
+    "deleteAccount": {
+      "title": "Delete Account",
+      "message": "This action cannot be undone. All your data, bookings, and messages will be permanently deleted in 30 days. Are you absolutely sure?",
+      "confirmText": "Delete My Account",
+      "cancelText": "Cancel"
+    }
+  },
+  "emptyStates": {
+    "noCertifications": {
+      "title": "No Certifications",
+      "description": "Add certifications to showcase your qualifications to potential clients.",
+      "action": "Add Certification"
+    },
+    "noInsurance": {
+      "title": "No Insurance Documents",
+      "description": "Upload your insurance documents to build trust with clients.",
+      "action": "Upload Insurance"
+    },
+    "noPayoutMethods": {
+      "title": "No Payout Methods",
+      "description": "Add a bank account or PayPal to receive payments.",
+      "action": "Add Payout Method"
+    },
+    "noTeamMembers": {
+      "title": "No Team Members",
+      "description": "Invite team members to help manage bookings and technician communications.",
+      "action": "Invite Member"
+    },
+    "noInvoices": {
+      "title": "No Invoices",
+      "description": "Your subscription invoices will appear here.",
+      "action": null
+    }
+  }
+}

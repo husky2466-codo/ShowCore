@@ -1,0 +1,421 @@
+// Generated from Design OS data model for ShowCore
+// Customize fields, add indexes, and relations as needed
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// User & Profile Models
+// ============================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String?
+  emailVerified Boolean   @default(false)
+  role          UserRole  @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  // Profile - one of these will be populated
+  technician    Technician?
+  company       Company?
+
+  // Relations
+  sentMessages      Message[]       @relation("MessageSender")
+  reviewsGiven      Review[]        @relation("ReviewAuthor")
+  reviewsReceived   Review[]        @relation("ReviewSubject")
+  disputesFiled     Dispute[]       @relation("DisputeFiler")
+  disputesAgainst   Dispute[]       @relation("DisputeRespondent")
+  notifications     Notification[]
+  aiConversations   AIAssistantConversation[]
+  onboardingProgress OnboardingProgress?
+}
+
+enum UserRole {
+  USER
+  TECHNICIAN
+  COMPANY
+  ADMIN
+}
+
+model Technician {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id])
+
+  // Profile fields
+  displayName     String
+  bio             String?
+  avatarUrl       String?
+  location        String?
+  hourlyRate      Decimal?  @db.Decimal(10, 2)
+
+  // Tier & XP
+  tier            TechnicianTier @default(BEGINNER)
+  xpPoints        Int       @default(0)
+
+  // Verification
+  isVerified      Boolean   @default(false)
+  hasInsurance    Boolean   @default(false)
+  insuranceExpiry DateTime?
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+
+  // Relations
+  skills          TechnicianSkill[]
+  showProofs      ShowProof[]
+  bookings        Booking[]
+}
+
+enum TechnicianTier {
+  BEGINNER
+  EXPERIENCED
+  ADVANCED
+  PRO
+}
+
+model Company {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id])
+
+  // Profile fields
+  name            String
+  description     String?
+  logoUrl         String?
+  website         String?
+  location        String?
+
+  // Subscription
+  subscriptionTier SubscriptionTier @default(FREE)
+  subscriptionEnds DateTime?
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+
+  // Relations
+  bookings        Booking[]
+}
+
+enum SubscriptionTier {
+  FREE
+  BASIC
+  PRO
+  ENTERPRISE
+}
+
+// ============================================
+// Skills
+// ============================================
+
+model Skill {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  category    String
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  technicians TechnicianSkill[]
+}
+
+model TechnicianSkill {
+  id           String    @id @default(cuid())
+  technicianId String
+  technician   Technician @relation(fields: [technicianId], references: [id])
+  skillId      String
+  skill        Skill     @relation(fields: [skillId], references: [id])
+
+  // Verification
+  isVerified   Boolean   @default(false)
+  verifiedAt   DateTime?
+  verifiedBy   String?   // Admin user ID
+
+  createdAt    DateTime  @default(now())
+
+  @@unique([technicianId, skillId])
+}
+
+// ============================================
+// Bookings & Messaging
+// ============================================
+
+model Booking {
+  id            String    @id @default(cuid())
+  technicianId  String
+  technician    Technician @relation(fields: [technicianId], references: [id])
+  companyId     String
+  company       Company   @relation(fields: [companyId], references: [id])
+
+  // Event details
+  title         String
+  description   String?
+  eventDate     DateTime
+  eventEndDate  DateTime?
+  location      String?
+
+  // Rate & payment
+  hourlyRate    Decimal   @db.Decimal(10, 2)
+  estimatedHours Decimal? @db.Decimal(5, 2)
+  totalAmount   Decimal?  @db.Decimal(10, 2)
+
+  // Status
+  status        BookingStatus @default(PENDING)
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  // Relations
+  messages      Message[]
+  reviews       Review[]
+  dispute       Dispute?
+}
+
+enum BookingStatus {
+  PENDING
+  ACCEPTED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  DISPUTED
+}
+
+model Message {
+  id          String    @id @default(cuid())
+  bookingId   String
+  booking     Booking   @relation(fields: [bookingId], references: [id])
+  senderId    String
+  sender      User      @relation("MessageSender", fields: [senderId], references: [id])
+
+  content     String
+  attachments Json?     // Array of attachment URLs
+
+  readAt      DateTime?
+  createdAt   DateTime  @default(now())
+  deletedAt   DateTime?
+}
+
+// ============================================
+// Show Proof & XP
+// ============================================
+
+model ShowProof {
+  id            String    @id @default(cuid())
+  technicianId  String
+  technician    Technician @relation(fields: [technicianId], references: [id])
+
+  title         String
+  description   String?
+  proofType     ShowProofType
+  mediaUrls     Json      // Array of media URLs
+
+  // Verification
+  status        ShowProofStatus @default(PENDING)
+  aiScore       Float?
+  aiAnalysis    Json?
+  reviewedBy    String?   // Admin user ID
+  reviewedAt    DateTime?
+  reviewNotes   String?
+
+  // XP awarded
+  xpAwarded     Int       @default(0)
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+}
+
+enum ShowProofType {
+  PHOTO
+  VIDEO
+  CONSOLE_FILE
+  DOCUMENT
+  PORTFOLIO
+}
+
+enum ShowProofStatus {
+  PENDING
+  AI_REVIEWED
+  APPROVED
+  REJECTED
+}
+
+// ============================================
+// Reviews & Trust
+// ============================================
+
+model Review {
+  id          String    @id @default(cuid())
+  bookingId   String
+  booking     Booking   @relation(fields: [bookingId], references: [id])
+  authorId    String
+  author      User      @relation("ReviewAuthor", fields: [authorId], references: [id])
+  subjectId   String
+  subject     User      @relation("ReviewSubject", fields: [subjectId], references: [id])
+
+  rating      Int       // 1-5
+  content     String?
+
+  // Response from subject
+  response    String?
+  respondedAt DateTime?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  @@unique([bookingId, authorId])
+}
+
+model Dispute {
+  id            String    @id @default(cuid())
+  bookingId     String    @unique
+  booking       Booking   @relation(fields: [bookingId], references: [id])
+  filerId       String
+  filer         User      @relation("DisputeFiler", fields: [filerId], references: [id])
+  respondentId  String
+  respondent    User      @relation("DisputeRespondent", fields: [respondentId], references: [id])
+
+  reason        String
+  description   String
+  evidence      Json?     // Array of evidence URLs
+
+  status        DisputeStatus @default(OPEN)
+  resolution    String?
+  resolvedBy    String?   // Admin user ID
+  resolvedAt    DateTime?
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum DisputeStatus {
+  OPEN
+  UNDER_REVIEW
+  ARBITRATION
+  RESOLVED
+  DISMISSED
+}
+
+// ============================================
+// Notifications & Onboarding
+// ============================================
+
+model Notification {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+
+  type        NotificationType
+  title       String
+  message     String
+  actionUrl   String?
+
+  readAt      DateTime?
+  createdAt   DateTime  @default(now())
+}
+
+enum NotificationType {
+  BOOKING_REQUEST
+  BOOKING_ACCEPTED
+  BOOKING_CANCELLED
+  MESSAGE_RECEIVED
+  REVIEW_RECEIVED
+  XP_MILESTONE
+  SHOW_PROOF_APPROVED
+  SHOW_PROOF_REJECTED
+  DISPUTE_UPDATE
+  LOTTERY_ELIGIBLE
+  ONBOARDING_REMINDER
+  SYSTEM
+}
+
+model OnboardingProgress {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id])
+
+  completedTasks Json   @default("[]") // Array of completed task IDs
+  skippedTasks   Json   @default("[]") // Array of skipped task IDs
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model OnboardingTask {
+  id          String    @id @default(cuid())
+
+  title       String
+  description String?
+  category    OnboardingCategory
+  priority    OnboardingPriority
+  targetRoute String?   // Where to send user to complete
+  xpReward    Int       @default(0)
+
+  // Targeting
+  forRole     UserRole?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+enum OnboardingCategory {
+  PROFILE
+  TRUST
+  PAYMENT
+  ENGAGEMENT
+}
+
+enum OnboardingPriority {
+  REQUIRED
+  RECOMMENDED
+  OPTIONAL
+}
+
+// ============================================
+// AI Assistant
+// ============================================
+
+model AIAssistantConversation {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+
+  context     Json      // Current page, user role, onboarding progress, etc.
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  messages    AIAssistantMessage[]
+}
+
+model AIAssistantMessage {
+  id             String    @id @default(cuid())
+  conversationId String
+  conversation   AIAssistantConversation @relation(fields: [conversationId], references: [id])
+
+  sender         AIMessageSender
+  content        String
+  suggestedActions Json?  // Array of { label, targetRoute }
+
+  createdAt      DateTime  @default(now())
+}
+
+enum AIMessageSender {
+  USER
+  ASSISTANT
+}
