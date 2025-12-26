@@ -1,21 +1,22 @@
 import { initTRPC, TRPCError } from '@trpc/server'
-import type { Context } from './context'
+import { OpenApiMeta } from 'trpc-openapi'
+import type { Context } from './context.js'
 
 // Import entity routers
-import { userRouter } from './procedures/user'
-import { technicianRouter } from './procedures/technician'
-import { companyRouter } from './procedures/company'
-import { skillRouter } from './procedures/skill'
-import { bookingRouter } from './procedures/booking'
-import { messageRouter } from './procedures/message'
-import { showProofRouter } from './procedures/showProof'
-import { reviewRouter } from './procedures/review'
-import { disputeRouter } from './procedures/dispute'
-import { notificationRouter } from './procedures/notification'
-import { onboardingRouter } from './procedures/onboarding'
-import { aiAssistantRouter } from './procedures/aiAssistant'
+import { userRouter } from './procedures/user.js'
+import { technicianRouter } from './procedures/technician.js'
+import { companyRouter } from './procedures/company.js'
+import { skillRouter } from './procedures/skill.js'
+import { bookingRouter } from './procedures/booking.js'
+import { messageRouter } from './procedures/message.js'
+import { showProofRouter } from './procedures/showProof.js'
+import { reviewRouter } from './procedures/review.js'
+import { disputeRouter } from './procedures/dispute.js'
+import { notificationRouter } from './procedures/notification.js'
+import { onboardingRouter } from './procedures/onboarding.js'
+import { aiAssistantRouter } from './procedures/aiAssistant.js'
 
-const t = initTRPC.context<Context>().create()
+const t = initTRPC.context<Context>().meta<OpenApiMeta>().create()
 
 export const router = t.router
 export const publicProcedure = t.procedure

@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { router, publicProcedure, protectedProcedure } from '../router'
-import { prisma } from '../../db'
+import { router, publicProcedure, protectedProcedure } from '../router.js'
+import { prisma } from '../../db.js'
 import { TRPCError } from '@trpc/server'
 
 const TechnicianCreateInput = z.object({
@@ -16,6 +16,14 @@ const TechnicianUpdateInput = TechnicianCreateInput.partial()
 export const technicianRouter = router({
   // List technicians (public discovery)
   list: publicProcedure
+    .meta({
+      openapi: {
+        method: 'GET',
+        path: '/api/v1/technicians',
+        summary: 'List technicians',
+        tags: ['Technicians'],
+      },
+    })
     .input(z.object({
       limit: z.number().min(1).max(50).default(20),
       cursor: z.string().optional(),
@@ -25,6 +33,7 @@ export const technicianRouter = router({
       minRate: z.number().optional(),
       maxRate: z.number().optional(),
     }))
+    .output(z.any())
     .query(async ({ input }) => {
       const technicians = await prisma.technician.findMany({
         take: input.limit + 1,
@@ -63,7 +72,16 @@ export const technicianRouter = router({
 
   // Get technician by ID
   getById: publicProcedure
+    .meta({
+      openapi: {
+        method: 'GET',
+        path: '/api/v1/technicians/{id}',
+        summary: 'Get technician by ID',
+        tags: ['Technicians'],
+      },
+    })
     .input(z.object({ id: z.string() }))
+    .output(z.any())
     .query(async ({ input }) => {
       return prisma.technician.findUnique({
         where: { id: input.id, deletedAt: null },
@@ -83,7 +101,17 @@ export const technicianRouter = router({
 
   // Create technician profile (for current user)
   create: protectedProcedure
+    .meta({
+      openapi: {
+        method: 'POST',
+        path: '/api/v1/technicians',
+        summary: 'Create technician profile',
+        tags: ['Technicians'],
+        protect: true,
+      },
+    })
     .input(TechnicianCreateInput)
+    .output(z.any())
     .mutation(async ({ input, ctx }) => {
       // Check if user already has a profile
       const existing = await prisma.technician.findUnique({
@@ -112,7 +140,17 @@ export const technicianRouter = router({
 
   // Update technician profile
   update: protectedProcedure
+    .meta({
+      openapi: {
+        method: 'PATCH',
+        path: '/api/v1/technicians/me',
+        summary: 'Update technician profile',
+        tags: ['Technicians'],
+        protect: true,
+      },
+    })
     .input(TechnicianUpdateInput)
+    .output(z.any())
     .mutation(async ({ input, ctx }) => {
       const technician = await prisma.technician.findUnique({
         where: { userId: ctx.user.id },
@@ -129,7 +167,17 @@ export const technicianRouter = router({
 
   // Add skill to profile
   addSkill: protectedProcedure
+    .meta({
+      openapi: {
+        method: 'POST',
+        path: '/api/v1/technicians/me/skills',
+        summary: 'Add skill to technician profile',
+        tags: ['Technicians'],
+        protect: true,
+      },
+    })
     .input(z.object({ skillId: z.string() }))
+    .output(z.any())
     .mutation(async ({ input, ctx }) => {
       const technician = await prisma.technician.findUnique({
         where: { userId: ctx.user.id },
@@ -149,7 +197,17 @@ export const technicianRouter = router({
 
   // Remove skill from profile
   removeSkill: protectedProcedure
+    .meta({
+      openapi: {
+        method: 'DELETE',
+        path: '/api/v1/technicians/me/skills/{skillId}',
+        summary: 'Remove skill from technician profile',
+        tags: ['Technicians'],
+        protect: true,
+      },
+    })
     .input(z.object({ skillId: z.string() }))
+    .output(z.any())
     .mutation(async ({ input, ctx }) => {
       const technician = await prisma.technician.findUnique({
         where: { userId: ctx.user.id },

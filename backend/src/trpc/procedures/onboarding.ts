@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { router, publicProcedure, protectedProcedure, adminProcedure } from '../router'
-import { prisma } from '../../db'
+import { router, publicProcedure, protectedProcedure, adminProcedure } from '../router.js'
+import { prisma } from '../../db.js'
 
 export const onboardingRouter = router({
   // Get all onboarding tasks (for current user's role)

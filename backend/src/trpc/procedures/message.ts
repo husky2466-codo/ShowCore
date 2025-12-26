@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { router, protectedProcedure } from '../router'
-import { prisma } from '../../db'
+import { router, protectedProcedure } from '../router.js'
+import { prisma } from '../../db.js'
 import { TRPCError } from '@trpc/server'
 
 export const messageRouter = router({

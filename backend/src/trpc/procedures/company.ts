@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { router, publicProcedure, protectedProcedure } from '../router'
-import { prisma } from '../../db'
+import { router, publicProcedure, protectedProcedure } from '../router.js'
+import { prisma } from '../../db.js'
 import { TRPCError } from '@trpc/server'
 
 const CompanyCreateInput = z.object({
@@ -16,11 +16,20 @@ const CompanyUpdateInput = CompanyCreateInput.partial()
 export const companyRouter = router({
   // List companies (public)
   list: publicProcedure
+    .meta({
+      openapi: {
+        method: 'GET',
+        path: '/api/v1/companies',
+        summary: 'List companies',
+        tags: ['Companies'],
+      },
+    })
     .input(z.object({
       limit: z.number().min(1).max(50).default(20),
       cursor: z.string().optional(),
       subscriptionTier: z.enum(['FREE', 'BASIC', 'PRO', 'ENTERPRISE']).optional(),
     }))
+    .output(z.any())
     .query(async ({ input }) => {
       const companies = await prisma.company.findMany({
         take: input.limit + 1,
@@ -43,7 +52,16 @@ export const companyRouter = router({
 
   // Get company by ID
   getById: publicProcedure
+    .meta({
+      openapi: {
+        method: 'GET',
+        path: '/api/v1/companies/{id}',
+        summary: 'Get company by ID',
+        tags: ['Companies'],
+      },
+    })
     .input(z.object({ id: z.string() }))
+    .output(z.any())
     .query(async ({ input }) => {
       return prisma.company.findUnique({
         where: { id: input.id, deletedAt: null },
@@ -52,7 +70,17 @@ export const companyRouter = router({
 
   // Create company profile
   create: protectedProcedure
+    .meta({
+      openapi: {
+        method: 'POST',
+        path: '/api/v1/companies',
+        summary: 'Create company profile',
+        tags: ['Companies'],
+        protect: true,
+      },
+    })
     .input(CompanyCreateInput)
+    .output(z.any())
     .mutation(async ({ input, ctx }) => {
       const existing = await prisma.company.findUnique({
         where: { userId: ctx.user.id },
@@ -76,7 +104,17 @@ export const companyRouter = router({
 
   // Update company profile
   update: protectedProcedure
+    .meta({
+      openapi: {
+        method: 'PATCH',
+        path: '/api/v1/companies/me',
+        summary: 'Update company profile',
+        tags: ['Companies'],
+        protect: true,
+      },
+    })
     .input(CompanyUpdateInput)
+    .output(z.any())
     .mutation(async ({ input, ctx }) => {
       const company = await prisma.company.findUnique({
         where: { userId: ctx.user.id },

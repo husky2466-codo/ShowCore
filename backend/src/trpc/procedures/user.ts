@@ -1,22 +1,43 @@
 import { z } from 'zod'
-import { router, publicProcedure, protectedProcedure, adminProcedure } from '../router'
-import { prisma } from '../../db'
+import { router, publicProcedure, protectedProcedure, adminProcedure } from '../router.js'
+import { prisma } from '../../db.js'
 
 export const userRouter = router({
   // Get current user
-  me: protectedProcedure.query(async ({ ctx }) => {
-    return prisma.user.findUnique({
-      where: { id: ctx.user.id },
-      include: {
-        technician: true,
-        company: true,
+  me: protectedProcedure
+    .meta({
+      openapi: {
+        method: 'GET',
+        path: '/api/v1/users/me',
+        summary: 'Get current authenticated user',
+        tags: ['Users'],
+        protect: true,
       },
     })
-  }),
+    .input(z.void())
+    .output(z.any())
+    .query(async ({ ctx }) => {
+      return prisma.user.findUnique({
+        where: { id: ctx.user.id },
+        include: {
+          technician: true,
+          company: true,
+        },
+      })
+    }),
 
   // Get user by ID (public profiles)
   getById: publicProcedure
+    .meta({
+      openapi: {
+        method: 'GET',
+        path: '/api/v1/users/{id}',
+        summary: 'Get user by ID',
+        tags: ['Users'],
+      },
+    })
     .input(z.object({ id: z.string() }))
+    .output(z.any())
     .query(async ({ input }) => {
       return prisma.user.findUnique({
         where: { id: input.id, deletedAt: null },
@@ -48,9 +69,19 @@ export const userRouter = router({
 
   // Update current user
   update: protectedProcedure
+    .meta({
+      openapi: {
+        method: 'PATCH',
+        path: '/api/v1/users/me',
+        summary: 'Update current user',
+        tags: ['Users'],
+        protect: true,
+      },
+    })
     .input(z.object({
       email: z.string().email().optional(),
     }))
+    .output(z.any())
     .mutation(async ({ input, ctx }) => {
       return prisma.user.update({
         where: { id: ctx.user.id },
@@ -60,11 +91,21 @@ export const userRouter = router({
 
   // Admin: List all users
   adminList: adminProcedure
+    .meta({
+      openapi: {
+        method: 'GET',
+        path: '/api/v1/admin/users',
+        summary: 'List all users (admin only)',
+        tags: ['Admin'],
+        protect: true,
+      },
+    })
     .input(z.object({
       limit: z.number().min(1).max(100).default(20),
       cursor: z.string().optional(),
       role: z.enum(['USER', 'TECHNICIAN', 'COMPANY', 'ADMIN']).optional(),
     }))
+    .output(z.any())
     .query(async ({ input }) => {
       const users = await prisma.user.findMany({
         take: input.limit + 1,
@@ -91,7 +132,17 @@ export const userRouter = router({
 
   // Soft delete (admin only)
   delete: adminProcedure
+    .meta({
+      openapi: {
+        method: 'DELETE',
+        path: '/api/v1/admin/users/{id}',
+        summary: 'Delete user (admin only)',
+        tags: ['Admin'],
+        protect: true,
+      },
+    })
     .input(z.object({ id: z.string() }))
+    .output(z.any())
     .mutation(async ({ input }) => {
       return prisma.user.update({
         where: { id: input.id },

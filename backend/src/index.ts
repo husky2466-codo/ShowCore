@@ -2,8 +2,8 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 import { trpcServer } from '@hono/trpc-server'
-import { appRouter } from './trpc/router'
-import { createContext } from './trpc/context'
+import { appRouter } from './trpc/router.js'
+import { createContext } from './trpc/context.js'
 
 const app = new Hono()
 
