@@ -36,12 +36,5 @@ app.onError((err, c) => {
   return c.json({ error: 'Internal Server Error' }, 500)
 })
 
-// Export for different runtimes
+// Export for Vercel Functions
 export default app
-
-// For Cloudflare Workers
-export const fetch = app.fetch
-
-// For Node.js (with @hono/node-server)
-// import { serve } from '@hono/node-server'
-// serve({ fetch: app.fetch, port: 8787 })

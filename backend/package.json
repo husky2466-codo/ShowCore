@@ -3,10 +3,8 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev src/index.ts",
-    "dev:node": "tsx watch src/index.ts",
-    "build": "wrangler deploy --dry-run",
-    "deploy": "wrangler deploy",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
@@ -15,23 +13,25 @@
     "db:seed": "tsx prisma/seed.ts",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/",
-    "test": "vitest"
+    "test": "vitest",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hono/trpc-server": "^0.3.2",
     "@prisma/client": "^5.22.0",
     "@trpc/server": "^10.45.0",
     "hono": "^4.6.0",
+    "swagger-ui-dist": "^5.31.0",
+    "trpc-openapi": "^1.2.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20241127.0",
     "@types/node": "^22.10.0",
+    "@types/swagger-ui-dist": "^3.30.6",
     "prisma": "^5.22.0",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",
-    "vitest": "^2.1.0",
-    "wrangler": "^3.91.0"
+    "vitest": "^2.1.0"
   },
   "engines": {
     "node": ">=18.0.0"

@@ -1,0 +1,14 @@
+{
+  "buildCommand": "npm run db:generate && npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "src/index.ts": {
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/src/index.ts" },
+    { "source": "/(.*)", "destination": "/src/index.ts" }
+  ]
+}
