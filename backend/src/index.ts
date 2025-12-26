@@ -14,6 +14,9 @@ app.use('/*', cors({
     'http://localhost:3000',
     'http://localhost:3010',
     'http://localhost:5173',
+    // Vercel deployments
+    'https://showcore-app.vercel.app',
+    /\.vercel\.app$/,  // Allow all Vercel preview deployments
   ],
   credentials: true,
 }))

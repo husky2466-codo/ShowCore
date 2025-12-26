@@ -27,8 +27,8 @@ export function useApi<T = any>() {
     setState(prev => ({ ...prev, loading: true, error: null }))
 
     try {
-      // TODO: Replace with actual API base URL
-      const baseUrl = process.env.VITE_API_URL || 'http://localhost:3001/api'
+      // API base URL - uses Vercel deployment in production, localhost in dev
+      const baseUrl = import.meta.env.VITE_API_URL || 'https://showcore-api.vercel.app'
       const fullUrl = url.startsWith('http') ? url : `${baseUrl}${url}`
 
       const response = await fetch(fullUrl, {
