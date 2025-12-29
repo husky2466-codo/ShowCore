@@ -19,7 +19,7 @@ import {
 import data from '@/sections/bookings-and-messaging/data.json'
 import type { Booking, User as BookingUser, Message, Contract, TimeEntry, Invoice } from '@/sections/bookings-and-messaging/types'
 
-export function BookingDetailPage() {
+export default function BookingDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const [booking, setBooking] = useState<Booking | null>(null)
@@ -98,10 +98,10 @@ export function BookingDetailPage() {
 
   if (!booking) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-white mb-2">Booking not found</h2>
-          <p className="text-zinc-400 mb-4">The booking you're looking for doesn't exist.</p>
+          <h2 className="text-xl font-semibold text-zinc-900 dark:text-white mb-2">Booking not found</h2>
+          <p className="text-zinc-600 dark:text-zinc-400 mb-4">The booking you're looking for doesn't exist.</p>
           <button
             onClick={() => navigate('/bookings')}
             className="px-4 py-2 bg-amber-500 text-black rounded-lg hover:bg-amber-400 transition-colors"
@@ -140,13 +140,13 @@ export function BookingDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       {/* Header */}
-      <div className="bg-zinc-900 border-b border-zinc-800">
+      <div className="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
         <div className="max-w-6xl mx-auto px-4 py-6">
           <button
             onClick={() => navigate('/bookings')}
-            className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-6"
+            className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Bookings
@@ -155,13 +155,13 @@ export function BookingDetailPage() {
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-2xl font-bold text-white">{booking.title}</h1>
+                <h1 className="text-2xl font-bold text-zinc-900 dark:text-white">{booking.title}</h1>
                 <div className={`px-3 py-1 rounded-full text-sm font-medium border ${statusColors[booking.status]}`}>
                   {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                 </div>
               </div>
               
-              <div className="flex flex-wrap items-center gap-4 text-zinc-400">
+              <div className="flex flex-wrap items-center gap-4 text-zinc-600 dark:text-zinc-400">
                 <div className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
                   <span>{formatDate(booking.startDate)}</span>
@@ -229,7 +229,7 @@ export function BookingDetailPage() {
               
               <button
                 onClick={handleScheduleCall}
-                className="px-4 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors flex items-center gap-2"
+                className="px-4 py-2 bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2"
               >
                 <Phone className="w-4 h-4" />
                 Schedule Call
@@ -242,7 +242,7 @@ export function BookingDetailPage() {
       {/* Content */}
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Tabs */}
-        <div className="flex space-x-1 mb-8 bg-zinc-900 p-1 rounded-lg">
+        <div className="flex space-x-1 mb-8 bg-white dark:bg-zinc-900 p-1 rounded-lg">
           {[
             { id: 'overview', label: 'Overview', icon: FileText },
             { id: 'messages', label: 'Messages', icon: MessageCircle },
@@ -257,7 +257,7 @@ export function BookingDetailPage() {
                 className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                   activeTab === tab.id
                     ? 'bg-amber-500 text-black'
-                    : 'text-zinc-400 hover:text-white hover:bg-zinc-800'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -273,34 +273,34 @@ export function BookingDetailPage() {
             {activeTab === 'overview' && (
               <div className="space-y-6">
                 {/* Description */}
-                <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
-                  <h3 className="text-lg font-semibold text-white mb-4">Description</h3>
-                  <p className="text-zinc-300 leading-relaxed">{booking.description}</p>
+                <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
+                  <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Description</h3>
+                  <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">{booking.description}</p>
                 </div>
 
                 {/* Contract */}
                 {contract && (
-                  <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
+                  <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-white">Contract</h3>
-                      <button className="flex items-center gap-2 px-3 py-1 bg-zinc-800 text-zinc-300 rounded-lg hover:bg-zinc-700 transition-colors">
+                      <h3 className="text-lg font-semibold text-zinc-900 dark:text-white">Contract</h3>
+                      <button className="flex items-center gap-2 px-3 py-1 bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors">
                         <Download className="w-4 h-4" />
                         Download
                       </button>
                     </div>
                     <div className="space-y-3">
                       <div>
-                        <h4 className="text-white font-medium mb-2">Scope</h4>
-                        <p className="text-zinc-300 text-sm">{contract.scope}</p>
+                        <h4 className="text-zinc-900 dark:text-white font-medium mb-2">Scope</h4>
+                        <p className="text-zinc-700 dark:text-zinc-300 text-sm">{contract.scope}</p>
                       </div>
                       <div className="flex items-center gap-4 text-sm">
                         <div className="flex items-center gap-1">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-zinc-300">Technician Signed</span>
+                          <span className="text-zinc-700 dark:text-zinc-300">Technician Signed</span>
                         </div>
                         <div className="flex items-center gap-1">
                           <CheckCircle className="w-4 h-4 text-green-400" />
-                          <span className="text-zinc-300">Client Signed</span>
+                          <span className="text-zinc-700 dark:text-zinc-300">Client Signed</span>
                         </div>
                       </div>
                     </div>
@@ -310,9 +310,9 @@ export function BookingDetailPage() {
             )}
 
             {activeTab === 'messages' && (
-              <div className="bg-zinc-900 rounded-xl border border-zinc-800">
-                <div className="p-6 border-b border-zinc-800">
-                  <h3 className="text-lg font-semibold text-white">Messages</h3>
+              <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800">
+                <div className="p-6 border-b border-zinc-200 dark:border-zinc-800">
+                  <h3 className="text-lg font-semibold text-zinc-900 dark:text-white">Messages</h3>
                 </div>
                 
                 <div className="p-6 max-h-96 overflow-y-auto space-y-4">
@@ -327,11 +327,11 @@ export function BookingDetailPage() {
                         <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
                           isCurrentUser
                             ? 'bg-amber-500 text-black'
-                            : 'bg-zinc-800 text-white'
+                            : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white'
                         }`}>
                           <p className="text-sm">{message.content}</p>
                           <p className={`text-xs mt-1 ${
-                            isCurrentUser ? 'text-black/70' : 'text-zinc-400'
+                            isCurrentUser ? 'text-black/70' : 'text-zinc-600 dark:text-zinc-400'
                           }`}>
                             {new Date(message.timestamp).toLocaleTimeString()}
                           </p>
@@ -341,14 +341,14 @@ export function BookingDetailPage() {
                   })}
                 </div>
                 
-                <div className="p-6 border-t border-zinc-800">
+                <div className="p-6 border-t border-zinc-200 dark:border-zinc-800">
                   <div className="flex gap-3">
                     <input
                       type="text"
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
                       placeholder="Type a message..."
-                      className="flex-1 px-3 py-2 bg-zinc-800 text-white rounded-lg border border-zinc-700 focus:border-amber-500 focus:outline-none"
+                      className="flex-1 px-3 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white rounded-lg border border-zinc-300 dark:border-zinc-700 focus:border-amber-500 focus:outline-none"
                       onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                     />
                     <button
@@ -363,13 +363,13 @@ export function BookingDetailPage() {
             )}
 
             {activeTab === 'time' && (
-              <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
-                <h3 className="text-lg font-semibold text-white mb-4">Time Entries</h3>
+              <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Time Entries</h3>
                 <div className="space-y-3">
                   {timeEntries.map((entry) => (
-                    <div key={entry.id} className="p-4 bg-zinc-800 rounded-lg">
+                    <div key={entry.id} className="p-4 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-white font-medium">{entry.date}</span>
+                        <span className="text-zinc-900 dark:text-white font-medium">{entry.date}</span>
                         <div className={`px-2 py-1 rounded text-xs font-medium ${
                           entry.status === 'approved' 
                             ? 'bg-green-400/10 text-green-400'
@@ -378,11 +378,11 @@ export function BookingDetailPage() {
                           {entry.status}
                         </div>
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-zinc-400 mb-2">
+                      <div className="flex items-center gap-4 text-sm text-zinc-600 dark:text-zinc-400 mb-2">
                         <span>{new Date(entry.startTime).toLocaleTimeString()} - {new Date(entry.endTime).toLocaleTimeString()}</span>
                         <span>{entry.duration} hours</span>
                       </div>
-                      <p className="text-zinc-300 text-sm">{entry.notes}</p>
+                      <p className="text-zinc-700 dark:text-zinc-300 text-sm">{entry.notes}</p>
                     </div>
                   ))}
                 </div>
@@ -390,18 +390,18 @@ export function BookingDetailPage() {
             )}
 
             {activeTab === 'invoices' && (
-              <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
-                <h3 className="text-lg font-semibold text-white mb-4">Invoices</h3>
+              <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
+                <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Invoices</h3>
                 <div className="space-y-4">
                   {invoices.map((invoice) => (
-                    <div key={invoice.id} className="p-4 bg-zinc-800 rounded-lg">
+                    <div key={invoice.id} className="p-4 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
                       <div className="flex items-center justify-between mb-3">
                         <div>
-                          <h4 className="text-white font-medium">{invoice.invoiceNumber}</h4>
-                          <p className="text-zinc-400 text-sm">Due: {invoice.dueDate}</p>
+                          <h4 className="text-zinc-900 dark:text-white font-medium">{invoice.invoiceNumber}</h4>
+                          <p className="text-zinc-600 dark:text-zinc-400 text-sm">Due: {invoice.dueDate}</p>
                         </div>
                         <div className="text-right">
-                          <p className="text-white font-semibold">{formatCurrency(invoice.total)}</p>
+                          <p className="text-zinc-900 dark:text-white font-semibold">{formatCurrency(invoice.total)}</p>
                           <div className={`px-2 py-1 rounded text-xs font-medium ${
                             invoice.status === 'paid' 
                               ? 'bg-green-400/10 text-green-400'
@@ -414,8 +414,8 @@ export function BookingDetailPage() {
                       <div className="space-y-2">
                         {invoice.lineItems.map((item, index) => (
                           <div key={index} className="flex justify-between text-sm">
-                            <span className="text-zinc-300">{item.description}</span>
-                            <span className="text-zinc-400">{formatCurrency(item.amount)}</span>
+                            <span className="text-zinc-700 dark:text-zinc-300">{item.description}</span>
+                            <span className="text-zinc-600 dark:text-zinc-400">{formatCurrency(item.amount)}</span>
                           </div>
                         ))}
                       </div>
@@ -429,8 +429,8 @@ export function BookingDetailPage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Participants */}
-            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
-              <h3 className="text-lg font-semibold text-white mb-4">Participants</h3>
+            <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
+              <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Participants</h3>
               <div className="space-y-4">
                 {client && (
                   <div className="flex items-center gap-3">
@@ -440,12 +440,12 @@ export function BookingDetailPage() {
                       className="w-10 h-10 rounded-full"
                     />
                     <div>
-                      <p className="text-white font-medium">{client.name}</p>
-                      <p className="text-zinc-400 text-sm">Client</p>
+                      <p className="text-zinc-900 dark:text-white font-medium">{client.name}</p>
+                      <p className="text-zinc-600 dark:text-zinc-400 text-sm">Client</p>
                     </div>
                   </div>
                 )}
-                
+
                 {technician && (
                   <div className="flex items-center gap-3">
                     <img
@@ -454,8 +454,8 @@ export function BookingDetailPage() {
                       className="w-10 h-10 rounded-full"
                     />
                     <div>
-                      <p className="text-white font-medium">{technician.name}</p>
-                      <p className="text-zinc-400 text-sm">Technician</p>
+                      <p className="text-zinc-900 dark:text-white font-medium">{technician.name}</p>
+                      <p className="text-zinc-600 dark:text-zinc-400 text-sm">Technician</p>
                     </div>
                   </div>
                 )}
@@ -463,62 +463,62 @@ export function BookingDetailPage() {
             </div>
 
             {/* Booking Details */}
-            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
-              <h3 className="text-lg font-semibold text-white mb-4">Details</h3>
+            <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
+              <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Details</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-zinc-400">Service Type</span>
-                  <span className="text-white">{booking.serviceType}</span>
+                  <span className="text-zinc-600 dark:text-zinc-400">Service Type</span>
+                  <span className="text-zinc-900 dark:text-white">{booking.serviceType}</span>
                 </div>
-                
+
                 <div className="flex justify-between">
-                  <span className="text-zinc-400">Duration</span>
-                  <span className="text-white">{booking.estimatedDuration} hours</span>
+                  <span className="text-zinc-600 dark:text-zinc-400">Duration</span>
+                  <span className="text-zinc-900 dark:text-white">{booking.estimatedDuration} hours</span>
                 </div>
-                
+
                 {booking.agreedRate && (
                   <div className="flex justify-between">
-                    <span className="text-zinc-400">Rate</span>
-                    <span className="text-white">${booking.agreedRate}/hour</span>
+                    <span className="text-zinc-600 dark:text-zinc-400">Rate</span>
+                    <span className="text-zinc-900 dark:text-white">${booking.agreedRate}/hour</span>
                   </div>
                 )}
-                
+
                 {booking.totalEstimate && (
                   <div className="flex justify-between">
-                    <span className="text-zinc-400">Total Estimate</span>
-                    <span className="text-white">{formatCurrency(booking.totalEstimate)}</span>
+                    <span className="text-zinc-600 dark:text-zinc-400">Total Estimate</span>
+                    <span className="text-zinc-900 dark:text-white">{formatCurrency(booking.totalEstimate)}</span>
                   </div>
                 )}
-                
+
                 <div className="flex justify-between">
-                  <span className="text-zinc-400">Created</span>
-                  <span className="text-white">{new Date(booking.createdAt).toLocaleDateString()}</span>
+                  <span className="text-zinc-600 dark:text-zinc-400">Created</span>
+                  <span className="text-zinc-900 dark:text-white">{new Date(booking.createdAt).toLocaleDateString()}</span>
                 </div>
               </div>
             </div>
 
             {/* Quick Actions */}
-            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
-              <h3 className="text-lg font-semibold text-white mb-4">Quick Actions</h3>
+            <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
+              <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Quick Actions</h3>
               <div className="space-y-3">
                 <button
                   onClick={() => setActiveTab('messages')}
-                  className="w-full px-4 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors flex items-center gap-2"
+                  className="w-full px-4 py-2 bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2"
                 >
                   <MessageCircle className="w-4 h-4" />
                   Send Message
                 </button>
-                
+
                 <button
                   onClick={handleScheduleCall}
-                  className="w-full px-4 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors flex items-center gap-2"
+                  className="w-full px-4 py-2 bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2"
                 >
                   <Phone className="w-4 h-4" />
                   Schedule Call
                 </button>
-                
+
                 {contract && (
-                  <button className="w-full px-4 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700 transition-colors flex items-center gap-2">
+                  <button className="w-full px-4 py-2 bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors flex items-center gap-2">
                     <Download className="w-4 h-4" />
                     Download Contract
                   </button>

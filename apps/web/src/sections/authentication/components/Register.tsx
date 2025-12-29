@@ -26,7 +26,7 @@ export function Register({
   }
 
   return (
-    <div className="min-h-screen flex">
+    <main className="min-h-screen flex">
       {/* Left side - Hero image */}
       <div className="hidden lg:flex lg:w-1/2 relative bg-zinc-950 overflow-hidden">
         {/* Hero image */}
@@ -437,7 +437,7 @@ export function Register({
           </p>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
 

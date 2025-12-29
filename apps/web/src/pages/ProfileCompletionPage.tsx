@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { ProfileCompletion } from '@/sections/authentication/components'
 import type { ProfileCompletionData, UserRole } from '@/sections/authentication/types'
 
-export function ProfileCompletionPage() {
+export default function ProfileCompletionPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   

@@ -63,14 +63,24 @@ export default function ReviewsAndTrust({
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-[1800px] mx-auto p-4 sm:p-6 lg:p-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">
-            Reviews & Trust
-          </h1>
-          <p className="text-zinc-600 dark:text-zinc-400">
-            Manage your reputation, trust signals, and disputes
-          </p>
+          <div className="relative bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 dark:from-amber-600 dark:via-amber-700 dark:to-orange-700 rounded-xl p-6 sm:p-8 text-white shadow-lg overflow-hidden">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-32 translate-x-32"></div>
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full translate-y-24 -translate-x-24"></div>
+            </div>
+
+            <div className="relative">
+              <h1 className="text-2xl sm:text-3xl font-bold drop-shadow-sm mb-2">
+                Reviews & Trust
+              </h1>
+              <p className="text-amber-50 drop-shadow-sm">
+                Manage your reputation, trust signals, and disputes
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="border-b border-zinc-200 dark:border-zinc-800 mb-8">

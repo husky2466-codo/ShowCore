@@ -47,7 +47,7 @@ export function PasswordReset({
   const passwordsMatch = password && confirmPassword && password === confirmPassword
 
   return (
-    <div className="min-h-screen flex">
+    <main className="min-h-screen flex">
       {/* Left side - Atmospheric visual */}
       <div className="hidden lg:flex lg:w-1/2 relative bg-zinc-950 overflow-hidden">
         {/* Hero image background */}
@@ -299,6 +299,6 @@ export function PasswordReset({
           </div>
         </div>
       </div>
-    </div>
+    </main>
   )
 }

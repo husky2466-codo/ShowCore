@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Menu, X, Bell } from 'lucide-react'
 import { MainNav, type NavItem } from './MainNav'
 import { UserMenu, type User } from './UserMenu'
@@ -71,25 +72,35 @@ export function AppShell({
           <div
             className="fixed inset-0 z-40 bg-black/50 lg:hidden"
             onClick={() => setSidebarOpen(false)}
+            aria-hidden="true"
           />
         )}
 
         {/* Sidebar */}
         <aside
+          role="navigation"
+          aria-label="Main navigation"
           className={`fixed top-0 left-0 z-50 h-full w-60 transform bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800 transition-transform duration-200 ease-in-out lg:translate-x-0 ${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
           {/* Logo */}
-          <div className="flex h-16 items-center justify-between px-4 border-b border-zinc-200 dark:border-zinc-800">
-            <img
-              src="/logo/showcore-logo-white.png"
-              alt="ShowCore"
-              className="h-8"
-            />
+          <div className="relative px-4 py-4 border-b border-zinc-200 dark:border-zinc-800">
+            <Link to="/" className="block">
+              <img
+                src="/logo/showcore-logo.png"
+                alt="ShowCore"
+                className="w-full h-auto dark:hidden"
+              />
+              <img
+                src="/logo/showcore-logo-white.png"
+                alt="ShowCore"
+                className="w-full h-auto hidden dark:block"
+              />
+            </Link>
             <button
               onClick={() => setSidebarOpen(false)}
-              className="lg:hidden p-1 rounded-md text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"
+              className="lg:hidden absolute top-2 right-2 p-1 rounded-md text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"
             >
               <X className="h-5 w-5" />
             </button>

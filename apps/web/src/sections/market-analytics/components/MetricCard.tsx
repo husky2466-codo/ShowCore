@@ -9,6 +9,7 @@ export interface MetricCardProps {
   period?: string
   size?: 'default' | 'large'
   highlight?: boolean
+  icon?: string
 }
 
 export function MetricCard({
@@ -19,6 +20,7 @@ export function MetricCard({
   period,
   size = 'default',
   highlight = false,
+  icon,
 }: MetricCardProps) {
   const isLarge = size === 'large'
 
@@ -31,9 +33,18 @@ export function MetricCard({
       } ${isLarge ? 'p-6' : 'p-4'}`}
     >
       <div className="flex flex-col gap-2">
-        <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-          {label}
-        </p>
+        <div className="flex items-center gap-2">
+          {icon && (
+            <img
+              src={icon}
+              alt=""
+              className="w-6 h-6 object-contain"
+            />
+          )}
+          <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+            {label}
+          </p>
+        </div>
         <div className="flex items-baseline gap-2">
           <span
             className={`font-bold text-zinc-900 dark:text-zinc-100 ${

@@ -17,7 +17,7 @@ import {
 import data from '@/sections/technician-discovery/data.json'
 import type { Technician } from '@/sections/technician-discovery/types'
 
-export function TechnicianProfilePage() {
+export default function TechnicianProfilePage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const [technician, setTechnician] = useState<Technician | null>(null)
@@ -52,10 +52,10 @@ export function TechnicianProfilePage() {
 
   if (!technician) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-white mb-2">Technician not found</h2>
-          <p className="text-zinc-400 mb-4">The technician you're looking for doesn't exist.</p>
+          <h2 className="text-xl font-semibold text-zinc-900 dark:text-white mb-2">Technician not found</h2>
+          <p className="text-zinc-600 dark:text-zinc-400 mb-4">The technician you're looking for doesn't exist.</p>
           <button
             onClick={() => navigate('/discovery')}
             className="px-4 py-2 bg-amber-500 text-black rounded-lg hover:bg-amber-400 transition-colors"
@@ -93,13 +93,13 @@ export function TechnicianProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       {/* Header */}
-      <div className="bg-zinc-900 border-b border-zinc-800">
+      <div className="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
         <div className="max-w-6xl mx-auto px-4 py-6">
           <button
             onClick={() => navigate('/discovery')}
-            className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-6"
+            className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Discovery
@@ -121,13 +121,13 @@ export function TechnicianProfilePage() {
 
               <div className="flex-1">
                 <div className="flex items-start justify-between mb-2">
-                  <h1 className="text-2xl font-bold text-white">{technician.name}</h1>
+                  <h1 className="text-2xl font-bold text-zinc-900 dark:text-white">{technician.name}</h1>
                   <button
                     onClick={handleSaveTechnician}
                     className={`p-2 rounded-lg transition-colors ${
                       isBookmarked
                         ? 'bg-amber-500/20 text-amber-400'
-                        : 'bg-zinc-800 text-zinc-400 hover:text-amber-400'
+                        : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-amber-400'
                     }`}
                   >
                     <Bookmark className={`w-5 h-5 ${isBookmarked ? 'fill-current' : ''}`} />
@@ -137,11 +137,11 @@ export function TechnicianProfilePage() {
                 <div className="flex items-center gap-4 mb-3">
                   <div className="flex items-center gap-1">
                     <Star className="w-4 h-4 text-amber-400 fill-current" />
-                    <span className="text-white font-medium">{technician.averageRating}</span>
-                    <span className="text-zinc-400">({technician.reviewCount} reviews)</span>
+                    <span className="text-zinc-900 dark:text-white font-medium">{technician.averageRating}</span>
+                    <span className="text-zinc-600 dark:text-zinc-400">({technician.reviewCount} reviews)</span>
                   </div>
                   
-                  <div className="flex items-center gap-1 text-zinc-400">
+                  <div className="flex items-center gap-1 text-zinc-600 dark:text-zinc-400">
                     <MapPin className="w-4 h-4" />
                     <span>{technician.location.city}, {technician.location.state}</span>
                   </div>
@@ -163,7 +163,7 @@ export function TechnicianProfilePage() {
                   )}
                 </div>
 
-                <p className="text-zinc-300 leading-relaxed">{technician.bio}</p>
+                <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">{technician.bio}</p>
               </div>
             </div>
 
@@ -178,7 +178,7 @@ export function TechnicianProfilePage() {
               
               <button
                 onClick={handleSendMessage}
-                className="w-full px-6 py-3 bg-zinc-800 text-white font-medium rounded-lg hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2"
+                className="w-full px-6 py-3 bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white font-medium rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2"
               >
                 <MessageCircle className="w-4 h-4" />
                 Send Message
@@ -194,8 +194,8 @@ export function TechnicianProfilePage() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Skills */}
-            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
-              <h2 className="text-xl font-semibold text-white mb-4">Skills & Expertise</h2>
+            <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
+              <h2 className="text-xl font-semibold text-zinc-900 dark:text-white mb-4">Skills & Expertise</h2>
               <div className="flex flex-wrap gap-2">
                 {technician.skills.map((skill, index) => (
                   <div
@@ -203,7 +203,7 @@ export function TechnicianProfilePage() {
                     className={`px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-1 ${
                       skill.verified
                         ? 'bg-green-400/10 text-green-400 border border-green-400/20'
-                        : 'bg-zinc-800 text-zinc-300 border border-zinc-700'
+                        : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-300 dark:border-zinc-700'
                     }`}
                   >
                     {skill.verified && <BadgeCheck className="w-3 h-3" />}
@@ -214,36 +214,36 @@ export function TechnicianProfilePage() {
             </div>
 
             {/* Recent Activity */}
-            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
-              <h2 className="text-xl font-semibold text-white mb-4">Recent Activity</h2>
+            <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
+              <h2 className="text-xl font-semibold text-zinc-900 dark:text-white mb-4">Recent Activity</h2>
               <div className="space-y-4">
-                <div className="flex items-center gap-3 p-3 bg-zinc-800 rounded-lg">
+                <div className="flex items-center gap-3 p-3 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
                   <div className="w-8 h-8 bg-green-400/10 rounded-full flex items-center justify-center">
                     <Award className="w-4 h-4 text-green-400" />
                   </div>
                   <div>
-                    <p className="text-white text-sm">Completed corporate event in Los Angeles</p>
-                    <p className="text-zinc-400 text-xs">2 days ago</p>
+                    <p className="text-zinc-900 dark:text-white text-sm">Completed corporate event in Los Angeles</p>
+                    <p className="text-zinc-600 dark:text-zinc-400 text-xs">2 days ago</p>
                   </div>
                 </div>
-                
-                <div className="flex items-center gap-3 p-3 bg-zinc-800 rounded-lg">
+
+                <div className="flex items-center gap-3 p-3 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
                   <div className="w-8 h-8 bg-blue-400/10 rounded-full flex items-center justify-center">
                     <BadgeCheck className="w-4 h-4 text-blue-400" />
                   </div>
                   <div>
-                    <p className="text-white text-sm">Skill verification completed: DiGiCo</p>
-                    <p className="text-zinc-400 text-xs">1 week ago</p>
+                    <p className="text-zinc-900 dark:text-white text-sm">Skill verification completed: DiGiCo</p>
+                    <p className="text-zinc-600 dark:text-zinc-400 text-xs">1 week ago</p>
                   </div>
                 </div>
-                
-                <div className="flex items-center gap-3 p-3 bg-zinc-800 rounded-lg">
+
+                <div className="flex items-center gap-3 p-3 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
                   <div className="w-8 h-8 bg-amber-400/10 rounded-full flex items-center justify-center">
                     <Star className="w-4 h-4 text-amber-400" />
                   </div>
                   <div>
-                    <p className="text-white text-sm">Received 5-star review from client</p>
-                    <p className="text-zinc-400 text-xs">2 weeks ago</p>
+                    <p className="text-zinc-900 dark:text-white text-sm">Received 5-star review from client</p>
+                    <p className="text-zinc-600 dark:text-zinc-400 text-xs">2 weeks ago</p>
                   </div>
                 </div>
               </div>
@@ -253,61 +253,61 @@ export function TechnicianProfilePage() {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Stats */}
-            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
-              <h3 className="text-lg font-semibold text-white mb-4">Stats</h3>
+            <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
+              <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Stats</h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-zinc-400">
+                  <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
                     <DollarSign className="w-4 h-4" />
                     <span>Hourly Rate</span>
                   </div>
-                  <span className="text-white font-medium">${technician.hourlyRate}</span>
+                  <span className="text-zinc-900 dark:text-white font-medium">${technician.hourlyRate}</span>
                 </div>
-                
+
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-zinc-400">
+                  <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
                     <Award className="w-4 h-4" />
                     <span>XP Points</span>
                   </div>
-                  <span className="text-white font-medium">{technician.xp.toLocaleString()}</span>
+                  <span className="text-zinc-900 dark:text-white font-medium">{technician.xp.toLocaleString()}</span>
                 </div>
-                
+
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-zinc-400">
+                  <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
                     <Users className="w-4 h-4" />
                     <span>Reviews</span>
                   </div>
-                  <span className="text-white font-medium">{technician.reviewCount}</span>
+                  <span className="text-zinc-900 dark:text-white font-medium">{technician.reviewCount}</span>
                 </div>
-                
+
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-zinc-400">
+                  <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
                     <MapPin className="w-4 h-4" />
                     <span>Distance</span>
                   </div>
-                  <span className="text-white font-medium">{technician.location.distance} mi</span>
+                  <span className="text-zinc-900 dark:text-white font-medium">{technician.location.distance} mi</span>
                 </div>
               </div>
             </div>
 
             {/* Availability */}
-            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
-              <h3 className="text-lg font-semibold text-white mb-4">Availability</h3>
+            <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
+              <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Availability</h3>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-                  <span className="text-zinc-300">Available this week</span>
+                  <span className="text-zinc-700 dark:text-zinc-300">Available this week</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-zinc-400" />
-                  <span className="text-zinc-400">Usually responds within 2 hours</span>
+                  <Clock className="w-4 h-4 text-zinc-600 dark:text-zinc-400" />
+                  <span className="text-zinc-600 dark:text-zinc-400">Usually responds within 2 hours</span>
                 </div>
               </div>
             </div>
 
             {/* Contact Actions */}
-            <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
-              <h3 className="text-lg font-semibold text-white mb-4">Quick Actions</h3>
+            <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
+              <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Quick Actions</h3>
               <div className="space-y-3">
                 <button
                   onClick={handleRequestBooking}
@@ -319,15 +319,15 @@ export function TechnicianProfilePage() {
                 
                 <button
                   onClick={handleSendMessage}
-                  className="w-full px-4 py-2 bg-zinc-800 text-white font-medium rounded-lg hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2"
+                  className="w-full px-4 py-2 bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white font-medium rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2"
                 >
                   <MessageCircle className="w-4 h-4" />
                   Send Message
                 </button>
-                
+
                 <button
                   onClick={() => navigate('/reviews')}
-                  className="w-full px-4 py-2 bg-zinc-800 text-white font-medium rounded-lg hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2"
+                  className="w-full px-4 py-2 bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white font-medium rounded-lg hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-colors flex items-center justify-center gap-2"
                 >
                   <Star className="w-4 h-4" />
                   View Reviews

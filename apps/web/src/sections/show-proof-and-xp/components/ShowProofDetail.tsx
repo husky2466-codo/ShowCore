@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Modal } from '@/components/ui/Modal';
 import type { ShowProofDetailProps } from '../types';
 
 const ShowProofDetail: React.FC<ShowProofDetailProps> = ({ showProof, onEdit, onDelete, onClose }) => {
@@ -42,8 +43,14 @@ const ShowProofDetail: React.FC<ShowProofDetailProps> = ({ showProof, onEdit, on
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-zinc-900 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+    <Modal
+      isOpen={true}
+      onClose={onClose}
+      ariaLabel={`Show Proof: ${showProof.title}`}
+      backdropClassName="backdrop-blur-sm animate-in fade-in duration-200"
+      className="w-full max-w-4xl mx-4"
+    >
+      <div className="bg-white dark:bg-zinc-900 rounded-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
         {/* Header */}
         <div className="sticky top-0 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 p-6 z-10">
           <div className="flex items-start justify-between">
@@ -364,27 +371,30 @@ const ShowProofDetail: React.FC<ShowProofDetailProps> = ({ showProof, onEdit, on
 
       {/* Lightbox */}
       {isLightboxOpen && (
-        <div
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-          onClick={() => setIsLightboxOpen(false)}
+        <Modal
+          isOpen={true}
+          onClose={() => setIsLightboxOpen(false)}
+          ariaLabel={`Image: ${showProof.title}`}
+          backdropClassName="bg-black/90"
         >
-          <button
-            onClick={() => setIsLightboxOpen(false)}
-            className="absolute top-4 right-4 w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <img
-            src={showProof.mediaUrls[currentImageIndex]}
-            alt={showProof.title}
-            className="max-w-full max-h-full object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
+          <div className="relative">
+            <button
+              onClick={() => setIsLightboxOpen(false)}
+              className="absolute -top-12 right-0 w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-all"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <img
+              src={showProof.mediaUrls[currentImageIndex]}
+              alt={showProof.title}
+              className="max-w-full max-h-[80vh] object-contain"
+            />
+          </div>
+        </Modal>
       )}
-    </div>
+    </Modal>
   );
 };
 

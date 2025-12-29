@@ -9,6 +9,35 @@ import {
   Briefcase,
 } from 'lucide-react';
 
+// Company logo imports
+import AudioVivignLogo from '@/assets/companies/AudioVivign.PNG';
+import BroadcastMediaGroupLogo from '@/assets/companies/BroadcastMediaGroup.PNG';
+import LiveTechSolutionsLogo from '@/assets/companies/LiveTechSolutions.PNG';
+import SondWaveLogo from '@/assets/companies/SondWave.PNG';
+import StageLightLogo from '@/assets/companies/StageLight.PNG';
+
+// Map of company name patterns to their logos
+const companyLogoMap: { patterns: string[]; logo: string }[] = [
+  { patterns: ['AudioVivign', 'Audio Vivign'], logo: AudioVivignLogo },
+  { patterns: ['BroadcastMediaGroup', 'Broadcast Media'], logo: BroadcastMediaGroupLogo },
+  { patterns: ['LiveTechSolutions', 'Live Tech'], logo: LiveTechSolutionsLogo },
+  { patterns: ['SondWave', 'Sond Wave'], logo: SondWaveLogo },
+  { patterns: ['StageLight', 'Stage Light'], logo: StageLightLogo },
+];
+
+// Helper function to find a company logo from text
+function getCompanyLogo(text: string): string | undefined {
+  const lowerText = text.toLowerCase();
+  for (const { patterns, logo } of companyLogoMap) {
+    for (const pattern of patterns) {
+      if (lowerText.includes(pattern.toLowerCase())) {
+        return logo;
+      }
+    }
+  }
+  return undefined;
+}
+
 export interface ActivityItem {
   id: string;
   type:
@@ -93,6 +122,8 @@ export function RecentActivity({ activities, onActivityClick }: RecentActivityPr
           {activities.map((activity) => {
             const { Icon, color, bg } = getActivityIcon(activity.type);
             const isClickable = !!onActivityClick;
+            // Check for company logo in title or description
+            const companyLogo = getCompanyLogo(activity.title) || getCompanyLogo(activity.description);
 
             return (
               <button
@@ -105,8 +136,17 @@ export function RecentActivity({ activities, onActivityClick }: RecentActivityPr
                     : 'cursor-default'
                 }`}
               >
-                <div className={`flex-shrink-0 p-2 rounded-lg ${bg}`}>
-                  <Icon className={`w-4 h-4 ${color}`} />
+                <div className="flex-shrink-0 flex items-center gap-2">
+                  <div className={`p-2 rounded-lg ${bg}`}>
+                    <Icon className={`w-4 h-4 ${color}`} />
+                  </div>
+                  {companyLogo && (
+                    <img
+                      src={companyLogo}
+                      alt="Company logo"
+                      className="w-6 h-6 rounded object-contain bg-white dark:bg-zinc-800"
+                    />
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-0.5">

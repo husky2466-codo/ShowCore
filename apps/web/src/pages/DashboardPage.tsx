@@ -1,11 +1,31 @@
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Dashboard } from '@/sections/dashboard-and-onboarding/components'
 import type { ActivityItem } from '@/sections/dashboard-and-onboarding/components/RecentActivity'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
+import { trpc } from '@/lib/trpc'
 import dashboardData from '@/sections/dashboard-and-onboarding/data.json'
 
-export function DashboardPage() {
+export default function DashboardPage() {
   const navigate = useNavigate()
+
+  // Test tRPC connection by fetching skills
+  const { data: skills, isLoading: skillsLoading, error: skillsError } = trpc.skill.list.useQuery(
+    {},
+    { retry: false, refetchOnWindowFocus: false }
+  )
+
+  // Log API connection status for debugging
+  useEffect(() => {
+    if (skillsLoading) {
+      console.log('[tRPC] Fetching skills from API...')
+    } else if (skillsError) {
+      console.error('[tRPC] API Error:', skillsError.message)
+      console.log('[tRPC] Note: Database may not be configured. Check DATABASE_URL in backend Vercel settings.')
+    } else if (skills) {
+      console.log('[tRPC] API Connected! Skills loaded:', skills.length)
+    }
+  }, [skills, skillsLoading, skillsError])
   const [userRole] = useLocalStorage<'technician' | 'company'>('showcore_settings_role', 'technician')
   
   // Get user data from localStorage (this would normally come from auth context)

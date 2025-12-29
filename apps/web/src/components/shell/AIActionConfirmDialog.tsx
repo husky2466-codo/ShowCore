@@ -1,4 +1,5 @@
 import { X, Pencil, Check, AlertCircle } from 'lucide-react';
+import { Modal } from '../ui/Modal';
 import type { SuggestedAction } from './AIAssistant';
 
 interface AIActionConfirmDialogProps {
@@ -40,8 +41,13 @@ export function AIActionConfirmDialog({
   };
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50">
-      <div className="w-full max-w-md mx-4 bg-white dark:bg-zinc-900 rounded-lg shadow-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+    <Modal
+      isOpen={true}
+      onClose={onCancel}
+      ariaLabel="AI Assistant - Review before filling"
+      className="w-full max-w-md mx-4"
+    >
+      <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-amber-50 dark:bg-amber-500/10">
           <div className="flex items-center gap-2">
@@ -117,6 +123,6 @@ export function AIActionConfirmDialog({
           </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }

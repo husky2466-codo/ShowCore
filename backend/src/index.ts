@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { logger } from 'hono/logger'
 import { trpcServer } from '@hono/trpc-server'
+import { serve } from '@hono/node-server'
 import { appRouter } from './trpc/router.js'
 import { createContext } from './trpc/context.js'
 
@@ -37,6 +38,14 @@ app.notFound((c) => c.json({ error: 'Not Found' }, 404))
 app.onError((err, c) => {
   console.error('Server error:', err)
   return c.json({ error: 'Internal Server Error' }, 500)
+})
+
+// Start local server for development
+const port = 3001
+console.log(`Server starting on http://localhost:${port}`)
+serve({
+  fetch: app.fetch,
+  port,
 })
 
 // Export for Vercel Functions

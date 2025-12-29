@@ -3,7 +3,7 @@ import { ReviewsAndTrust } from '@/sections/reviews-and-trust/components'
 import type { Review, TrustProfile, Dispute, ReviewStats } from '@/sections/reviews-and-trust/types'
 import dataImport from '@/sections/reviews-and-trust/data.json'
 
-export function ReviewsPage() {
+export default function ReviewsPage() {
   const data = dataImport as {
     reviews: Review[]
     trustProfiles: TrustProfile[]

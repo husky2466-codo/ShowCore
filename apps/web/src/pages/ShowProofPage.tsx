@@ -3,7 +3,7 @@ import { ShowProofXP } from '@/sections/show-proof-and-xp/components'
 import data from '@/sections/show-proof-and-xp/data.json'
 import type { ShowProofUploadData, ShowProof, TechnicianXPProfile, LotteryStatus, TierDefinition } from '@/sections/show-proof-and-xp/types'
 
-export function ShowProofPage() {
+export default function ShowProofPage() {
   // State management for show proof page
   // @ts-ignore - Placeholder for future functionality
   const [uploadModalOpen, setUploadModalOpen] = useState(false)

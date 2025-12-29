@@ -5,7 +5,7 @@ import { Login } from '@/sections/authentication/components'
 import type { LoginFormData, MagicLinkRequestData, OAuthProviderId, OAuthProvider } from '@/sections/authentication/types'
 import data from '@/sections/authentication/data.json'
 
-export function LoginPage() {
+export default function LoginPage() {
   const navigate = useNavigate()
   const { login } = useAuth()
   const [isLoading, setIsLoading] = useState(false)

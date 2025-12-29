@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import { SettingsLayout, ProfileSettings, SecuritySettings, NotificationSettings, PayoutSettings, BillingSettings, PrivacySettings, AppearanceSettings, ConnectedAccountsSettings, AccountSettings } from '@/sections/settings/components'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { useTheme } from '@/hooks/useTheme'
@@ -5,9 +7,27 @@ import { useTranslation } from 'react-i18next'
 import type { SettingsSectionId, SettingsProfile, ProfileUpdateData, SettingsNavigationGroup, SecuritySettings as SecuritySettingsType, PasswordChangeData, NotificationPreferences, PayoutMethod, BankAccountFormData, PayPalFormData, BillingInfo, PaymentMethodFormData, PrivacySettings as PrivacySettingsType, AppearanceSettings as AppearanceSettingsType, ConnectedAccount, AccountManagement, CompanyTier, BillingAddress } from '@/sections/settings/types'
 import sampleData from '@/sections/settings/data.json'
 
-export function SettingsPage() {
+// Valid section IDs that can be used in the URL
+const validSections: SettingsSectionId[] = ['profile', 'security', 'notifications', 'payment', 'billing', 'privacy', 'appearance', 'connected-accounts', 'account']
+
+export default function SettingsPage() {
+  const { section: urlSection } = useParams<{ section?: string }>()
+  const navigate = useNavigate()
   const [currentSection, setCurrentSection] = useLocalStorage<SettingsSectionId>('showcore_settings_section', 'profile')
   const [currentRole, setCurrentRole] = useLocalStorage<'technician' | 'company'>('showcore_settings_role', 'technician')
+
+  // Sync URL section parameter with currentSection state
+  useEffect(() => {
+    if (urlSection && validSections.includes(urlSection as SettingsSectionId)) {
+      setCurrentSection(urlSection as SettingsSectionId)
+    }
+  }, [urlSection, setCurrentSection])
+
+  // Handle navigation - update URL when section changes via sidebar
+  const handleNavigate = (sectionId: SettingsSectionId) => {
+    setCurrentSection(sectionId)
+    navigate(`/settings/${sectionId}`, { replace: true })
+  }
   const { theme, fontSize, language } = useTheme()
   const { t } = useTranslation('settings')
 
@@ -152,30 +172,44 @@ export function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-      <div className="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold text-zinc-900 dark:text-white">{t('title')}</h1>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-0.5">{t('subtitle')}</p>
-          </div>
-          <div className="flex items-center gap-2 bg-zinc-100 dark:bg-zinc-800 p-1 rounded-lg">
-            <button
-              onClick={() => { setCurrentRole('technician'); setCurrentSection('profile') }}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${currentRole === 'technician' ? 'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white shadow-sm' : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'}`}
-            >
-              Technician
-            </button>
-            <button
-              onClick={() => { setCurrentRole('company'); setCurrentSection('profile') }}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${currentRole === 'company' ? 'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white shadow-sm' : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'}`}
-            >
-              Company
-            </button>
+      <div className="lg:pl-64 xl:pl-72 px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 lg:pt-8">
+        <div className="max-w-[1800px] mb-8">
+          <div className="relative bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 dark:from-amber-600 dark:via-amber-700 dark:to-orange-700 rounded-xl p-6 sm:p-8 text-white shadow-lg overflow-hidden">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-32 translate-x-32"></div>
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full translate-y-24 -translate-x-24"></div>
+            </div>
+
+            <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold drop-shadow-sm mb-2">
+                  {t('title')}
+                </h1>
+                <p className="text-amber-50 drop-shadow-sm">
+                  {t('subtitle')}
+                </p>
+              </div>
+              <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm p-1 rounded-lg">
+                <button
+                  onClick={() => { setCurrentRole('technician'); handleNavigate('profile') }}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${currentRole === 'technician' ? 'bg-white text-amber-600 shadow-sm' : 'text-white hover:bg-white/10'}`}
+                >
+                  Technician
+                </button>
+                <button
+                  onClick={() => { setCurrentRole('company'); handleNavigate('profile') }}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${currentRole === 'company' ? 'bg-white text-amber-600 shadow-sm' : 'text-white hover:bg-white/10'}`}
+                >
+                  Company
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <SettingsLayout currentSection={currentSection} navigationGroups={navigationGroups} onNavigate={setCurrentSection}>
+      <SettingsLayout currentSection={currentSection} navigationGroups={navigationGroups} onNavigate={handleNavigate}>
         {currentSection === 'profile' && (
           <ProfileSettings profile={profile} onUpdateProfile={handleUpdateProfile} onUploadPhoto={handleUploadPhoto} />
         )}
@@ -233,20 +267,22 @@ export function SettingsPage() {
         )}
         {currentSection === 'appearance' && (
           <div>
-            {/* Debug info */}
-            <div className="mb-4 p-4 bg-yellow-100 dark:bg-yellow-900 rounded-lg">
-              <h4 className="font-semibold text-yellow-800 dark:text-yellow-200">Debug Info:</h4>
-              <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                Current theme: {theme} | Font size: {fontSize} | Language: {language}
-              </p>
-              <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                HTML classes: {typeof document !== 'undefined' ? document.documentElement.className : 'N/A'}
-              </p>
-              <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                HTML lang: {typeof document !== 'undefined' ? document.documentElement.getAttribute('lang') : 'N/A'}
-              </p>
-            </div>
-            
+            {/* Debug info - only visible in development */}
+            {import.meta.env.DEV && (
+              <div className="mb-4 p-4 bg-yellow-100 dark:bg-yellow-900 rounded-lg">
+                <h4 className="font-semibold text-yellow-800 dark:text-yellow-200">Debug Info:</h4>
+                <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                  Current theme: {theme} | Font size: {fontSize} | Language: {language}
+                </p>
+                <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                  HTML classes: {typeof document !== 'undefined' ? document.documentElement.className : 'N/A'}
+                </p>
+                <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                  HTML lang: {typeof document !== 'undefined' ? document.documentElement.getAttribute('lang') : 'N/A'}
+                </p>
+              </div>
+            )}
+
             <AppearanceSettings 
               appearanceSettings={{
                 ...sampleData.appearanceSettings as AppearanceSettingsType,

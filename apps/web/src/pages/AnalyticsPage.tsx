@@ -4,7 +4,7 @@ import { MarketAnalytics } from '@/sections/market-analytics/components'
 import analyticsData from '@/sections/market-analytics/data.json'
 import type { MarketAnalyticsData } from '@/sections/market-analytics/types'
 
-export function AnalyticsPage() {
+export default function AnalyticsPage() {
   const data = analyticsData as unknown as MarketAnalyticsData
 
   // State management for analytics page

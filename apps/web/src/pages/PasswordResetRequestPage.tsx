@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { PasswordResetRequest } from '@/sections/authentication/components'
 import type { PasswordResetRequestData } from '@/sections/authentication/types'
 
-export function PasswordResetRequestPage() {
+export default function PasswordResetRequestPage() {
   const navigate = useNavigate()
 
   const handlePasswordResetRequest = async (formData: PasswordResetRequestData) => {

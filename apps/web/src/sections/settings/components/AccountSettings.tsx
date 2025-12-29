@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Modal } from '@/components/ui/Modal';
 import type { AccountManagementProps } from '../types';
 
 export function AccountSettings({
@@ -281,112 +282,122 @@ export function AccountSettings({
       )}
 
       {/* Deactivate Modal */}
-      {showDeactivateModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-xl max-w-md w-full p-6">
-            <h3 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-4">
-              Deactivate Account
-            </h3>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6">
-              Your account will be hidden from searches and you won't be able to book or be booked.
-              You can reactivate anytime. Are you sure?
-            </p>
+      <Modal
+        isOpen={showDeactivateModal}
+        onClose={() => setShowDeactivateModal(false)}
+        ariaLabel="Deactivate Account"
+        className="w-full max-w-md mx-4"
+      >
+        <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-xl w-full p-6">
+          <h3 id="deactivate-title" className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-4">
+            Deactivate Account
+          </h3>
+          <p id="deactivate-description" className="text-sm text-zinc-600 dark:text-zinc-400 mb-6">
+            Your account will be hidden from searches and you won't be able to book or be booked.
+            You can reactivate anytime. Are you sure?
+          </p>
 
-            <div className="flex gap-3 justify-end">
-              <button
-                onClick={() => setShowDeactivateModal(false)}
-                className="px-4 py-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm font-medium rounded-lg transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDeactivate}
-                disabled={isLoading}
-                className="px-4 py-2 bg-amber-600 hover:bg-amber-700 disabled:bg-amber-400 text-white text-sm font-medium rounded-lg transition-colors"
-              >
-                {isLoading ? 'Deactivating...' : 'Deactivate Account'}
-              </button>
-            </div>
+          <div className="flex gap-3 justify-end">
+            <button
+              onClick={() => setShowDeactivateModal(false)}
+              className="px-4 py-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm font-medium rounded-lg transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleDeactivate}
+              disabled={isLoading}
+              className="px-4 py-2 bg-amber-600 hover:bg-amber-700 disabled:bg-amber-400 text-white text-sm font-medium rounded-lg transition-colors"
+            >
+              {isLoading ? 'Deactivating...' : 'Deactivate Account'}
+            </button>
           </div>
         </div>
-      )}
+      </Modal>
 
       {/* Delete Modal */}
-      {showDeleteModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-xl max-w-md w-full p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-red-100 dark:bg-red-900/40 rounded-lg flex items-center justify-center flex-shrink-0">
-                <svg className="w-5 h-5 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-red-900 dark:text-red-100">
-                Delete Account
-              </h3>
+      <Modal
+        isOpen={showDeleteModal}
+        onClose={() => {
+          setShowDeleteModal(false);
+          setDeleteConfirmText('');
+          setPasswordConfirm('');
+        }}
+        ariaLabel="Delete Account"
+        className="w-full max-w-md mx-4"
+      >
+        <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-xl w-full p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-red-100 dark:bg-red-900/40 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-red-900 dark:text-red-100">
+              Delete Account
+            </h3>
+          </div>
+
+          <div className="space-y-4 mb-6">
+            <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <p className="text-sm text-red-800 dark:text-red-200 font-medium mb-2">
+                This action cannot be undone.
+              </p>
+              <ul className="text-sm text-red-700 dark:text-red-300 list-disc list-inside space-y-1">
+                <li>All data will be permanently deleted in 30 days</li>
+                <li>You can cancel within the grace period</li>
+                <li>After 30 days, recovery is impossible</li>
+              </ul>
             </div>
 
-            <div className="space-y-4 mb-6">
-              <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                <p className="text-sm text-red-800 dark:text-red-200 font-medium mb-2">
-                  This action cannot be undone.
-                </p>
-                <ul className="text-sm text-red-700 dark:text-red-300 list-disc list-inside space-y-1">
-                  <li>All data will be permanently deleted in 30 days</li>
-                  <li>You can cancel within the grace period</li>
-                  <li>After 30 days, recovery is impossible</li>
-                </ul>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-2">
-                  Type <span className="font-mono font-bold">DELETE</span> to confirm
-                </label>
-                <input
-                  type="text"
-                  value={deleteConfirmText}
-                  onChange={(e) => setDeleteConfirmText(e.target.value)}
-                  className="w-full px-3 py-2 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                  placeholder="DELETE"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-2">
-                  Enter your password
-                </label>
-                <input
-                  type="password"
-                  value={passwordConfirm}
-                  onChange={(e) => setPasswordConfirm(e.target.value)}
-                  className="w-full px-3 py-2 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                  placeholder="Password"
-                />
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-2">
+                Type <span className="font-mono font-bold">DELETE</span> to confirm
+              </label>
+              <input
+                type="text"
+                value={deleteConfirmText}
+                onChange={(e) => setDeleteConfirmText(e.target.value)}
+                className="w-full px-3 py-2 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                placeholder="DELETE"
+              />
             </div>
 
-            <div className="flex gap-3 justify-end">
-              <button
-                onClick={() => {
-                  setShowDeleteModal(false);
-                  setDeleteConfirmText('');
-                  setPasswordConfirm('');
-                }}
-                className="px-4 py-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm font-medium rounded-lg transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDelete}
-                disabled={!isDeleteConfirmed || !passwordConfirm || isLoading}
-                className="px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-red-400 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg transition-colors"
-              >
-                {isLoading ? 'Deleting...' : 'Delete My Account'}
-              </button>
+            <div>
+              <label className="block text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-2">
+                Enter your password
+              </label>
+              <input
+                type="password"
+                value={passwordConfirm}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+                className="w-full px-3 py-2 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                placeholder="Password"
+              />
             </div>
           </div>
+
+          <div className="flex gap-3 justify-end">
+            <button
+              onClick={() => {
+                setShowDeleteModal(false);
+                setDeleteConfirmText('');
+                setPasswordConfirm('');
+              }}
+              className="px-4 py-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm font-medium rounded-lg transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleDelete}
+              disabled={!isDeleteConfirmed || !passwordConfirm || isLoading}
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-red-400 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg transition-colors"
+            >
+              {isLoading ? 'Deleting...' : 'Delete My Account'}
+            </button>
+          </div>
         </div>
-      )}
+      </Modal>
     </div>
   );
 }

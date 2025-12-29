@@ -7,6 +7,38 @@ import type {
   CompanyProfileUpdateData,
 } from '../types'
 
+// Skill icons
+import AudioIcon from '@/assets/icons/skills/Audio.PNG'
+import BroadcastIcon from '@/assets/icons/skills/Broadcast.PNG'
+import LEDIcon from '@/assets/icons/skills/LED.PNG'
+import LightingIcon from '@/assets/icons/skills/Lighting.PNG'
+import ProjectionIcon from '@/assets/icons/skills/Projection.PNG'
+import RiggingIcon from '@/assets/icons/skills/Rigging.PNG'
+import StageManagementIcon from '@/assets/icons/skills/Stage-Management.PNG'
+import VideoIcon from '@/assets/icons/skills/Video.PNG'
+
+// Map skill name patterns to their icons
+const skillIconMap: { pattern: RegExp; icon: string }[] = [
+  { pattern: /audio|sound/i, icon: AudioIcon },
+  { pattern: /lighting|light/i, icon: LightingIcon },
+  { pattern: /video/i, icon: VideoIcon },
+  { pattern: /led/i, icon: LEDIcon },
+  { pattern: /broadcast/i, icon: BroadcastIcon },
+  { pattern: /rigging|rig/i, icon: RiggingIcon },
+  { pattern: /stage/i, icon: StageManagementIcon },
+  { pattern: /projection|projector/i, icon: ProjectionIcon },
+]
+
+// Helper function to get the matching icon for a skill name
+function getSkillIcon(skillName: string): string | undefined {
+  for (const { pattern, icon } of skillIconMap) {
+    if (pattern.test(skillName)) {
+      return icon
+    }
+  }
+  return undefined
+}
+
 export function ProfileSettings({
   profile,
   onUpdateProfile,
@@ -406,24 +438,34 @@ export function ProfileSettings({
 
               {/* Skills tags */}
               <div className="flex flex-wrap gap-2">
-                {(formData as TechnicianProfileUpdateData).skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 text-sm font-medium"
-                  >
-                    {skill}
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveSkill(skill)}
-                      disabled={isLoading || isSubmitting}
-                      className="hover:text-amber-900 dark:hover:text-amber-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                {(formData as TechnicianProfileUpdateData).skills.map((skill) => {
+                  const skillIcon = getSkillIcon(skill)
+                  return (
+                    <span
+                      key={skill}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 text-sm font-medium"
                     >
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </span>
-                ))}
+                      {skillIcon && (
+                        <img
+                          src={skillIcon}
+                          alt=""
+                          className="w-4 h-4 object-contain"
+                        />
+                      )}
+                      {skill}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveSkill(skill)}
+                        disabled={isLoading || isSubmitting}
+                        className="hover:text-amber-900 dark:hover:text-amber-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </span>
+                  )
+                })}
               </div>
             </div>
 

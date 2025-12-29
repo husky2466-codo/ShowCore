@@ -1,6 +1,21 @@
 import { useState, useEffect } from 'react'
 
 /**
+ * Safely parse a localStorage value that might be JSON or a plain string
+ * @param value - The raw string value from localStorage
+ * @returns The parsed value (JSON parsed if valid JSON, otherwise the raw string)
+ */
+function safeParseLocalStorageValue<T>(value: string): T {
+  try {
+    return JSON.parse(value)
+  } catch {
+    // If JSON.parse fails, the value might be a plain string (e.g., "en" instead of "\"en\"")
+    // Return the raw value as-is
+    return value as T
+  }
+}
+
+/**
  * Custom hook for localStorage persistence with JSON serialization/deserialization
  * @param key - localStorage key
  * @param initialValue - default value if key doesn't exist
@@ -14,7 +29,7 @@ export function useLocalStorage<T>(
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       const item = window.localStorage.getItem(key)
-      return item ? JSON.parse(item) : initialValue
+      return item ? safeParseLocalStorageValue<T>(item) : initialValue
     } catch (error) {
       console.warn(`Error reading localStorage key "${key}":`, error)
       return initialValue
@@ -42,7 +57,7 @@ export function useLocalStorage<T>(
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === key && e.newValue !== null) {
         try {
-          setStoredValue(JSON.parse(e.newValue))
+          setStoredValue(safeParseLocalStorageValue<T>(e.newValue))
         } catch (error) {
           console.warn(`Error parsing localStorage change for key "${key}":`, error)
         }

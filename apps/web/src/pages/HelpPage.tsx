@@ -109,31 +109,31 @@ export default function HelpPage({ userRole = 'technician' }: HelpPageProps) {
   const getStatusIcon = () => {
     switch (helpData.platformStatus.status) {
       case 'operational':
-        return <CheckCircle className="w-5 h-5 text-green-500" />
+        return <CheckCircle className="w-5 h-5 text-white" />
       case 'degraded':
-        return <AlertCircle className="w-5 h-5 text-yellow-500" />
+        return <AlertCircle className="w-5 h-5 text-yellow-900" />
       case 'outage':
-        return <XCircle className="w-5 h-5 text-red-500" />
+        return <XCircle className="w-5 h-5 text-white" />
       default:
-        return <CheckCircle className="w-5 h-5 text-green-500" />
+        return <CheckCircle className="w-5 h-5 text-white" />
     }
   }
 
   const getStatusColor = () => {
     switch (helpData.platformStatus.status) {
       case 'operational':
-        return 'text-green-600 bg-green-50 border-green-200'
+        return 'text-white bg-green-600 border-green-600'
       case 'degraded':
-        return 'text-yellow-600 bg-yellow-50 border-yellow-200'
+        return 'text-yellow-900 bg-yellow-400 border-yellow-400'
       case 'outage':
-        return 'text-red-600 bg-red-50 border-red-200'
+        return 'text-white bg-red-600 border-red-600'
       default:
-        return 'text-green-600 bg-green-50 border-green-200'
+        return 'text-white bg-green-600 border-green-600'
     }
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-8">
+    <div className="max-w-[1800px] mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
       {/* Header */}
       <div className="text-center space-y-4">
         <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100">

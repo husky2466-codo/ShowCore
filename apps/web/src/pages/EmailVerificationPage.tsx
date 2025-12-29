@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { EmailVerification } from '@/sections/authentication/components'
 
-export function EmailVerificationPage() {
+export default function EmailVerificationPage() {
   const navigate = useNavigate()
   
   // TODO: Get email from auth context or URL params

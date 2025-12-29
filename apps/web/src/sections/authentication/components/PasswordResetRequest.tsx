@@ -23,7 +23,7 @@ export function PasswordResetRequest({
   }
 
   return (
-    <div className="min-h-screen flex">
+    <main className="min-h-screen flex">
       {/* Left side - Atmospheric visual */}
       <div className="hidden lg:flex lg:w-1/2 relative bg-zinc-950 overflow-hidden">
         {/* Hero background image */}
@@ -238,6 +238,6 @@ export function PasswordResetRequest({
           )}
         </div>
       </div>
-    </div>
+    </main>
   )
 }

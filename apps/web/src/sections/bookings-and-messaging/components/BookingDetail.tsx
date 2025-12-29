@@ -10,6 +10,48 @@ import type {
 } from '../types';
 import { MessageThread } from './MessageThread';
 
+// Company logo imports
+import AudioVivignLogo from '@/assets/companies/AudioVivign.PNG';
+import BroadcastMediaGroupLogo from '@/assets/companies/BroadcastMediaGroup.PNG';
+import LiveTechSolutionsLogo from '@/assets/companies/LiveTechSolutions.PNG';
+import SondWaveLogo from '@/assets/companies/SondWave.PNG';
+import StageLightLogo from '@/assets/companies/StageLight.PNG';
+
+// Map company name patterns to logos
+const companyLogoMap: Record<string, string> = {
+  'audiovivign': AudioVivignLogo,
+  'audio vivign': AudioVivignLogo,
+  'broadcastmediagroup': BroadcastMediaGroupLogo,
+  'broadcast media': BroadcastMediaGroupLogo,
+  'broadcast media group': BroadcastMediaGroupLogo,
+  'livetechsolutions': LiveTechSolutionsLogo,
+  'live tech': LiveTechSolutionsLogo,
+  'live tech solutions': LiveTechSolutionsLogo,
+  'sondwave': SondWaveLogo,
+  'sond wave': SondWaveLogo,
+  'stagelight': StageLightLogo,
+  'stage light': StageLightLogo,
+};
+
+// Helper function to get company logo by name
+function getCompanyLogo(companyName: string): string | undefined {
+  const normalizedName = companyName.toLowerCase().trim();
+
+  // Direct match
+  if (companyLogoMap[normalizedName]) {
+    return companyLogoMap[normalizedName];
+  }
+
+  // Partial match - check if any key is contained in the company name
+  for (const [key, logo] of Object.entries(companyLogoMap)) {
+    if (normalizedName.includes(key) || key.includes(normalizedName)) {
+      return logo;
+    }
+  }
+
+  return undefined;
+}
+
 interface BookingDetailProps {
   booking: Booking;
   client?: User;
@@ -100,13 +142,21 @@ export function BookingDetail({
         {/* Header */}
         <div className="flex items-start justify-between p-6 border-b border-zinc-200 dark:border-zinc-800">
           <div className="flex items-start gap-4 flex-1 min-w-0">
-            {otherUser && (
-              <img
-                src={otherUser.avatar}
-                alt={otherUser.name}
-                className="w-14 h-14 rounded-full ring-2 ring-zinc-100 dark:ring-zinc-800"
-              />
-            )}
+            {otherUser && (() => {
+              // Check if the other user is a client (company) and has a matching company logo
+              const isCompanyClient = currentUserRole === 'technician' && otherUser.role === 'client';
+              const companyLogo = isCompanyClient ? getCompanyLogo(otherUser.name) : undefined;
+
+              return (
+                <img
+                  src={companyLogo || otherUser.avatar}
+                  alt={otherUser.name}
+                  className={`w-14 h-14 ring-2 ring-zinc-100 dark:ring-zinc-800 ${
+                    companyLogo ? 'rounded-lg object-contain bg-white p-1' : 'rounded-full'
+                  }`}
+                />
+              );
+            })()}
             <div className="flex-1 min-w-0">
               {otherUser && (
                 <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-1">

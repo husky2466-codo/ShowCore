@@ -4,7 +4,7 @@ import { TechnicianDiscovery } from '@/sections/technician-discovery/components/
 import data from '@/sections/technician-discovery/data.json'
 import type { Technician, Filters, SearchState } from '@/sections/technician-discovery/types'
 
-export function DiscoveryPage() {
+export default function DiscoveryPage() {
   const navigate = useNavigate()
   const [technicians, setTechnicians] = useState<Technician[]>(data.technicians as Technician[])
   const [searchState, setSearchState] = useState<SearchState>(data.searchState as SearchState)

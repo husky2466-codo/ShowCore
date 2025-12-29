@@ -3,6 +3,43 @@ import type {
   ProfileCompletionProps,
 } from '../types'
 
+// Skill icons
+import AudioIcon from '@/assets/icons/skills/Audio.PNG'
+import BroadcastIcon from '@/assets/icons/skills/Broadcast.PNG'
+import LEDIcon from '@/assets/icons/skills/LED.PNG'
+import LightingIcon from '@/assets/icons/skills/Lighting.PNG'
+import ProjectionIcon from '@/assets/icons/skills/Projection.PNG'
+import RiggingIcon from '@/assets/icons/skills/Rigging.PNG'
+import StageManagementIcon from '@/assets/icons/skills/Stage-Management.PNG'
+import VideoIcon from '@/assets/icons/skills/Video.PNG'
+
+// Map skill name patterns to icons
+const skillIconMap: Record<string, string> = {
+  audio: AudioIcon,
+  sound: AudioIcon,
+  lighting: LightingIcon,
+  light: LightingIcon,
+  video: VideoIcon,
+  led: LEDIcon,
+  broadcast: BroadcastIcon,
+  rigging: RiggingIcon,
+  rig: RiggingIcon,
+  stage: StageManagementIcon,
+  projection: ProjectionIcon,
+  projector: ProjectionIcon,
+}
+
+// Helper function to get the matching skill icon
+function getSkillIcon(skillName: string): string | undefined {
+  const lowerSkillName = skillName.toLowerCase()
+  for (const [pattern, icon] of Object.entries(skillIconMap)) {
+    if (lowerSkillName.includes(pattern)) {
+      return icon
+    }
+  }
+  return undefined
+}
+
 export function ProfileCompletion({
   role,
   onCompleteProfile,
@@ -114,7 +151,7 @@ export function ProfileCompletion({
   ]
 
   return (
-    <div className="min-h-screen flex">
+    <main className="min-h-screen flex">
       {/* Left side - Atmospheric visual */}
       <div className="hidden lg:flex lg:w-1/2 relative bg-zinc-950 overflow-hidden">
         {/* Hero image background */}
@@ -353,23 +390,33 @@ export function ProfileCompletion({
                         </div>
                         {techSkills.length > 0 && (
                           <div className="flex flex-wrap gap-2">
-                            {techSkills.map((skill, index) => (
-                              <div
-                                key={index}
-                                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300 text-sm"
-                              >
-                                <span>{skill}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => handleRemoveSkill(skill)}
-                                  className="hover:text-amber-900 dark:hover:text-amber-100"
+                            {techSkills.map((skill, index) => {
+                              const skillIcon = getSkillIcon(skill)
+                              return (
+                                <div
+                                  key={index}
+                                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300 text-sm"
                                 >
-                                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                  </svg>
-                                </button>
-                              </div>
-                            ))}
+                                  {skillIcon && (
+                                    <img
+                                      src={skillIcon}
+                                      alt={`${skill} icon`}
+                                      className="w-4 h-4 object-contain"
+                                    />
+                                  )}
+                                  <span>{skill}</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleRemoveSkill(skill)}
+                                    className="hover:text-amber-900 dark:hover:text-amber-100"
+                                  >
+                                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                  </button>
+                                </div>
+                              )
+                            })}
                           </div>
                         )}
                       </div>
@@ -660,6 +707,6 @@ export function ProfileCompletion({
           </form>
         </div>
       </div>
-    </div>
+    </main>
   )
 }

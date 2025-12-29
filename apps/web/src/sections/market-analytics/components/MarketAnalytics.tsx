@@ -17,6 +17,41 @@ import { LineChart, BarChart, DistributionChart } from './ChartPlaceholder'
 import { InsightCard } from './InsightCard'
 import { EventComparison } from './EventComparison'
 import { SavedLayouts } from './SavedLayouts'
+import analyticsIllustration from '@/assets/illustrations/analytics-charts.png'
+
+// Skill icons
+import AudioIcon from '@/assets/icons/skills/Audio.PNG'
+import BroadcastIcon from '@/assets/icons/skills/Broadcast.PNG'
+import LEDIcon from '@/assets/icons/skills/LED.PNG'
+import LightingIcon from '@/assets/icons/skills/Lighting.PNG'
+import ProjectionIcon from '@/assets/icons/skills/Projection.PNG'
+import RiggingIcon from '@/assets/icons/skills/Rigging.PNG'
+import StageManagementIcon from '@/assets/icons/skills/Stage-Management.PNG'
+import VideoIcon from '@/assets/icons/skills/Video.PNG'
+
+// Map skill name patterns to icons
+const skillIconMap: Record<string, string> = {
+  audio: AudioIcon,
+  sound: AudioIcon,
+  lighting: LightingIcon,
+  video: VideoIcon,
+  led: LEDIcon,
+  broadcast: BroadcastIcon,
+  rigging: RiggingIcon,
+  stage: StageManagementIcon,
+  projection: ProjectionIcon,
+}
+
+// Helper function to get skill icon based on skill name
+function getSkillIcon(skillName: string): string | undefined {
+  const lowerName = skillName.toLowerCase()
+  for (const [pattern, icon] of Object.entries(skillIconMap)) {
+    if (lowerName.includes(pattern)) {
+      return icon
+    }
+  }
+  return undefined
+}
 
 export function MarketAnalytics({
   data,
@@ -164,48 +199,65 @@ export function MarketAnalytics({
       <div className="max-w-[1800px] mx-auto p-4 sm:p-6 lg:p-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-2">
-            <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">
-              Market Analytics
-            </h1>
-            <div className="flex items-center gap-3">
-              <SavedLayouts
-                layouts={data.savedLayouts}
-                currentLayoutId={selectedLayoutId}
-                onLoadLayout={handleLoadLayout}
-                onDeleteLayout={onDeleteLayout}
-                onSetDefaultLayout={onSetDefaultLayout}
+          <div className="relative bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600 dark:from-amber-600 dark:via-amber-700 dark:to-orange-700 rounded-xl p-6 sm:p-8 text-white shadow-lg overflow-hidden">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-32 translate-x-32"></div>
+              <div className="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full translate-y-24 -translate-x-24"></div>
+            </div>
+            
+            {/* Analytics Illustration */}
+            <div className="absolute top-4 right-4 sm:top-6 sm:right-6 opacity-20 sm:opacity-30">
+              <img
+                src={analyticsIllustration}
+                alt="Analytics illustration"
+                className="w-32 h-32 sm:w-40 sm:h-40 object-contain"
               />
-              <button
-                onClick={() => {
-                  const layoutName = prompt('Name this layout:')
-                  if (layoutName) {
-                    onSaveLayout?.({
-                      name: layoutName,
-                      userId: data.personalBenchmark.userId,
-                      filters: currentFilters,
-                      chartConfiguration: {
-                        visibleCharts: ['line-trend', 'bar-comparison'],
-                        primaryChart: 'line-trend',
-                        showPersonalBenchmark,
-                        showPredictions,
-                      },
-                      isDefault: false,
-                    })
-                  }
-                }}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-amber-500/30 dark:hover:border-amber-500/20 transition-colors"
-              >
-                <Save className="h-4 w-4 text-zinc-500" />
-                <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
-                  Save Layout
-                </span>
-              </button>
+            </div>
+
+            <div className="relative">
+              <div className="flex items-center justify-between mb-2">
+                <h1 className="text-2xl sm:text-3xl font-bold drop-shadow-sm">
+                  Market Analytics
+                </h1>
+                <div className="flex items-center gap-3">
+                  <SavedLayouts
+                    layouts={data.savedLayouts}
+                    currentLayoutId={selectedLayoutId}
+                    onLoadLayout={handleLoadLayout}
+                    onDeleteLayout={onDeleteLayout}
+                    onSetDefaultLayout={onSetDefaultLayout}
+                  />
+                  <button
+                    onClick={() => {
+                      const layoutName = prompt('Name this layout:')
+                      if (layoutName) {
+                        onSaveLayout?.({
+                          name: layoutName,
+                          userId: data.personalBenchmark.userId,
+                          filters: currentFilters,
+                          chartConfiguration: {
+                            visibleCharts: ['line-trend', 'bar-comparison'],
+                            primaryChart: 'line-trend',
+                            showPersonalBenchmark,
+                            showPredictions,
+                          },
+                          isDefault: false,
+                        })
+                      }
+                    }}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30 transition-colors"
+                  >
+                    <Save className="h-4 w-4" />
+                    <span className="text-sm font-medium">Save Layout</span>
+                  </button>
+                </div>
+              </div>
+              <p className="text-amber-50 drop-shadow-sm">
+                Transparent rate guidance and market trends for AV technicians
+              </p>
             </div>
           </div>
-          <p className="text-zinc-600 dark:text-zinc-400">
-            Transparent rate guidance and market trends for AV technicians
-          </p>
         </div>
 
         {/* Alerts */}
@@ -298,16 +350,20 @@ export function MarketAnalytics({
                 Trending Skills
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {data.marketOverview.trendingSkills.map((skill) => (
-                  <MetricCard
-                    key={skill.skill}
-                    label={skill.skill}
-                    value={skill.currentAvgRate}
-                    trend={skill.trend}
-                    change={skill.percentageChange}
-                    period={skill.period}
-                  />
-                ))}
+                {data.marketOverview.trendingSkills.map((skill) => {
+                  const skillIcon = getSkillIcon(skill.skill)
+                  return (
+                    <MetricCard
+                      key={skill.skill}
+                      label={skill.skill}
+                      value={skill.currentAvgRate}
+                      trend={skill.trend}
+                      change={skill.percentageChange}
+                      period={skill.period}
+                      icon={skillIcon}
+                    />
+                  )
+                })}
               </div>
             </div>
 

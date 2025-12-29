@@ -3,7 +3,7 @@ import { Register } from '@/sections/authentication/components'
 import type { RegisterFormData, OAuthProviderId, OAuthProvider } from '@/sections/authentication/types'
 import data from '@/sections/authentication/data.json'
 
-export function RegisterPage() {
+export default function RegisterPage() {
   const navigate = useNavigate()
 
   const handleRegister = async (formData: RegisterFormData) => {

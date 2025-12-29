@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Modal } from '@/components/ui/Modal';
 import type {
   UserManagementProps,
   AccountStatus,
@@ -781,128 +782,142 @@ export function UserManagement({
       </div>
 
       {/* Suspend User Modal */}
-      {showSuspendModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg w-full max-w-md p-6">
-            <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-4" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-              Suspend User
-            </h3>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-2">
-                  Reason
-                </label>
-                <textarea
-                  value={suspendReason}
-                  onChange={(e) => setSuspendReason(e.target.value)}
-                  placeholder="Enter suspension reason..."
-                  rows={3}
-                  className="w-full px-3 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-2">
-                  Duration
-                </label>
-                <select
-                  value={suspendDuration}
-                  onChange={(e) => setSuspendDuration(e.target.value)}
-                  className="w-full px-3 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                >
-                  <option value="7 days">7 days</option>
-                  <option value="14 days">14 days</option>
-                  <option value="30 days">30 days</option>
-                  <option value="permanent">Permanent</option>
-                </select>
-              </div>
+      <Modal
+        isOpen={!!showSuspendModal}
+        onClose={() => {
+          setShowSuspendModal(null);
+          setSuspendReason('');
+          setSuspendDuration('7 days');
+        }}
+        ariaLabel="Suspend User"
+        className="w-full max-w-md mx-4"
+      >
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg w-full p-6">
+          <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-4" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+            Suspend User
+          </h3>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-2">
+                Reason
+              </label>
+              <textarea
+                value={suspendReason}
+                onChange={(e) => setSuspendReason(e.target.value)}
+                placeholder="Enter suspension reason..."
+                rows={3}
+                className="w-full px-3 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                style={{ fontFamily: 'DM Sans, sans-serif' }}
+              />
             </div>
-            <div className="flex gap-3 mt-6">
-              <button
-                onClick={() => handleSuspendUser(showSuspendModal)}
-                className="flex-1 px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg transition-colors"
+            <div>
+              <label className="block text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-2">
+                Duration
+              </label>
+              <select
+                value={suspendDuration}
+                onChange={(e) => setSuspendDuration(e.target.value)}
+                className="w-full px-3 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
               >
-                Suspend
-              </button>
-              <button
-                onClick={() => {
-                  setShowSuspendModal(null);
-                  setSuspendReason('');
-                  setSuspendDuration('7 days');
-                }}
-                className="flex-1 px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white rounded-lg transition-colors"
-                style={{ fontFamily: 'DM Sans, sans-serif' }}
-              >
-                Cancel
-              </button>
+                <option value="7 days">7 days</option>
+                <option value="14 days">14 days</option>
+                <option value="30 days">30 days</option>
+                <option value="permanent">Permanent</option>
+              </select>
             </div>
           </div>
+          <div className="flex gap-3 mt-6">
+            <button
+              onClick={() => showSuspendModal && handleSuspendUser(showSuspendModal)}
+              className="flex-1 px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg transition-colors"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            >
+              Suspend
+            </button>
+            <button
+              onClick={() => {
+                setShowSuspendModal(null);
+                setSuspendReason('');
+                setSuspendDuration('7 days');
+              }}
+              className="flex-1 px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white rounded-lg transition-colors"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
-      )}
+      </Modal>
 
       {/* Add Note Modal */}
-      {showNoteModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg w-full max-w-md p-6">
-            <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-4" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-              Add Admin Note
-            </h3>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-2">
-                  Category
-                </label>
-                <select
-                  value={noteCategory}
-                  onChange={(e) => setNoteCategory(e.target.value as AdminNote['category'])}
-                  className="w-full px-3 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                >
-                  <option value="general">General</option>
-                  <option value="warning">Warning</option>
-                  <option value="positive">Positive</option>
-                  <option value="investigation">Investigation</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-2">
-                  Note
-                </label>
-                <textarea
-                  value={noteContent}
-                  onChange={(e) => setNoteContent(e.target.value)}
-                  placeholder="Enter admin note..."
-                  rows={4}
-                  className="w-full px-3 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  style={{ fontFamily: 'DM Sans, sans-serif' }}
-                />
-              </div>
+      <Modal
+        isOpen={!!showNoteModal}
+        onClose={() => {
+          setShowNoteModal(null);
+          setNoteContent('');
+          setNoteCategory('general');
+        }}
+        ariaLabel="Add Admin Note"
+        className="w-full max-w-md mx-4"
+      >
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg w-full p-6">
+          <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-4" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+            Add Admin Note
+          </h3>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-2">
+                Category
+              </label>
+              <select
+                value={noteCategory}
+                onChange={(e) => setNoteCategory(e.target.value as AdminNote['category'])}
+                className="w-full px-3 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-amber-500"
+                style={{ fontFamily: 'DM Sans, sans-serif' }}
+              >
+                <option value="general">General</option>
+                <option value="warning">Warning</option>
+                <option value="positive">Positive</option>
+                <option value="investigation">Investigation</option>
+              </select>
             </div>
-            <div className="flex gap-3 mt-6">
-              <button
-                onClick={() => handleAddNote(showNoteModal)}
-                className="flex-1 px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors"
+            <div>
+              <label className="block text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-2">
+                Note
+              </label>
+              <textarea
+                value={noteContent}
+                onChange={(e) => setNoteContent(e.target.value)}
+                placeholder="Enter admin note..."
+                rows={4}
+                className="w-full px-3 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
                 style={{ fontFamily: 'DM Sans, sans-serif' }}
-              >
-                Add Note
-              </button>
-              <button
-                onClick={() => {
-                  setShowNoteModal(null);
-                  setNoteContent('');
-                  setNoteCategory('general');
-                }}
-                className="flex-1 px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white rounded-lg transition-colors"
-                style={{ fontFamily: 'DM Sans, sans-serif' }}
-              >
-                Cancel
-              </button>
+              />
             </div>
           </div>
+          <div className="flex gap-3 mt-6">
+            <button
+              onClick={() => showNoteModal && handleAddNote(showNoteModal)}
+              className="flex-1 px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg transition-colors"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            >
+              Add Note
+            </button>
+            <button
+              onClick={() => {
+                setShowNoteModal(null);
+                setNoteContent('');
+                setNoteCategory('general');
+              }}
+              className="flex-1 px-4 py-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white rounded-lg transition-colors"
+              style={{ fontFamily: 'DM Sans, sans-serif' }}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
-      )}
+      </Modal>
 
       {/* Click Outside Handler for Dropdown */}
       {openDropdown && (

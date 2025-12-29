@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import { Search, SlidersHorizontal, X, Users } from 'lucide-react'
+import { Modal } from '@/components/ui/Modal'
 import type { TechnicianDiscoveryProps } from '../types'
 import { TechnicianCard } from './TechnicianCard'
 import { FilterPanel } from './FilterPanel'
+import technicianSet1 from '@/assets/avatars/technician-set-1.png'
+import technicianSet2 from '@/assets/avatars/technician-set-2.png'
+import noResultsIllustration from '@/assets/illustrations/no-results.png'
 
 export function TechnicianDiscovery({
   technicians,
@@ -35,42 +39,57 @@ export function TechnicianDiscovery({
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
-      {/* Hero Header */}
-      <div className="bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-          <div className="text-center mb-6">
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Find Your <span className="text-amber-400">Perfect Technician</span>
-            </h1>
-            <p className="text-zinc-400 text-sm sm:text-base max-w-xl mx-auto">
-              Browse verified AV professionals ranked by skill, experience, and client reviews
-            </p>
-          </div>
-
-          {/* Search Bar */}
-          <form onSubmit={handleSearchSubmit} className="max-w-2xl mx-auto">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by name, skill, or keyword..."
-                className="w-full pl-12 pr-4 py-4 text-base bg-white dark:bg-zinc-800 border-0 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400"
+      {/* Header Banner */}
+      <div className="max-w-[1800px] mx-auto p-4 sm:p-6 lg:p-8">
+        <div className="mb-8">
+          <div className="relative bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 rounded-xl p-6 sm:p-8 text-white shadow-lg overflow-hidden">
+            {/* Background Technician Avatars */}
+            <div className="absolute inset-0 opacity-5">
+              <img
+                src={technicianSet1}
+                alt=""
+                className="absolute top-4 left-4 w-24 h-24 object-contain"
               />
-              <button
-                type="submit"
-                className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors"
-              >
-                Search
-              </button>
+              <img
+                src={technicianSet2}
+                alt=""
+                className="absolute bottom-4 right-4 w-32 h-32 object-contain"
+              />
             </div>
-          </form>
-        </div>
-      </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="relative">
+              <div className="text-center mb-4">
+                <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                  Find Your <span className="text-amber-400">Perfect Technician</span>
+                </h1>
+                <p className="text-zinc-400 text-sm sm:text-base max-w-xl mx-auto">
+                  Browse verified AV professionals ranked by skill, experience, and client reviews
+                </p>
+              </div>
+
+              {/* Search Bar */}
+              <form onSubmit={handleSearchSubmit} className="max-w-2xl mx-auto">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search by name, skill, or keyword..."
+                    className="w-full pl-12 pr-4 py-3 text-base bg-white dark:bg-zinc-800 border-0 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400"
+                  />
+                  <button
+                    type="submit"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-1.5 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-md transition-colors"
+                  >
+                    Search
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
         {/* Results Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
@@ -116,7 +135,7 @@ export function TechnicianDiscovery({
           </aside>
 
           {/* Results Grid */}
-          <main className="flex-1 min-w-0">
+          <section className="flex-1 min-w-0">
             {isLoading ? (
               /* Loading Skeleton */
               <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -152,8 +171,12 @@ export function TechnicianDiscovery({
             ) : technicians.length === 0 ? (
               /* Empty State */
               <div className="flex flex-col items-center justify-center py-16 px-4 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800">
-                <div className="w-16 h-16 mb-4 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
-                  <Users className="w-8 h-8 text-zinc-400" />
+                <div className="w-32 h-32 mb-6">
+                  <img
+                    src={noResultsIllustration}
+                    alt="No results found"
+                    className="w-full h-full object-contain opacity-60"
+                  />
                 </div>
                 <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-2">
                   No technicians found
@@ -219,49 +242,46 @@ export function TechnicianDiscovery({
                 )}
               </>
             )}
-          </main>
+          </section>
         </div>
       </div>
 
       {/* Mobile Filter Drawer */}
-      {showMobileFilters && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={() => setShowMobileFilters(false)}
-          />
-
-          {/* Drawer */}
-          <div className="absolute inset-y-0 right-0 w-full max-w-sm bg-zinc-50 dark:bg-zinc-950 shadow-xl overflow-y-auto">
-            <div className="sticky top-0 flex items-center justify-between px-4 py-3 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
-              <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Filters</h2>
-              <button
-                onClick={() => setShowMobileFilters(false)}
-                className="p-2 text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="p-4">
-              <FilterPanel
-                filters={filters}
-                searchState={searchState}
-                onChange={onFilterChange}
-                onClear={onClearFilters}
-              />
-            </div>
-            <div className="sticky bottom-0 p-4 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800">
-              <button
-                onClick={() => setShowMobileFilters(false)}
-                className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors"
-              >
-                View {searchState.totalResults} Results
-              </button>
-            </div>
+      <Modal
+        isOpen={showMobileFilters}
+        onClose={() => setShowMobileFilters(false)}
+        ariaLabel="Filter technicians"
+        closeOnBackdropClick={true}
+        className="lg:hidden fixed inset-y-0 right-0 w-full max-w-sm"
+      >
+        <div className="h-full bg-zinc-50 dark:bg-zinc-950 shadow-xl overflow-y-auto flex flex-col">
+          <div className="sticky top-0 flex items-center justify-between px-4 py-3 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
+            <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">Filters</h2>
+            <button
+              onClick={() => setShowMobileFilters(false)}
+              className="p-2 text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+          <div className="p-4 flex-1">
+            <FilterPanel
+              filters={filters}
+              searchState={searchState}
+              onChange={onFilterChange}
+              onClear={onClearFilters}
+            />
+          </div>
+          <div className="sticky bottom-0 p-4 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800">
+            <button
+              onClick={() => setShowMobileFilters(false)}
+              className="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg transition-colors"
+            >
+              View {searchState.totalResults} Results
+            </button>
           </div>
         </div>
-      )}
+      </Modal>
     </div>
   )
 }

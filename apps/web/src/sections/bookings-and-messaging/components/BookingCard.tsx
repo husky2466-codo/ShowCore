@@ -1,5 +1,44 @@
 import type { Booking, User } from '../types';
 
+// Company logo imports
+import AudioVivignLogo from '@/assets/companies/AudioVivign.PNG';
+import BroadcastMediaGroupLogo from '@/assets/companies/BroadcastMediaGroup.PNG';
+import LiveTechSolutionsLogo from '@/assets/companies/LiveTechSolutions.PNG';
+import SondWaveLogo from '@/assets/companies/SondWave.PNG';
+import StageLightLogo from '@/assets/companies/StageLight.PNG';
+
+// Company logo mapping
+const companyLogoMap: Record<string, string> = {
+  'AudioVivign': AudioVivignLogo,
+  'Audio Vivign': AudioVivignLogo,
+  'BroadcastMediaGroup': BroadcastMediaGroupLogo,
+  'Broadcast Media': BroadcastMediaGroupLogo,
+  'LiveTechSolutions': LiveTechSolutionsLogo,
+  'Live Tech': LiveTechSolutionsLogo,
+  'SondWave': SondWaveLogo,
+  'Sond Wave': SondWaveLogo,
+  'StageLight': StageLightLogo,
+  'Stage Light': StageLightLogo,
+};
+
+// Helper function to get company logo by name
+const getCompanyLogo = (companyName: string): string | undefined => {
+  // Direct match
+  if (companyLogoMap[companyName]) {
+    return companyLogoMap[companyName];
+  }
+
+  // Case-insensitive partial match
+  const lowerName = companyName.toLowerCase();
+  for (const [key, logo] of Object.entries(companyLogoMap)) {
+    if (lowerName.includes(key.toLowerCase()) || key.toLowerCase().includes(lowerName)) {
+      return logo;
+    }
+  }
+
+  return undefined;
+};
+
 interface BookingCardProps {
   booking: Booking;
   client?: User;
@@ -63,13 +102,22 @@ export function BookingCard({
       <div className="flex items-start justify-between gap-4 mb-4">
         <div className="flex items-start gap-3 flex-1 min-w-0">
           {/* Avatar */}
-          {otherUser && (
-            <img
-              src={otherUser.avatar}
-              alt={otherUser.name}
-              className="w-12 h-12 rounded-full flex-shrink-0 ring-2 ring-zinc-100 dark:ring-zinc-800"
-            />
-          )}
+          {otherUser && (() => {
+            // Check if the other user is a client/company and get company logo
+            const isCompanyUser = currentUserRole === 'technician'; // If current user is technician, other user is client/company
+            const companyLogo = isCompanyUser ? getCompanyLogo(otherUser.name) : undefined;
+            const avatarSrc = companyLogo || otherUser.avatar;
+
+            return (
+              <img
+                src={avatarSrc}
+                alt={otherUser.name}
+                className={`w-12 h-12 flex-shrink-0 ring-2 ring-zinc-100 dark:ring-zinc-800 ${
+                  companyLogo ? 'rounded-lg object-contain bg-white p-1' : 'rounded-full'
+                }`}
+              />
+            );
+          })()}
 
           {/* User & Title Info */}
           <div className="flex-1 min-w-0">

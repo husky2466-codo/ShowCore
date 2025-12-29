@@ -27,7 +27,7 @@ const messages = data.messages as unknown as Message[]
 // Use first user as current user
 const currentUser = users[0]
 
-export function BookingsPage() {
+export default function BookingsPage() {
   // State management for bookings page
   // @ts-ignore - Placeholder for future functionality
   const [selectedBookingId, setSelectedBookingId] = useState<string | null>(null)

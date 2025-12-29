@@ -1,6 +1,47 @@
 import type { Review } from '../types';
 import { Star, ThumbsUp, ThumbsDown, Edit2, Award } from 'lucide-react';
 
+// Company logo imports
+import AudioVivignLogo from '@/assets/companies/AudioVivign.PNG';
+import BroadcastMediaGroupLogo from '@/assets/companies/BroadcastMediaGroup.PNG';
+import LiveTechSolutionsLogo from '@/assets/companies/LiveTechSolutions.PNG';
+import SondWaveLogo from '@/assets/companies/SondWave.PNG';
+import StageLightLogo from '@/assets/companies/StageLight.PNG';
+
+// Map company name patterns to their logos
+const companyLogoMap: Record<string, string> = {
+  'audiovivign': AudioVivignLogo,
+  'audio vivign': AudioVivignLogo,
+  'broadcastmediagroup': BroadcastMediaGroupLogo,
+  'broadcast media': BroadcastMediaGroupLogo,
+  'livetechsolutions': LiveTechSolutionsLogo,
+  'live tech': LiveTechSolutionsLogo,
+  'sondwave': SondWaveLogo,
+  'sond wave': SondWaveLogo,
+  'stagelight': StageLightLogo,
+  'stage light': StageLightLogo,
+};
+
+// Helper function to get company logo by name
+function getCompanyLogo(companyName: string | null | undefined): string | undefined {
+  if (!companyName) return undefined;
+  const normalizedName = companyName.toLowerCase().trim();
+
+  // Check for exact match first
+  if (companyLogoMap[normalizedName]) {
+    return companyLogoMap[normalizedName];
+  }
+
+  // Check if any key is contained in the company name
+  for (const [key, logo] of Object.entries(companyLogoMap)) {
+    if (normalizedName.includes(key)) {
+      return logo;
+    }
+  }
+
+  return undefined;
+}
+
 interface ReviewCardProps {
   review: Review;
   canEdit?: boolean;
@@ -48,9 +89,23 @@ export default function ReviewCard({
     <div className="border border-zinc-200 dark:border-zinc-800 rounded-lg p-6 bg-white dark:bg-zinc-900 transition-colors">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-semibold text-lg">
-            {review.reviewerName.charAt(0)}
-          </div>
+          {(() => {
+            const companyLogo = getCompanyLogo(review.reviewerCompany);
+            if (companyLogo) {
+              return (
+                <img
+                  src={companyLogo}
+                  alt={`${review.reviewerCompany} logo`}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+              );
+            }
+            return (
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-semibold text-lg">
+                {review.reviewerName.charAt(0)}
+              </div>
+            );
+          })()}
           <div>
             <div className="font-semibold text-zinc-900 dark:text-zinc-100">
               {review.reviewerName}

@@ -15,8 +15,21 @@ import techMaleHispanicOlder from '@/assets/avatars/tech-male-hispanic-older.png
 import techMaleWhiteYoung from '@/assets/avatars/tech-male-white-young.png'
 import techMaleWhiteOlder from '@/assets/avatars/tech-male-white-older.png'
 
-// Tier badge import
-import tierBadges from '@/assets/icons/tier-badges.png'
+// Tier badge imports
+import tierBeginner from '@/assets/icons/Beginner.PNG'
+import tierExperienced from '@/assets/icons/Experienced.PNG'
+import tierAdvanced from '@/assets/icons/Advanced.PNG'
+import tierPro from '@/assets/icons/Pro.PNG'
+
+// Skill icon imports
+import skillAudio from '@/assets/icons/skills/Audio.PNG'
+import skillBroadcast from '@/assets/icons/skills/Broadcast.PNG'
+import skillLED from '@/assets/icons/skills/LED.PNG'
+import skillLighting from '@/assets/icons/skills/Lighting.PNG'
+import skillProjection from '@/assets/icons/skills/Projection.PNG'
+import skillRigging from '@/assets/icons/skills/Rigging.PNG'
+import skillStageManagement from '@/assets/icons/skills/Stage-Management.PNG'
+import skillVideo from '@/assets/icons/skills/Video.PNG'
 
 // Avatar mapping
 const avatars = [
@@ -62,11 +75,31 @@ const tierGlow = {
   Pro: 'ring-1 ring-amber-300 dark:ring-amber-700/50 shadow-amber-100 dark:shadow-amber-900/20',
 }
 
-const tierBadgePositions = {
-  Beginner: '0%',
-  Experienced: '33.33%',
-  Advanced: '66.66%',
-  Pro: '100%',
+const tierBadgeImages = {
+  Beginner: tierBeginner,
+  Experienced: tierExperienced,
+  Advanced: tierAdvanced,
+  Pro: tierPro,
+}
+
+// Skill icon mapping - maps skill name patterns to icons
+const skillIconMap: { pattern: RegExp; icon: string }[] = [
+  { pattern: /audio/i, icon: skillAudio },
+  { pattern: /lighting/i, icon: skillLighting },
+  { pattern: /video/i, icon: skillVideo },
+  { pattern: /led/i, icon: skillLED },
+  { pattern: /broadcast/i, icon: skillBroadcast },
+  { pattern: /rigging/i, icon: skillRigging },
+  { pattern: /stage/i, icon: skillStageManagement },
+  { pattern: /projection/i, icon: skillProjection },
+]
+
+/**
+ * Returns the matching skill icon for a given skill name, or undefined if no match
+ */
+function getSkillIcon(skillName: string): string | undefined {
+  const match = skillIconMap.find(({ pattern }) => pattern.test(skillName))
+  return match?.icon
 }
 
 export function TechnicianCard({ technician, onClick, onBookmark, onViewRanking }: TechnicianCardProps) {
@@ -128,13 +161,10 @@ export function TechnicianCard({ technician, onClick, onBookmark, onViewRanking 
         {/* Tier + Rate Row */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div
-              className="w-8 h-8 bg-no-repeat bg-contain flex-shrink-0"
-              style={{
-                backgroundImage: `url(${tierBadges})`,
-                backgroundPosition: `${tierBadgePositions[technician.tier]} center`,
-                backgroundSize: '400% 100%',
-              }}
+            <img
+              src={tierBadgeImages[technician.tier]}
+              alt={technician.tier}
+              className="w-8 h-8 object-contain flex-shrink-0"
               title={technician.tier}
             />
             <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${tierColors[technician.tier]}`}>
@@ -151,19 +181,29 @@ export function TechnicianCard({ technician, onClick, onBookmark, onViewRanking 
 
         {/* Skills */}
         <div className="flex flex-wrap gap-1.5 mb-4">
-          {technician.skills.slice(0, 4).map((skill) => (
-            <span
-              key={skill.name}
-              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium ${
-                skill.verified
-                  ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300'
-                  : 'bg-zinc-50 dark:bg-zinc-800/50 text-zinc-400 dark:text-zinc-500'
-              }`}
-            >
-              {skill.name}
-              {skill.verified && <BadgeCheck className="w-3 h-3 text-amber-500" />}
-            </span>
-          ))}
+          {technician.skills.slice(0, 4).map((skill) => {
+            const skillIcon = getSkillIcon(skill.name)
+            return (
+              <span
+                key={skill.name}
+                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium ${
+                  skill.verified
+                    ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300'
+                    : 'bg-zinc-50 dark:bg-zinc-800/50 text-zinc-400 dark:text-zinc-500'
+                }`}
+              >
+                {skillIcon && (
+                  <img
+                    src={skillIcon}
+                    alt=""
+                    className="w-4 h-4 object-contain"
+                  />
+                )}
+                {skill.name}
+                {skill.verified && <BadgeCheck className="w-3 h-3 text-amber-500" />}
+              </span>
+            )
+          })}
           {technician.skills.length > 4 && (
             <span className="px-2 py-0.5 rounded text-xs font-medium bg-zinc-50 dark:bg-zinc-800/50 text-zinc-400 dark:text-zinc-500">
               +{technician.skills.length - 4}
