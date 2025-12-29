@@ -11,14 +11,19 @@ const app = new Hono()
 // Middleware
 app.use('*', logger())
 app.use('/*', cors({
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3010',
-    'http://localhost:5173',
-    // Vercel deployments
-    'https://showcore-app.vercel.app',
-    /\.vercel\.app$/,  // Allow all Vercel preview deployments
-  ],
+  origin: (origin) => {
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:3010',
+      'http://localhost:5173',
+      'https://showcore-app.vercel.app',
+    ]
+    // Allow all Vercel preview deployments
+    if (origin && (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app'))) {
+      return origin
+    }
+    return allowedOrigins[0]
+  },
   credentials: true,
 }))
 

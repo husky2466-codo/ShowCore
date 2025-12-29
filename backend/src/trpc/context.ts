@@ -1,4 +1,5 @@
 import type { Context as HonoContext } from 'hono'
+import type { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
 
 // TODO: Replace with your auth implementation
 export interface User {
@@ -7,11 +8,11 @@ export interface User {
   role: 'USER' | 'TECHNICIAN' | 'COMPANY' | 'ADMIN'
 }
 
-export interface Context {
+export interface Context extends Record<string, unknown> {
   user: User | null
 }
 
-export async function createContext(c: HonoContext): Promise<Context> {
+export async function createContext(opts: FetchCreateContextFnOptions, c: HonoContext): Promise<Context> {
   // TODO: Implement authentication
   //
   // Example with Clerk:

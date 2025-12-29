@@ -59,31 +59,26 @@ export const onboardingRouter = router({
         return progress
       }
 
-      // Award XP if technician
-      const updates: Promise<unknown>[] = [
-        prisma.onboardingProgress.update({
-          where: { userId: ctx.user.id },
-          data: {
-            completedTasks: [...completedTasks, input.taskId],
-          },
-        }),
-      ]
+      // Update progress
+      await prisma.onboardingProgress.update({
+        where: { userId: ctx.user.id },
+        data: {
+          completedTasks: [...completedTasks, input.taskId],
+        },
+      })
 
+      // Award XP if technician
       if (task.xpReward > 0) {
         const technician = await prisma.technician.findUnique({
           where: { userId: ctx.user.id },
         })
         if (technician) {
-          updates.push(
-            prisma.technician.update({
-              where: { id: technician.id },
-              data: { xpPoints: { increment: task.xpReward } },
-            })
-          )
+          await prisma.technician.update({
+            where: { id: technician.id },
+            data: { xpPoints: { increment: task.xpReward } },
+          })
         }
       }
-
-      await prisma.$transaction(updates)
 
       return prisma.onboardingProgress.findUnique({
         where: { userId: ctx.user.id },
