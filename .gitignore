@@ -37,3 +37,7 @@ coverage/
 .cache/
 *.tsbuildinfo
 .vercel
+
+# Claude Code context files
+CLAUDE.md
+CLAUDELONGTERM.md
